@@ -54,6 +54,19 @@ html, body {
 .sdv-lines {
   touch-action: pan-y;
 }
+.sdv-lines p,
+.sdv-text-pane > p,
+.dialog p {
+  max-height: 999999px;
+}
+/* Bulletproof iOS Safari / WeChat / Standalone PWA lock against WebKit TextAutosizer font boosting on long NPC dialogs */
+@supports (-webkit-touch-callout: none) {
+  html, body, p, div, span, small, strong, b, button, h1, h2, h3, h4, li,
+  #sheet, #sheet *, .sdv-dialog, .sdv-dialog * {
+    -webkit-text-size-adjust: none !important;
+    text-size-adjust: none !important;
+  }
+}
 body {
   display: grid;
   place-items: center;

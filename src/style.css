@@ -3030,7 +3030,7 @@ body.touch-on .crane-btn:active:not(:disabled) {
   .sdv-dialog {
     width: min(580px, 88%);
     min-height: 0;
-    max-height: min(44dvh, calc(var(--app-h, 100dvh) - 20px));
+    max-height: min(48dvh, calc(var(--app-h, 100dvh) - 20px));
     grid-template-columns: minmax(0, 1fr) 76px;
     grid-template-rows: minmax(0, 1fr);
     overflow: hidden;
