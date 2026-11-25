@@ -73,8 +73,15 @@ export function mountTitleScreen(scene, savedSession) {
     actions.append(go);
   }
 
+  const landscapeTip = el('div', 'title-landscape-tip');
+  landscapeTip.setAttribute('role', 'note');
+  landscapeTip.append(
+    el('strong', '', '横屏游玩更佳'),
+    el('span', '', '旋转手机横屏视野更大，竖屏也已居中适配')
+  );
+
   const controls = el('div', 'title-keys', 'WASD / 方向键移动　Shift 加速　E 互动/骑电动车　R 下车　空格 鸣笛　Tab 手账　U 成就　M 班车　J 结局');
-  card.append(badge, h1, sub, preview, actions, controls);
+  card.append(badge, h1, sub, preview, landscapeTip, actions, controls);
   root.append(card);
   viewport.append(root);
 

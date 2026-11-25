@@ -29,6 +29,7 @@ html, body {
   margin: 0;
   width: 100%;
   height: 100%;
+  height: 100dvh;
   overflow: hidden;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
@@ -429,14 +430,25 @@ canvas, img {
   -webkit-user-select: none;
   user-select: none;
 }
+.vpad-top-deck {
+  display: none;
+}
 .vpad[hidden],
+.vpad-top-deck[hidden],
 body:not(.touch-on) .vpad,
+body:not(.touch-on) .vpad-top-deck,
 .vpad.modal-open,
+.vpad-top-deck.modal-open,
 body[data-touch-mode="world"] #viewport.cutscene ~ .vpad,
 body[data-touch-mode="world"] #viewport.title-mode ~ .vpad,
 body[data-touch-mode="world"] #viewport.ending ~ .vpad,
 body[data-touch-mode="world"] #viewport.hud-off ~ .vpad,
-body.mbar-modal-open .vpad {
+body:has(#viewport.cutscene) .vpad-top-deck,
+body:has(#viewport.title-mode) .vpad-top-deck,
+body:has(#viewport.ending) .vpad-top-deck,
+body:has(#viewport.hud-off) .vpad-top-deck,
+body.mbar-modal-open .vpad,
+body.mbar-modal-open .vpad-top-deck {
   display: none !important;
 }
 
@@ -626,24 +638,37 @@ body.touch-on[data-touch-mode="world"] #viewport #interaction {
 
 /* ============================================================
    PORTRAIT PHONE HANDHELD DECK (e.g. 390x844 / 412x915)
-   Top = 100% unobstructed 16:9 game screen; Bottom = Pale-Yellow Gamepad Deck!
+   Centered 16:9 game screen in the visual sweet spot!
+   Top = Status/Nav Deck (world mode), Center = 16:9 Screen, Bottom = Pale-Yellow Gamepad!
    ============================================================ */
 @media (max-width: 720px) and (orientation: portrait) {
   body.touch-on {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    justify-content: flex-start;
+    justify-content: center;
+    gap: 10px;
+    padding-top: max(10px, env(safe-area-inset-top));
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
   }
   body.touch-on #viewport {
     width: 100vw;
     max-width: 100vw;
     flex-shrink: 0;
+    overflow: visible;
     border-inline: 0;
-    border-top: 0;
-    border-bottom: 4px solid #0d1813;
+    border-block: 4px solid #0d1813;
+    box-shadow: 0 -2px 0 #2e463a, 0 2px 0 #2e463a;
   }
-  /* Keep top 16:9 canvas super clean in portrait; move nav & status into lower handheld deck */
+  body.touch-on #game {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+  body.touch-on #hud {
+    overflow: hidden;
+  }
+  /* Keep center 16:9 canvas super clean in portrait; move nav & status into upper handheld deck */
   body.touch-on[data-touch-mode="world"] .quest-strip,
   body.touch-on[data-touch-mode="world"] .corner-badges,
   body.touch-on[data-touch-mode="world"] .hotbar,
@@ -651,23 +676,29 @@ body.touch-on[data-touch-mode="world"] #viewport #interaction {
   body.touch-on[data-touch-mode="world"] #tutorial-bar {
     display: none !important;
   }
+  body.touch-on .vpad-top-deck {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    padding: 0 12px;
+    pointer-events: auto;
+    z-index: 20;
+  }
   body.touch-on .vpad {
     position: relative;
     inset: auto;
-    flex: 1;
+    flex: 0 0 auto;
     display: flex;
     flex-direction: column;
     pointer-events: auto;
-    background: linear-gradient(180deg, #1b3125 0%, #13221a 100%);
-    padding: 10px 14px max(18px, env(safe-area-inset-bottom));
-    overflow: hidden;
+    background: transparent;
+    padding: 4px 12px 0;
+    overflow: visible;
   }
   body.touch-on .vpad-world {
-    flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    gap: 10px;
+    justify-content: center;
   }
   body.touch-on .vpad-deck-top {
     display: flex;
@@ -679,9 +710,9 @@ body.touch-on[data-touch-mode="world"] #viewport #interaction {
     border: 3px solid #6b4e22;
     box-shadow: inset 2px 2px 0 #fffce8, inset -2px -2px 0 #e0c46c, 3px 3px 0 #0d1813;
     color: #3d280f;
-    padding: 7px 10px;
+    padding: 6px 10px;
     font-size: 12px;
-    line-height: 1.45;
+    line-height: 1.4;
     text-align: center;
   }
   body.touch-on .vpad-deck-nav {
@@ -700,7 +731,6 @@ body.touch-on[data-touch-mode="world"] #viewport #interaction {
     font-size: 12px;
   }
   body.touch-on .vpad-thumbs {
-    flex: 1;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -709,8 +739,8 @@ body.touch-on[data-touch-mode="world"] #viewport #interaction {
   }
   body.touch-on .vpad-dpad {
     position: static;
-    width: 156px;
-    height: 156px;
+    width: min(152px, 38vw);
+    height: min(152px, 38vw);
     flex-shrink: 0;
   }
   body.touch-on .vpad-dir {
@@ -719,26 +749,25 @@ body.touch-on[data-touch-mode="world"] #viewport #interaction {
   }
   body.touch-on .vpad-actions {
     position: static;
-    gap: 10px;
+    gap: 8px;
   }
   body.touch-on .vpad-btn {
-    min-width: 60px;
-    min-height: 50px;
+    min-width: 58px;
+    min-height: 48px;
     background: #fff4bc;
   }
   body.touch-on .vpad-btn.primary {
-    min-width: 78px;
-    min-height: 66px;
+    min-width: 74px;
+    min-height: 62px;
     background: #ffeb94;
   }
 
   /* Mixue Bar Portrait Pale-Yellow Barista Deck */
   body.touch-on[data-touch-mode="mixue_bar"] .vpad-mixue {
     display: flex;
-    flex: 1;
     flex-direction: column;
     justify-content: center;
-    gap: 10px;
+    gap: 8px;
   }
   .vpad-mixue-note {
     background: #fff6cf;
@@ -757,8 +786,8 @@ body.touch-on[data-touch-mode="world"] #viewport #interaction {
   .vpad-mx {
     flex: 1;
     min-width: 0;
-    min-height: 52px;
-    padding: 5px 4px;
+    min-height: 48px;
+    padding: 4px 4px;
     background: #fff4bc;
   }
   .vpad-mx.wide {
@@ -773,38 +802,70 @@ body.touch-on[data-touch-mode="world"] #viewport #interaction {
 
   body.touch-on #mixue-bar-hud {
     z-index: 35;
+    overflow: visible;
   }
-  /* Full-screen Portrait Modals & Screens so text/crane/ending aren't cramped into 219px */
+  body.touch-on #intro-layer,
+  body.touch-on #cutscene-layer {
+    z-index: 40;
+  }
+  /* Full-screen Portrait Modals & Screens: free from #viewport clipping on iOS Safari / WeChat WebView */
   body.touch-on #sheet:not([hidden]),
   body.touch-on #title-screen,
-  body.touch-on #ending-board,
+  body.touch-on #ending-board:not([hidden]),
+  body.touch-on #ending-epilogue,
   body.touch-on .intro-choice-wrap:not([hidden]),
   body.touch-on #mixue-bar-tutorial:not([hidden]),
   body.touch-on .mbar-finish-wrap:not([hidden]) {
     position: fixed;
     inset: 0;
-    z-index: 40;
-    overflow: auto;
+    z-index: 45;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: max(16px, env(safe-area-inset-top)) 12px max(18px, env(safe-area-inset-bottom));
+  }
+  body.touch-on #title-screen > .title-card,
+  body.touch-on .intro-choice-wrap > .choice-panel,
+  body.touch-on #ending-board > .ending-shell,
+  body.touch-on #ending-epilogue > .epilogue-card,
+  body.touch-on #mixue-bar-tutorial > .mbar-tut-card,
+  body.touch-on .mbar-finish-wrap > .mbar-finish-card,
+  body.touch-on #sheet:not(.sdv-sheet) > .dialog {
+    margin: auto 0;
+    width: min(540px, 100%);
+    max-height: none;
+    overflow: visible;
+    flex-shrink: 0;
   }
   body.touch-on .cine-dialog-mount:has(.cine-dialog) {
     position: fixed;
     inset: 0;
-    z-index: 40;
+    left: 0;
+    bottom: 0;
+    width: auto;
+    max-width: none;
+    transform: none;
+    z-index: 45;
     background: rgba(14, 29, 24, 0.72);
     display: flex;
-    align-items: flex-end;
-    padding: 12px 10px max(22px, env(safe-area-inset-bottom));
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    overflow-y: auto;
+    padding: max(16px, env(safe-area-inset-top)) 10px max(22px, env(safe-area-inset-bottom));
   }
-  body.touch-on #sheet.sdv-sheet {
-    align-items: flex-end;
-    padding: 12px 10px max(22px, env(safe-area-inset-bottom));
+  body.touch-on .cine-dialog-mount .cine-dialog {
+    width: min(540px, 100%);
+    max-height: 78dvh;
   }
-  body.touch-on .dialog {
-    width: min(540px, 96%);
-    max-height: 92dvh;
+  body.touch-on #sheet.sdv-sheet:not([hidden]) {
+    justify-content: flex-end;
+    padding: max(16px, env(safe-area-inset-top)) 10px max(22px, env(safe-area-inset-bottom));
   }
-  body.touch-on #title-screen {
-    padding: 14px;
-    overflow: auto;
+  body.touch-on #sheet.sdv-sheet .sdv-dialog {
+    width: min(540px, 100%);
+    max-height: 78dvh;
   }
 }

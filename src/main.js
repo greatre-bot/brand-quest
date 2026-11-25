@@ -7,8 +7,10 @@ import { TransitScene } from './scenes/TransitScene.js';
 import { WorldScene } from './scenes/WorldScene.js';
 import { MixueBarScene } from './scenes/MixueBarScene.js';
 import { EndingScene } from './scenes/EndingScene.js';
+import { applyTouchBodyClass } from './systems/touchControls.js';
 
 async function boot() {
+  applyTouchBodyClass();
   if (document.fonts?.load) {
     await Promise.race([
       document.fonts.load('12px FusionPixel').catch(() => {}),

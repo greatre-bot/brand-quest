@@ -1,5 +1,6 @@
 import {el} from './panel.js';
 import {sound} from '../systems/audio.js';
+import {syncTouchHud} from '../systems/touchControls.js';
 import {WAN_PHOTO_KEYS} from '../data/content.js';
 import playerPortrait from '../../assets/pixel/ui/portrait-player.png';
 import compassIcon from '../../assets/pixel/ui/compass.png';
@@ -13,6 +14,7 @@ export function playOpeningCutscene(scene, onComplete) {
   const viewport = document.getElementById('viewport');
   viewport.classList.add('cutscene');
   scene.overlay = 'intro';
+  syncTouchHud(scene);
 
   const isKarawang = scene.worldId === 'karawang';
   const endPos = isKarawang ? {x: 291, y: 220} : {x: 355, y: 238};
@@ -57,6 +59,7 @@ export function playOpeningCutscene(scene, onComplete) {
     player.setPosition(endPos.x, endPos.y).setFrame(0).setDepth(endPos.y);
     cam.startFollow(player, true, .16, .16, 0, 16);
     scene.overlay = null;
+    syncTouchHud(scene);
     scene.session.flag('intro_done');
     scene.session.save();
     if (onComplete) onComplete();

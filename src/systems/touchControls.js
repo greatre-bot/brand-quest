@@ -88,6 +88,9 @@ export function applyTouchBodyClass() {
     padDom.root.hidden = !show;
     padDom.worldWrap.hidden = mode !== 'world';
     padDom.mixueWrap.hidden = mode !== 'mixue_bar';
+    if (padDom.topDeck) {
+      padDom.topDeck.hidden = !(enabled && mode === 'world');
+    }
   }
   if (activeWorldScene && mode === 'world') {
     syncTouchHud(activeWorldScene);
@@ -105,16 +108,14 @@ function makeBtn(cls, label, sub = '') {
 export function mountTouchPad() {
   if (padDom && document.getElementById('mobile-pad')) return padDom;
   document.getElementById('mobile-pad')?.remove();
+  document.getElementById('mobile-top-deck')?.remove();
 
-  const root = el('aside', 'vpad');
-  root.id = 'mobile-pad';
-  root.setAttribute('aria-label', '手机端淡黄色虚拟按键');
-  root.hidden = true;
+  // Portrait-only top handheld status & quick nav bar (placed ABOVE #viewport so game screen sits in center!)
+  const topDeck = el('aside', 'vpad-top-deck');
+  topDeck.id = 'mobile-top-deck';
+  topDeck.setAttribute('aria-label', '竖屏任务与快捷导航');
+  topDeck.hidden = true;
 
-  // === 1. WORLD EXPLORATION PAD (D-Pad + Action Buttons + Portrait Handheld Info/Nav) ===
-  const worldWrap = el('div', 'vpad-world');
-
-  // Portrait-only top handheld info bar & shortcut nav (hidden in landscape overlay!)
   const deckTop = el('div', 'vpad-deck-top');
   const deckHint = el('div', 'vpad-deck-hint', '左下方向键漫游 · 右下淡黄按键互动');
   const deckNav = el('div', 'vpad-deck-nav');
@@ -126,6 +127,19 @@ export function mountTouchPad() {
   navEnd.hidden = true;
   deckNav.append(navTasks, navJournal, navMap, navAch, navEnd);
   deckTop.append(deckHint, deckNav);
+  topDeck.append(deckTop);
+
+  const viewportEl = document.getElementById('viewport');
+  if (viewportEl?.parentNode) viewportEl.parentNode.insertBefore(topDeck, viewportEl);
+  else document.body.prepend(topDeck);
+
+  const root = el('aside', 'vpad');
+  root.id = 'mobile-pad';
+  root.setAttribute('aria-label', '手机端淡黄色虚拟按键');
+  root.hidden = true;
+
+  // === 1. WORLD EXPLORATION PAD (D-Pad + Action Buttons) ===
+  const worldWrap = el('div', 'vpad-world');
 
   // Main Left / Right thumb controls
   const thumbRow = el('div', 'vpad-thumbs');
@@ -163,7 +177,7 @@ export function mountTouchPad() {
   actionsWrap.append(rowTop, rowBot);
 
   thumbRow.append(dpad, actionsWrap);
-  worldWrap.append(deckTop, thumbRow);
+  worldWrap.append(thumbRow);
 
   // === 2. MIXUE BAR PORTRAIT HANDHELD DECK (shown ONLY in portrait phone while inside MixueBarScene) ===
   const mixueWrap = el('div', 'vpad-mixue');
@@ -352,7 +366,7 @@ export function mountTouchPad() {
   }
 
   padDom = {
-    root, worldWrap, mixueWrap,
+    root, topDeck, worldWrap, mixueWrap,
     deckHint, navEnd,
     btnInteract, btnSprint, btnPhoto, btnHorn, btnDismount, btnEnd
   };
@@ -397,6 +411,7 @@ export function syncTouchHud(scene) {
   const modalOpen = Boolean(scene.overlay);
 
   padDom.root.classList.toggle('modal-open', modalOpen);
+  padDom.topDeck?.classList.toggle('modal-open', modalOpen);
 
   // Update contextual Interact button text & golden ready highlight
   const mainLabel = padDom.btnInteract.querySelector('.vpad-main');

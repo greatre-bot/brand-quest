@@ -54,6 +54,13 @@ try {
   await b.until("window.BRAND_QUEST?.scene.isActive('MenuScene') && !!document.querySelector('[data-start=\"new\"]')", 8000);
   assert.equal(await b.read("document.body.classList.contains('touch-on')"), true, `touch-on active in ${mode}`);
   assert.equal(await b.read("document.querySelector('#mobile-pad')?.hidden"), true, 'pad hidden on title screen');
+  const tipVisible = await b.read("(()=>{const n=document.querySelector('.title-landscape-tip');return Boolean(n && getComputedStyle(n).display!=='none' && n.textContent.includes('横屏游玩更佳'));})()");
+  assert.equal(tipVisible, true, `mobile landscape tip visible in ${mode}`);
+  if (mode === 'portrait') {
+    const titleVp = await b.read("(()=>{const r=document.getElementById('viewport').getBoundingClientRect();return {top:r.top,bottom:r.bottom,ov:getComputedStyle(document.getElementById('viewport')).overflow};})()");
+    assert.ok(titleVp.top > 180, `portrait title #viewport centered vertically (top=${titleVp.top})`);
+    assert.equal(titleVp.ov, 'visible', 'portrait #viewport overflow visible to prevent iOS fixed-modal clipping');
+  }
   await wait(150);
   await b.shot(`mobile-${mode}-title`);
 
@@ -62,6 +69,13 @@ try {
   await b.until("window.BRAND_QUEST?.scene.isActive('IntroScene')", 5000);
   await tapSelector('.cine-skip');
   await b.until("!!document.querySelector('[data-dest=\"jakarta\"]')", 4000);
+  await wait(150);
+  if (mode === 'portrait') {
+    const choiceMetrics = await b.read("(()=>{const a=document.querySelector('[data-dest=\"jakarta\"]').getBoundingClientRect();const c=document.querySelector('[data-dest=\"karawang\"]').getBoundingClientRect();return {aTop:a.top,aBot:a.bottom,aLeft:a.left,cTop:c.top,cBot:c.bottom,cLeft:c.left,vpBot:document.getElementById('viewport').getBoundingClientRect().bottom};})()");
+    assert.ok(Math.abs(choiceMetrics.aLeft - choiceMetrics.cLeft) < 4 && choiceMetrics.cTop > choiceMetrics.aBot, `portrait choice cards stacked vertically (${JSON.stringify(choiceMetrics)})`);
+    assert.ok(choiceMetrics.cBot <= H, `portrait second choice button fully visible inside screen (${choiceMetrics.cBot} <= ${H})`);
+    await b.shot('mobile-portrait-choice');
+  }
   await tapSelector('[data-dest="jakarta"]');
   await b.until("window.BRAND_QUEST?.scene.isActive('WorldScene')", 6000);
   await b.until("!!document.querySelector('#cutscene-layer .cine-skip')", 4000);
@@ -80,6 +94,10 @@ try {
   const y1 = await S('.player.y');
   assert.ok(y1 > y0 + 8, `down pale-yellow dpad moved player south (${y0} -> ${y1})`);
 
+  if (mode === 'portrait') {
+    const worldLayout = await b.read("(()=>{const t=document.getElementById('mobile-top-deck').getBoundingClientRect();const v=document.getElementById('viewport').getBoundingClientRect();const p=document.getElementById('mobile-pad').getBoundingClientRect();return {tBot:t.bottom,vTop:v.top,vBot:v.bottom,pTop:p.top};})()");
+    assert.ok(worldLayout.vTop >= 120 && worldLayout.tBot <= worldLayout.vTop + 2 && worldLayout.vBot <= worldLayout.pTop + 2, `portrait world #viewport centered between top deck & pad (${JSON.stringify(worldLayout)})`);
+  }
   await b.shot(`mobile-${mode}-world`);
 
   if (mode === 'landscape') {

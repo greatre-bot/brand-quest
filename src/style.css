@@ -2037,6 +2037,34 @@
   padding-top: 8px;
   line-height: 1.5;
 }
+.title-landscape-tip {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  padding: 7px 10px;
+  background: #fff4bc;
+  border: 3px solid #8a5c1c;
+  box-shadow:
+    inset 2px 2px 0 #fffce8,
+    inset -2px -2px 0 #e2c268,
+    3px 3px 0 #3f2814;
+  color: #4a2c0c;
+  font-size: 12px;
+  line-height: 1.45;
+  text-align: center;
+}
+.title-landscape-tip strong {
+  color: #9e2e1d;
+  font-size: 13px;
+}
+.title-landscape-tip strong::before {
+  content: "↻ ";
+}
+body.touch-on .title-landscape-tip {
+  display: flex;
+}
 
 /* ============================================================
    Opening Cutscene & Flight-to-Indonesia Stage
@@ -2877,6 +2905,11 @@ body.touch-on .crane-btn:active:not(:disabled) {
   .title-card h1 { font-size: 22px; }
   .title-sub { font-size: 12px; line-height: 1.45; }
   .title-preview { padding: 6px 10px; }
+  .title-landscape-tip {
+    padding: 5px 8px;
+    border-width: 2px;
+    box-shadow: inset 1px 1px 0 #fffce8, 2px 2px 0 #3f2814;
+  }
   .title-keys { display: none; }
   .choice-panel {
     padding: 12px 14px;
@@ -2887,10 +2920,41 @@ body.touch-on .crane-btn:active:not(:disabled) {
   .choice-head h2 { font-size: 18px; }
   .choice-head p { font-size: 12px; }
   .choice-thumb { height: 52px; }
+  .choice-card { padding: 9px; gap: 6px; }
+  .choice-body h3 { font-size: 16px; margin: 2px 0 4px; }
+  .choice-body p { font-size: 12px; line-height: 1.45; }
+  .choice-go { padding: 8px 10px; font-size: 13px; }
+  .cine-skip { top: 6px; right: 8px; padding: 4px 8px; border-width: 2px; font-size: 12px; }
+  .cine-caption { padding: 6px 12px; border-width: 2px; outline-width: 2px; }
+  .cine-caption strong { font-size: 14px; letter-spacing: 1px; }
+  .cine-caption small { font-size: 11px; margin-top: 2px; }
+  .transit-caption { min-width: min(320px, 90%); top: 10%; }
   .crane-canvas { max-height: 44dvh; width: auto; max-width: 100%; margin: 0 auto; }
   .crane-controls { margin-top: 6px; gap: 6px; }
   .dialog.unload .keys { display: none; }
   .tut-grid { grid-template-columns: 1fr; gap: 4px; }
+}
+
+@media (max-width: 720px) and (orientation: portrait) {
+  .choice-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .choice-thumb {
+    height: 54px;
+    padding: 4px;
+  }
+  .choice-thumb img {
+    max-height: 44px;
+  }
+  .sdv-dialog {
+    grid-template-columns: minmax(0, 1fr) 114px;
+    min-height: 120px;
+  }
+  .sdv-portrait-frame {
+    width: 68px;
+    height: 68px;
+  }
 }
 
 @media (max-width: 540px) {
