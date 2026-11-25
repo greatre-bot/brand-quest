@@ -3467,8 +3467,8 @@ body.touch-on .crane-btn:active:not(:disabled) {
     width: min(630px, 95%);
   }
   .sdv-dialog {
-    width: min(580px, 94%);
-    max-height: calc(var(--app-h, 100dvh) - 14px);
+    width: min(580px, 88%);
+    max-height: min(56dvh, calc(var(--app-h, 100dvh) - 14px));
     grid-template-columns: minmax(0, 1fr) 74px;
     padding: 4px;
     gap: 4px;

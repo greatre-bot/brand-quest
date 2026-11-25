@@ -34,9 +34,25 @@ html, body {
   height: var(--app-h, 100dvh);
   overflow: hidden;
   touch-action: manipulation;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
   -webkit-tap-highlight-color: transparent;
   -webkit-user-select: none;
   user-select: none;
+}
+:where(#sheet, #sheet *,
+.sdv-dialog, .sdv-dialog *,
+.cine-dialog-mount, .cine-dialog-mount *,
+.title-screen, .title-screen *,
+.intro-choice-wrap, .intro-choice-wrap *,
+.ending-board, .ending-board *,
+.epilogue-stage, .epilogue-stage *) {
+  touch-action: manipulation;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+.sdv-lines {
+  touch-action: pan-y;
 }
 body {
   display: grid;

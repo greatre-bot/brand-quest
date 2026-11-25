@@ -33,6 +33,13 @@ export function canNativeFullscreen() {
 export function getViewportBox() {
   if (typeof window === 'undefined') return {vw: BASE_W, vh: BASE_H};
   const vv = window.visualViewport;
+  // Ignore transient browser pinch/double-tap zoom frames so --app-w/--app-h never shrink and flip layouts.
+  if (vv && vv.scale && vv.scale > 1.03) {
+    return {
+      vw: Math.max(1, Math.round(window.innerWidth || vv.width * vv.scale || BASE_W)),
+      vh: Math.max(1, Math.round(window.innerHeight || vv.height * vv.scale || BASE_H))
+    };
+  }
   const vw = Math.max(1, Math.round(vv?.width || window.innerWidth || BASE_W));
   const vh = Math.max(1, Math.round(vv?.height || window.innerHeight || BASE_H));
   return {vw, vh};

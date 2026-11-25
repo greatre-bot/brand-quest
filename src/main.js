@@ -57,5 +57,10 @@ async function boot() {
   window.addEventListener('orientationchange', onOrientation, {passive: true});
   window.visualViewport?.addEventListener('resize', onResize, {passive: true});
   window.visualViewport?.addEventListener('scroll', onResize, {passive: true});
+  // Block iOS Safari / WeChat accidental pinch & double-tap smart zoom on UI overlays
+  const blockZoom = e => e.preventDefault();
+  document.addEventListener('gesturestart', blockZoom, {passive: false});
+  document.addEventListener('gesturechange', blockZoom, {passive: false});
+  document.addEventListener('dblclick', blockZoom, {passive: false});
 }
 boot();

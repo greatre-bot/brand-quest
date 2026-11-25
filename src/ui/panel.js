@@ -106,19 +106,35 @@ export function dialog(scene,title,lines,foot='',portraitKey='player',speakerNam
   textPane.append(body);
 
   const footerRow=el('div','actions sdv-actions');
-  const closeFn=()=>{sound.close();scene.closeOverlay();};
+  let closed=false;
+  const closeFn=()=>{if(closed)return;closed=true;sound.close();scene.closeOverlay();};
+  const bindFastClose=btn=>{
+    btn.addEventListener('pointerup',e=>{
+      if(e.pointerType==='touch'){
+        e.preventDefault();
+        e.stopPropagation();
+        closeFn();
+      }
+    });
+    btn.onclick=e=>{e.stopPropagation();closeFn();};
+  };
   const nextBtn=el('button','sdv-next','继续 ▸');
   nextBtn.type='button';
-  nextBtn.onclick=e=>{e.stopPropagation();closeFn();};
+  bindFastClose(nextBtn);
   const closeSquare=el('button','sdv-close-sq','×');
   closeSquare.type='button';
   closeSquare.title='关闭 [Esc]';
-  closeSquare.onclick=e=>{e.stopPropagation();closeFn();};
+  bindFastClose(closeSquare);
   footerRow.append(nextBtn,closeSquare);
   textPane.append(footerRow);
 
-  // Clicking the parchment text area also advances/closes comfortably
-  textPane.addEventListener('click',()=>closeFn());
+  // Clicking the parchment text area advances/closes (ignoring scroll drags inside long dialogs)
+  let downPos=null;
+  textPane.addEventListener('pointerdown',e=>{downPos={x:e.clientX,y:e.clientY};});
+  textPane.addEventListener('click',e=>{
+    if(downPos&&Math.hypot(e.clientX-downPos.x,e.clientY-downPos.y)>10)return;
+    closeFn();
+  });
 
   // Right carved-wood portrait + scroll nameplate panel
   const portraitPane=el('div','sdv-portrait-pane');
