@@ -39,7 +39,7 @@ export class IntroScene extends Phaser.Scene {
       [150, 38, 0x4b8584], [188, 28, 0x89aa8a], [216, 18, 0xd8c38c],
       [234, 42, 0x1f566b], [276, 44, 0x18475a], [320, 40, 0x123747]
     ];
-    for (const [y, h, c] of bands) sky.fillStyle(c).fillRect(-120, y, 880, h);
+    for (const [y, h, c] of bands) sky.fillStyle(c).fillRect(-320, y, 1280, h);
     // Pixel sun on horizon (stepped rectangle halo, zero smooth circles)
     sky.fillStyle(0xf8de9c, 0.4).fillRect(284, 186, 72, 48).fillRect(298, 174, 44, 60);
     sky.fillStyle(0xfff3c8, 0.85).fillRect(306, 198, 28, 36).fillRect(312, 192, 16, 42);
@@ -111,13 +111,13 @@ export class IntroScene extends Phaser.Scene {
       [0, 44, 0x265466], [44, 44, 0x3b7680], [88, 46, 0x62998e],
       [134, 44, 0xa8be94], [178, 38, 0xe8cf97]
     ];
-    for (const [y, h, c] of sky2) bg2.fillStyle(c).fillRect(-120, y, 880, h);
-    // Ground & intercity highway (widescreen full-bleed)
-    bg2.fillStyle(0xccb994).fillRect(-120, 216, 440, 68);
-    bg2.fillStyle(0xa8b5ab).fillRect(320, 216, 440, 68);
-    bg2.fillStyle(0x536061).fillRect(-120, 284, 880, 46);
-    bg2.fillStyle(0x3a4745).fillRect(-120, 282, 880, 4).fillRect(-120, 328, 880, 32);
-    for (let x = -112; x < 760; x += 42) bg2.fillStyle(0xe8d9a8).fillRect(x, 305, 22, 3);
+    for (const [y, h, c] of sky2) bg2.fillStyle(c).fillRect(-320, y, 1280, h);
+    // Ground & intercity highway (ultra-wide full-bleed)
+    bg2.fillStyle(0xccb994).fillRect(-320, 216, 640, 68);
+    bg2.fillStyle(0xa8b5ab).fillRect(320, 216, 640, 68);
+    bg2.fillStyle(0x536061).fillRect(-320, 284, 1280, 46);
+    bg2.fillStyle(0x3a4745).fillRect(-320, 282, 1280, 4).fillRect(-320, 328, 1280, 32);
+    for (let x = -310; x < 960; x += 42) bg2.fillStyle(0xe8d9a8).fillRect(x, 305, 22, 3);
     // Vertical scenic divider milepost (~70km highway marker)
     bg2.fillStyle(0x33473e).fillRect(318, 216, 4, 66);
     this.act2.add(bg2);
@@ -300,7 +300,7 @@ export class IntroScene extends Phaser.Scene {
       this.seaFx.clear();
       const shift = Math.floor((time / 12) % 48);
       for (let y = 244; y < 344; y += 22) {
-        for (let x = -shift; x < 640; x += 56) {
+        for (let x = -320 - shift; x < 960; x += 56) {
           this.seaFx.fillStyle(0x88c8d4, 0.28).fillRect(x + ((y * 7) % 24), y, 14, 2);
         }
       }

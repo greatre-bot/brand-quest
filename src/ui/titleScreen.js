@@ -1,5 +1,6 @@
 import {el} from './panel.js';
 import {sound} from '../systems/audio.js';
+import {isWeChat, isIOS, isStandalonePwa} from '../systems/viewportFit.js';
 import compassIcon from '../../assets/pixel/ui/compass.png';
 import atlasIcon from '../../assets/pixel/ui/atlas.png';
 
@@ -27,7 +28,7 @@ export function mountTitleScreen(scene, savedSession) {
   badge.append(icon, el('span', '', '印度尼西亚 · 双城像素漫游'));
 
   const h1 = el('h1', '', '出海日志：BRAND QUEST');
-  const sub = el('p', 'title-sub', '飞往印度尼西亚爪哇岛，自由选择先去雅加达街角的蜜雪冰城，还是先逛西爪哇卡拉旺的三一产业园。在街头点单、车间配货与沿途交谈里，亲眼看看两个中国品牌在海外的真实日常。');
+  const sub = el('p', 'title-sub', '飞往印度尼西亚爪哇岛，亲身走过两条截然不同的出海路：在雅加达蜜雪街角看 B2C 如何靠符号与亲切感拉客，去卡拉旺三一产业园看 B2B 如何靠现场履约与确定性赢得信任。');
 
   const preview = el('div', 'title-preview');
   const mapImg = el('img', 'title-avatar'); mapImg.src = atlasIcon; mapImg.alt = '双城行程';
@@ -81,7 +82,18 @@ export function mountTitleScreen(scene, savedSession) {
   );
 
   const controls = el('div', 'title-keys', 'WASD / 方向键移动　Shift 加速　E 互动/骑电动车　R 下车　空格 鸣笛　Tab 手账　U 成就　M 班车　J 结局');
-  card.append(badge, h1, sub, preview, landscapeTip, actions, controls);
+  card.append(badge, h1, sub, preview, landscapeTip, actions);
+  if ((isWeChat() || isIOS()) && !isStandalonePwa()) {
+    const fsHint = el(
+      'div',
+      'title-fs-tip',
+      isWeChat()
+        ? '提示：微信内点右上「···」→「在默认浏览器打开」视野更大'
+        : '全屏提示：Safari 点地址栏「隐藏工具栏」，或「分享 → 添加到主屏幕」真全屏'
+    );
+    card.append(fsHint);
+  }
+  card.append(controls);
   root.append(card);
   viewport.append(root);
 

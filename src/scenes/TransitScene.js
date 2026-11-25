@@ -44,7 +44,7 @@ export class TransitScene extends Phaser.Scene {
       [0, 42, 0x1e4a59], [42, 42, 0x316b78], [84, 42, 0x56908c],
       [126, 40, 0x91b492], [166, 36, 0xdec78e], [202, 26, 0xf2d99d]
     ];
-    for (const [y, h, c] of bands) sky.fillStyle(c).fillRect(-120, y, 880, h);
+    for (const [y, h, c] of bands) sky.fillStyle(c).fillRect(-320, y, 1280, h);
     // Stepped pixel sun
     const sunX = this.toKarawang ? 496 : 144;
     sky.fillStyle(0xf8de9c, 0.36).fillRect(sunX - 34, 152, 68, 44).fillRect(sunX - 22, 142, 44, 54);
@@ -63,24 +63,24 @@ export class TransitScene extends Phaser.Scene {
     // 3. Distant West Java volcanic ridge & lush hills (parallax layer)
     this.hills = this.add.graphics();
 
-    // 4. Highway & grassy verge (full-bleed widescreen!)
+    // 4. Highway & grassy verge (full-bleed ultra-wide!)
     const road = this.add.graphics();
-    road.fillStyle(0x7ca068).fillRect(-120, 224, 880, 22);
-    road.fillStyle(0x5d8252).fillRect(-120, 224, 880, 4);
+    road.fillStyle(0x7ca068).fillRect(-320, 224, 1280, 22);
+    road.fillStyle(0x5d8252).fillRect(-320, 224, 1280, 4);
     // Steel guardrail posts & rail
-    road.fillStyle(0x3a4745).fillRect(-120, 244, 880, 6);
-    road.fillStyle(0xc6d0cb).fillRect(-120, 245, 880, 2);
+    road.fillStyle(0x3a4745).fillRect(-320, 244, 1280, 6);
+    road.fillStyle(0xc6d0cb).fillRect(-320, 245, 1280, 2);
     // Asphalt toll highway
-    road.fillStyle(0x4c585c).fillRect(-120, 250, 880, 66);
-    road.fillStyle(0x3d484b).fillRect(-120, 250, 880, 4).fillRect(-120, 312, 880, 4);
+    road.fillStyle(0x4c585c).fillRect(-320, 250, 1280, 66);
+    road.fillStyle(0x3d484b).fillRect(-320, 250, 1280, 4).fillRect(-320, 312, 1280, 4);
     // Southern shoulder & grass
-    road.fillStyle(0x637d53).fillRect(-120, 316, 880, 44);
+    road.fillStyle(0x637d53).fillRect(-320, 316, 1280, 44);
 
     // 5. Scrolling roadside palms, highway signs & dashed road markings
     this.roadFx = this.add.graphics();
     this.palms = [];
-    for (let i = 0; i < 6; i++) {
-      const px = 40 + i * 124;
+    for (let i = 0; i < 10; i++) {
+      const px = -260 + i * 124;
       const palm = this.add.image(px, 244, 'palm').setOrigin(0.5, 1).setScale(0.76);
       this.palms.push(palm);
     }
@@ -238,7 +238,7 @@ export class TransitScene extends Phaser.Scene {
     // Parallax West Java hills
     this.hills.clear();
     const hillShift = Math.floor((this.elapsed * 48) % 320) * this.dir;
-    for (let k = -1; k <= 3; k++) {
+    for (let k = -2; k <= 4; k++) {
       const bx = k * 320 - hillShift;
       this.hills.fillStyle(0x4c7863).fillRect(bx + 20, 198, 160, 28).fillRect(bx + 54, 184, 92, 16).fillRect(bx + 78, 174, 42, 12);
       this.hills.fillStyle(0x3f6956).fillRect(bx + 170, 204, 150, 22).fillRect(bx + 205, 192, 82, 14);
@@ -247,20 +247,20 @@ export class TransitScene extends Phaser.Scene {
     // Scroll palms & highway stripes fast
     for (const palm of this.palms) {
       palm.x -= this.dir * 220 * dt;
-      if (this.dir > 0 && palm.x < -60) palm.x += 744;
-      if (this.dir < 0 && palm.x > 700) palm.x -= 744;
+      if (this.dir > 0 && palm.x < -300) palm.x += 1240;
+      if (this.dir < 0 && palm.x > 940) palm.x -= 1240;
     }
 
     this.roadFx.clear();
     const dashShift = Math.floor((this.elapsed * 320) % 52) * this.dir;
     this.roadFx.fillStyle(0xf0de9e);
-    for (let x = -52; x < 700; x += 52) {
+    for (let x = -312; x < 960; x += 52) {
       this.roadFx.fillRect(x - dashShift, 282, 26, 4);
     }
     // Roadside mileposts & posts
     const postShift = Math.floor((this.elapsed * 220) % 96) * this.dir;
     this.roadFx.fillStyle(0x344240);
-    for (let x = -96; x < 740; x += 96) {
+    for (let x = -384; x < 960; x += 96) {
       this.roadFx.fillRect(x - postShift, 244, 4, 8);
     }
 

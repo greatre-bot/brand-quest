@@ -28,8 +28,10 @@ h1, h2, h3, h4, b, strong, small, button, kbd, input {
 html, body {
   margin: 0;
   width: 100%;
+  width: var(--app-w, 100%);
   height: 100%;
   height: 100dvh;
+  height: var(--app-h, 100dvh);
   overflow: hidden;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
@@ -66,9 +68,9 @@ canvas, img {
   box-shadow: 0 0 0 2px #2e463a;
 }
 body.wide-landscape #viewport {
-  width: min(100dvw, 231.111111dvh);
-  height: 100dvh;
-  max-width: 100dvw;
+  width: min(var(--app-w, 100dvw), calc(var(--app-h, 100dvh) * 3.466667));
+  height: var(--app-h, 100dvh);
+  max-width: var(--app-w, 100dvw);
   aspect-ratio: var(--vp-aspect, 16 / 9);
   border: 0;
   box-shadow: none;
@@ -884,4 +886,108 @@ body.touch-on[data-touch-mode="world"] #viewport #interaction {
     width: min(362px, 92%);
     max-height: 36dvh;
   }
+}
+
+/* ============================================================
+   ULTRA-SHORT LANDSCAPE (Real iPhone Safari Tab Bar / WeChat Bars: ~255-340px tall)
+   Compact HUD + Ergonomic 96px Pale-Yellow Pad so the street stays wide open!
+   ============================================================ */
+@media (orientation: landscape) and (max-height: 360px) {
+  #hud { --pad: 4px; }
+  .location-plaque {
+    padding: 3px 7px 3px 4px;
+    gap: 4px;
+    border-width: 2px;
+    box-shadow: inset 1px 1px 0 #fff7dc, inset -1px -1px 0 #cfa96e, 2px 2px 0 #16241d;
+  }
+  .location-plaque img { width: 18px; height: 18px; }
+  .location-plaque h1 { font-size: 12px; }
+  .system-tools { gap: 3px; }
+  .system-tools button {
+    min-height: 24px;
+    padding: 3px 6px;
+    font-size: 11px;
+    border-width: 2px;
+    box-shadow: inset 1px 1px 0 #3f6250, inset -1px -1px 0 #182921, 2px 2px 0 #0f1c16;
+  }
+  .system-tools button.icon-btn { min-width: 24px; padding: 3px 5px; }
+  .hud-icon { width: 13px; height: 13px; }
+
+  body.touch-on[data-touch-mode="world"] .quest-strip {
+    top: 4px;
+    padding: 3px 7px;
+    gap: 4px;
+    border-width: 2px;
+    max-width: min(44%, 290px);
+    box-shadow: inset 1px 1px 0 #fff7dc, inset -1px -1px 0 #cfa96e, 2px 2px 0 #16241d;
+  }
+  body.touch-on[data-touch-mode="world"] .quest-strip img { width: 14px; height: 14px; }
+  body.touch-on[data-touch-mode="world"] .quest-strip strong { font-size: 11px; }
+
+  body.touch-on[data-touch-mode="world"] .corner-badges {
+    top: 32px;
+    right: 4px;
+    gap: 3px;
+  }
+  .photo-count, .ach-count {
+    font-size: 11px;
+    padding: 2px 6px;
+    min-height: 22px;
+    border-width: 2px;
+  }
+  .photo-count img, .ach-count img { width: 13px; height: 13px; }
+
+  body.touch-on[data-touch-mode="world"] .hotbar {
+    bottom: 4px;
+    padding: 2px 4px;
+    gap: 4px;
+    border-width: 2px;
+    box-shadow: inset 1px 1px 0 #9f7044, inset -1px -1px 0 #4d3119, 2px 2px 0 #16241d;
+  }
+  body.touch-on[data-touch-mode="world"] .hotbar img { width: 16px; height: 16px; }
+  body.touch-on[data-touch-mode="world"] .hotbar button { min-width: 38px; padding: 2px 4px; }
+  body.touch-on[data-touch-mode="world"] .hotbar span { font-size: 10px; }
+  body.touch-on[data-touch-mode="world"] #viewport #interaction {
+    bottom: 44px;
+    font-size: 11px;
+    padding: 3px 8px;
+  }
+
+  .vpad-dpad {
+    width: 96px;
+    height: 96px;
+    left: max(8px, env(safe-area-inset-left));
+    bottom: max(5px, env(safe-area-inset-bottom));
+  }
+  .vpad-dir {
+    font-size: 13px;
+    border-width: 2px;
+    box-shadow:
+      inset 1px 1px 0 #fffce8,
+      inset -1px -1px 0 #e0c46c,
+      2px 2px 0 rgba(16, 28, 22, 0.50);
+  }
+  .vpad-actions {
+    right: max(8px, env(safe-area-inset-right));
+    bottom: max(5px, env(safe-area-inset-bottom));
+    gap: 5px;
+  }
+  .vpad-act-row { gap: 5px; }
+  .vpad-btn {
+    min-width: 44px;
+    min-height: 36px;
+    padding: 3px 7px;
+    border-width: 2px;
+    box-shadow:
+      inset 1px 1px 0 #fffce8,
+      inset -1px -1px 0 #e0c46c,
+      2px 2px 0 rgba(16, 28, 22, 0.52);
+  }
+  .vpad-btn .vpad-main { font-size: 12px; }
+  .vpad-btn .vpad-sub { font-size: 10px; }
+  .vpad-btn.primary {
+    min-width: 56px;
+    min-height: 46px;
+  }
+  .vpad-btn.primary .vpad-main { font-size: 14px; }
 }

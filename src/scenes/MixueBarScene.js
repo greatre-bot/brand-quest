@@ -542,11 +542,11 @@ export class MixueBarScene extends Phaser.Scene {
 
   drawStaticBackground() {
     const g = this.bgG;
-    // 1. Back shop cream tile wall (full-bleed widescreen -120..760)
-    g.fillStyle(0xf2e4c2).fillRect(-120, 26, 880, 152);
+    // 1. Back shop cream tile wall (full-bleed ultra-wide -320..960)
+    g.fillStyle(0xf2e4c2).fillRect(-320, 26, 1280, 152);
     g.fillStyle(0xe5d3aa);
-    for (let y = 36; y < 176; y += 16) g.fillRect(-120, y, 880, 1);
-    for (let x = -120; x < 760; x += 24) g.fillRect(x, 26, 1, 152);
+    for (let y = 36; y < 176; y += 16) g.fillRect(-320, y, 1280, 1);
+    for (let x = -320; x < 960; x += 24) g.fillRect(x, 26, 1, 152);
 
     // 2. Left & right storefront windows looking onto sunny Jakarta street
     const drawWindow = (x, y, w, h) => {
@@ -588,21 +588,21 @@ export class MixueBarScene extends Phaser.Scene {
       }
     }
 
-    // 3. Top Mixue Crimson Header Fascia backdrop (full-bleed widescreen)
-    g.fillStyle(0xa82924).fillRect(-120, 0, 880, 26);
-    g.fillStyle(0xc93c35).fillRect(-120, 0, 880, 4);
-    g.fillStyle(0x6e1814).fillRect(-120, 24, 880, 3);
+    // 3. Top Mixue Crimson Header Fascia backdrop (full-bleed ultra-wide)
+    g.fillStyle(0xa82924).fillRect(-320, 0, 1280, 26);
+    g.fillStyle(0xc93c35).fillRect(-320, 0, 1280, 4);
+    g.fillStyle(0x6e1814).fillRect(-320, 24, 1280, 3);
 
-    // 4. First-person Wooden Front Counter & Stainless Prep Workspace (full-bleed widescreen)
-    g.fillStyle(0x4a2f18).fillRect(-120, 176, 880, 4);
-    g.fillStyle(0xd4a46a).fillRect(-120, 180, 880, 12);
-    g.fillStyle(0xe8be82).fillRect(-120, 180, 880, 3);
-    g.fillStyle(0x634123).fillRect(-120, 192, 880, 3);
-    g.fillStyle(0xc59a63).fillRect(-120, 195, 880, 165);
+    // 4. First-person Wooden Front Counter & Stainless Prep Workspace (full-bleed ultra-wide)
+    g.fillStyle(0x4a2f18).fillRect(-320, 176, 1280, 4);
+    g.fillStyle(0xd4a46a).fillRect(-320, 180, 1280, 12);
+    g.fillStyle(0xe8be82).fillRect(-320, 180, 1280, 3);
+    g.fillStyle(0x634123).fillRect(-320, 192, 1280, 3);
+    g.fillStyle(0xc59a63).fillRect(-320, 195, 1280, 165);
     g.fillStyle(0xb58850);
-    for (let y = 208; y < 346; y += 16) g.fillRect(-120, y, 880, 2);
-    g.fillStyle(0x3a2515).fillRect(-120, 344, 880, 16);
-    g.fillStyle(0x5c3c22).fillRect(-120, 344, 880, 2);
+    for (let y = 208; y < 346; y += 16) g.fillRect(-320, y, 1280, 2);
+    g.fillStyle(0x3a2515).fillRect(-320, 344, 1280, 16);
+    g.fillStyle(0x5c3c22).fillRect(-320, 344, 1280, 2);
   }
 
   currentOrder() {

@@ -14,7 +14,10 @@ async function boot() {
   applyTouchBodyClass();
   const initView = computeViewMetrics();
   window.BRAND_QUEST_VIEW = initView;
+  document.documentElement.style.setProperty('--app-w', `${initView.vw}px`);
+  document.documentElement.style.setProperty('--app-h', `${initView.vh}px`);
   document.body.classList.toggle('wide-landscape', initView.wide);
+  document.body.classList.toggle('short-landscape', initView.vw > initView.vh && initView.vh <= 360);
   const vp = document.getElementById('viewport');
   if (vp && initView.wide) vp.style.setProperty('--vp-aspect', `${initView.w} / ${initView.h}`);
 
@@ -41,9 +44,18 @@ async function boot() {
   let resizeTimer = null;
   const onResize = () => {
     clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => syncGameViewport(game), 60);
+    resizeTimer = setTimeout(() => {
+      syncGameViewport(game);
+      applyTouchBodyClass();
+    }, 50);
+  };
+  const onOrientation = () => {
+    setTimeout(() => { syncGameViewport(game); applyTouchBodyClass(); }, 100);
+    setTimeout(() => { syncGameViewport(game); applyTouchBodyClass(); }, 320);
   };
   window.addEventListener('resize', onResize, {passive: true});
-  window.addEventListener('orientationchange', () => setTimeout(() => syncGameViewport(game), 120), {passive: true});
+  window.addEventListener('orientationchange', onOrientation, {passive: true});
+  window.visualViewport?.addEventListener('resize', onResize, {passive: true});
+  window.visualViewport?.addEventListener('scroll', onResize, {passive: true});
 }
 boot();

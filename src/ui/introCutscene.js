@@ -78,14 +78,14 @@ export function playOpeningCutscene(scene, onComplete) {
     const box = el('div', 'sdv-dialog cine-dialog');
 
     const textPane = el('div', 'sdv-text-pane');
+    textPane.append(el('div', 'sdv-meta', isKarawang ? '第一站 · 卡拉旺三一产业园' : '第一站 · 雅加达街区'));
+    const bodyWrap = el('div', 'sdv-lines');
     if (isKarawang) {
-      textPane.append(
-        el('div', 'sdv-meta', '第一站 · 卡拉旺三一产业园'),
+      bodyWrap.append(
         el('p', '', '来到卡拉旺 KIM 产业园。北侧是主厂房和室外履带展机，东侧是服务车间——可以先找展机旁背斜挎包的万老师接下现场拍摄任务，再进车间操控龙门吊完成重型备件卸货；逛完随时按 M 乘班车去雅加达蜜雪街区。')
       );
     } else {
-      textPane.append(
-        el('div', 'sdv-meta', '第一站 · 雅加达街区'),
+      bodyWrap.append(
         el('p', '', '来到雅加达老城街角，对面红底白字的蜜雪门店正值午高峰。可以先和街坊、骑手聊聊天，再进店体验当一回蜜雪店员、按顾客订单调配套餐；逛完后按 M 乘班车去西爪哇卡拉旺三一产业园。')
       );
     }
@@ -123,7 +123,8 @@ export function playOpeningCutscene(scene, onComplete) {
       item.append(el('kbd', '', k), el('span', '', desc));
       grid.append(item);
     }
-    textPane.append(grid);
+    bodyWrap.append(grid);
+    textPane.append(bodyWrap);
 
     const row = el('div', 'sdv-actions');
     const goBtn = el('button', 'sdv-next', '开始逛逛 [Enter] ▸');
@@ -150,9 +151,8 @@ export function playOpeningCutscene(scene, onComplete) {
     dialogMount.append(box);
   }
 
-  const viewW = scene.scale?.width || 640;
-  const targetScrollX = Math.max(0, Math.min(scene.world.mapW - viewW, endPos.x - viewW / 2));
-  const targetScrollY = Math.max(0, Math.min(scene.world.mapH - 360, endPos.y - 180));
+  const targetScrollX = cam.clampX(endPos.x - cam.width / 2);
+  const targetScrollY = cam.clampY(endPos.y - cam.height / 2);
   scene.tweens.add({
     targets: cam,
     scrollX: targetScrollX,

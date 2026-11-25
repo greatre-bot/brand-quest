@@ -75,9 +75,24 @@ export class WorldScene extends Phaser.Scene{
     const fitCameraBounds=()=>{
       const vw=getViewMetrics(this).w;
       if(this.world.mapW>=vw){
+        camera.setZoom(1);
         camera.setBounds(0,0,this.world.mapW,this.world.mapH);
+      }else if(this.world.mode!=='interior'){
+        const zoom=Math.min(1.6,vw/this.world.mapW);
+        camera.setZoom(zoom);
+        const visW=vw/zoom;
+        if(visW>this.world.mapW+1){
+          const pad=Math.ceil((visW-this.world.mapW)/2);
+          camera.setBackgroundColor('#14241c');
+          camera.setBounds(-pad,0,this.world.mapW+pad*2,this.world.mapH);
+        }else{
+          camera.setBounds(0,0,this.world.mapW,this.world.mapH);
+        }
       }else{
-        const pad=Math.ceil((vw-this.world.mapW)/2);
+        const zoom=Math.min(1.22,vw/this.world.mapW);
+        camera.setZoom(zoom);
+        const visW=vw/zoom;
+        const pad=Math.max(0,Math.ceil((visW-this.world.mapW)/2));
         camera.setBackgroundColor(this.worldId==='mixue_shop'?'#2b1e16':'#1c2529');
         camera.setBounds(-pad,0,this.world.mapW+pad*2,this.world.mapH);
       }
@@ -371,8 +386,11 @@ export class WorldScene extends Phaser.Scene{
     photo.width=200;photo.height=114;
     const frame=n.photoFrame||[n.x-100,n.y-100,200,114];
     const [left,top,w,h]=frame;
-    const x=Phaser.Math.Clamp(left-camera.scrollX,0,this.scale.width-w),y=Phaser.Math.Clamp(top-camera.scrollY,0,this.scale.height-h);
-    photo.getContext('2d').drawImage(canvas,Math.round(x),Math.round(y),w,h,0,0,200,114);
+    const z=camera.zoom||1,wv=camera.worldView;
+    const sw=Math.min(canvas.width,Math.round(w*z)),sh=Math.min(canvas.height,Math.round(h*z));
+    const sx=Phaser.Math.Clamp(Math.round((left-wv.x)*z),0,Math.max(0,canvas.width-sw));
+    const sy=Phaser.Math.Clamp(Math.round((top-wv.y)*z),0,Math.max(0,canvas.height-sh));
+    photo.getContext('2d').drawImage(canvas,sx,sy,sw,sh,0,0,200,114);
     this.session.photo(n.key,photo.toDataURL('image/jpeg',.75));this.record('为万老师拍下 · '+EVIDENCE_LABELS[n.key]);
     const badge=this.evidenceBadges.get(n.key);
     if(badge){badge.setText('☑').setBackgroundColor('#5c7c57');}
