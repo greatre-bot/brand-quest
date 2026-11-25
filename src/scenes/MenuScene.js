@@ -5,6 +5,7 @@ import {WORLDS} from '../data/worlds.js';
 import {mountTitleScreen} from '../ui/titleScreen.js';
 import {sound} from '../systems/audio.js';
 import {setTouchSceneMode} from '../systems/touchControls.js';
+import {applyCenteredPanoramaCamera} from '../systems/viewportFit.js';
 
 export class MenuScene extends Phaser.Scene {
   constructor() { super('MenuScene'); }
@@ -22,11 +23,13 @@ export class MenuScene extends Phaser.Scene {
       return;
     }
 
-    // Animated 640x360 pixel twin-city panorama behind the title card
+    // Animated widescreen pixel twin-city panorama behind the title card
     this.cameras.main.setBackgroundColor('#1a3330');
+    applyCenteredPanoramaCamera(this);
+    this.events.on('bq-resize', () => applyCenteredPanoramaCamera(this));
     const g = this.add.graphics();
     const sky = [0x1b3738, 0x264c4a, 0x38665d, 0x5c856d, 0x99a97c, 0xd8bd8b];
-    sky.forEach((c, i) => g.fillStyle(c).fillRect(0, i * 40, 640, 42));
+    sky.forEach((c, i) => g.fillStyle(c).fillRect(-120, i * 40, 880, 42));
     // Stepped pixel sunlit horizon glow (zero anti-aliased circles)
     const sunBand=(cx,cy,r,col,a)=>{
       g.fillStyle(col,a);
@@ -37,8 +40,11 @@ export class MenuScene extends Phaser.Scene {
     sunBand(320,210,84,0xf5d697,0.38);
     sunBand(320,210,44,0xffebba,0.55);
     // Ground silhouettes: left Jakarta shophouses + palms, right Karawang industrial hall + crane/excavator
-    g.fillStyle(0x223832).fillRect(0, 232, 640, 128);
-    g.fillStyle(0x2d483f).fillRect(0, 232, 640, 6);
+    g.fillStyle(0x223832).fillRect(-120, 232, 880, 128);
+    g.fillStyle(0x2d483f).fillRect(-120, 232, 880, 6);
+    // Extended side skyline wings for widescreen phones
+    g.fillStyle(0x253a35).fillRect(-110, 194, 72, 38).fillRect(-32, 186, 50, 46);
+    g.fillStyle(0x2b4042).fillRect(620, 184, 76, 48).fillRect(702, 196, 56, 36);
     // Left skyline: shophouses & Mixue red accent
     g.fillStyle(0x2a3f39).fillRect(24, 178, 68, 54).fillRect(102, 166, 92, 66).fillRect(204, 184, 62, 48);
     g.fillStyle(0xb84344).fillRect(114, 182, 68, 18);

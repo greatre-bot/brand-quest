@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import {el} from '../ui/panel.js';
 import {sound} from '../systems/audio.js';
 import {setTouchSceneMode} from '../systems/touchControls.js';
+import {applyCenteredPanoramaCamera} from '../systems/viewportFit.js';
 import mixueSignUrl from '../../assets/pixel/buildings/mixue-sign.png';
 import excavatorUrl from '../../assets/pixel/props/excavator.png';
 
@@ -25,18 +26,20 @@ export class IntroScene extends Phaser.Scene {
     const viewport = document.getElementById('viewport');
     viewport.classList.add('cutscene');
     setTouchSceneMode('none');
+    applyCenteredPanoramaCamera(this);
+    this.events.on('bq-resize', () => applyCenteredPanoramaCamera(this));
     sound.setWorld('intro');
 
     // --- ACT 1 LAYER: Full-screen pixel flight across ocean & clouds ---
     this.act1 = this.add.container(0, 0);
     const sky = this.add.graphics();
-    // Stepped tropical sky & sea horizon bands
+    // Stepped tropical sky & sea horizon bands (widescreen full-bleed)
     const bands = [
       [0, 56, 0x163340], [56, 48, 0x1e4756], [104, 46, 0x2c616d],
       [150, 38, 0x4b8584], [188, 28, 0x89aa8a], [216, 18, 0xd8c38c],
       [234, 42, 0x1f566b], [276, 44, 0x18475a], [320, 40, 0x123747]
     ];
-    for (const [y, h, c] of bands) sky.fillStyle(c).fillRect(0, y, 640, h);
+    for (const [y, h, c] of bands) sky.fillStyle(c).fillRect(-120, y, 880, h);
     // Pixel sun on horizon (stepped rectangle halo, zero smooth circles)
     sky.fillStyle(0xf8de9c, 0.4).fillRect(284, 186, 72, 48).fillRect(298, 174, 44, 60);
     sky.fillStyle(0xfff3c8, 0.85).fillRect(306, 198, 28, 36).fillRect(312, 192, 16, 42);
@@ -108,13 +111,13 @@ export class IntroScene extends Phaser.Scene {
       [0, 44, 0x265466], [44, 44, 0x3b7680], [88, 46, 0x62998e],
       [134, 44, 0xa8be94], [178, 38, 0xe8cf97]
     ];
-    for (const [y, h, c] of sky2) bg2.fillStyle(c).fillRect(0, y, 640, h);
-    // Ground & intercity highway
-    bg2.fillStyle(0xccb994).fillRect(0, 216, 320, 68);
-    bg2.fillStyle(0xa8b5ab).fillRect(320, 216, 320, 68);
-    bg2.fillStyle(0x536061).fillRect(0, 284, 640, 46);
-    bg2.fillStyle(0x3a4745).fillRect(0, 282, 640, 4).fillRect(0, 328, 640, 32);
-    for (let x = 14; x < 640; x += 42) bg2.fillStyle(0xe8d9a8).fillRect(x, 305, 22, 3);
+    for (const [y, h, c] of sky2) bg2.fillStyle(c).fillRect(-120, y, 880, h);
+    // Ground & intercity highway (widescreen full-bleed)
+    bg2.fillStyle(0xccb994).fillRect(-120, 216, 440, 68);
+    bg2.fillStyle(0xa8b5ab).fillRect(320, 216, 440, 68);
+    bg2.fillStyle(0x536061).fillRect(-120, 284, 880, 46);
+    bg2.fillStyle(0x3a4745).fillRect(-120, 282, 880, 4).fillRect(-120, 328, 880, 32);
+    for (let x = -112; x < 760; x += 42) bg2.fillStyle(0xe8d9a8).fillRect(x, 305, 22, 3);
     // Vertical scenic divider milepost (~70km highway marker)
     bg2.fillStyle(0x33473e).fillRect(318, 216, 4, 66);
     this.act2.add(bg2);

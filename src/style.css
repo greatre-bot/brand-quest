@@ -2790,22 +2790,18 @@ body.touch-on .title-landscape-tip {
   flex-wrap: wrap;
   margin-top: 4px;
 }
-@media (max-width: 720px) {
-  .ach-grid { grid-template-columns: 1fr; }
-}
-
 /* ============================================================
-   MOBILE RESPONSIVE ADAPTATION — Minigames, Title, Intro & Panels
+   MOBILE RESPONSIVE ADAPTATION — Compact Popups, Achievements & Minigames
    ============================================================ */
 /* Pale-Yellow Crane Unload Touch Controls when touch mode is active */
 body.touch-on .crane-btn {
   background: #fff4bc;
   color: #4a3110;
-  border: 3px solid #6b4e22;
+  border: 2px solid #6b4e22;
   box-shadow: inset 2px 2px 0 #fffce8, inset -2px -2px 0 #e0c46c, 2px 2px 0 #3d2712;
-  min-height: 44px;
-  padding: 8px 10px;
-  font-size: 13px;
+  min-height: 34px;
+  padding: 5px 8px;
+  font-size: 12px;
 }
 body.touch-on .crane-btn.primary {
   background: #ffe885;
@@ -2818,8 +2814,279 @@ body.touch-on .crane-btn:active:not(:disabled) {
   transform: translate(1px, 1px);
 }
 
-/* Compact Mixue Bar HUD & Speech Bubble on Landscape & Portrait Phone Screens */
+/* Compact ALL Mobile Popups, Dialogs, Achievement Toast & Panels */
 @media (max-width: 960px), (max-height: 520px) {
+  /* 1. Ultra-slim Achievement Unlock Ribbon (tiny footprint, never blocks street!) */
+  #ach-toast {
+    top: 66px;
+    right: 6px;
+    width: auto;
+    max-width: min(176px, 44%);
+    gap: 6px;
+    padding: 4px 8px;
+    border-width: 2px;
+    outline-width: 2px;
+    box-shadow:
+      inset 1px 1px 0 #3f6350,
+      inset -1px -1px 0 #16261e,
+      2px 2px 0 #0c1712;
+  }
+  .ach-toast-icon {
+    width: 16px;
+    height: 16px;
+  }
+  .ach-toast-body small {
+    font-size: 10px;
+    line-height: 1.1;
+    letter-spacing: 0;
+  }
+  .ach-toast-body strong {
+    font-size: 12px;
+    line-height: 1.15;
+    margin: 1px 0 0;
+    white-space: nowrap;
+  }
+  .ach-toast-body span {
+    display: none;
+  }
+
+  /* 2. Compact Floating Toast (clear of both top quest-strip and achievement ribbon) */
+  #viewport #toast,
+  #toast {
+    top: 36px;
+    font-size: 11px;
+    line-height: 1.25;
+    padding: 3px 8px;
+    max-width: min(260px, 58%);
+    white-space: normal;
+    text-align: center;
+    border-width: 2px;
+    box-shadow: 2px 2px 0 #122019;
+  }
+
+  /* 3. Compact Standard Modals (#sheet .dialog: Settings, Tasks, Journal, Map, Achievements, Crane) */
+  #sheet {
+    padding: 6px 8px;
+  }
+  .dialog {
+    width: min(410px, 84%);
+    max-height: 80dvh;
+    padding: 7px 10px;
+    border-width: 3px;
+    box-shadow:
+      inset 2px 2px 0 #fff8e2,
+      inset -2px -2px 0 #cfa96e,
+      4px 4px 0 #0e1914;
+  }
+  .dialog header {
+    padding-bottom: 4px;
+    margin-bottom: 5px;
+    gap: 6px;
+    border-bottom-width: 2px;
+  }
+  .dialog header img {
+    width: 18px;
+    height: 18px;
+  }
+  .dialog h2 {
+    font-size: 14px;
+  }
+  .dialog .exit {
+    padding: 2px 6px;
+    font-size: 11px;
+  }
+  .dialog p {
+    font-size: 11px;
+    line-height: 1.38;
+    margin: 3px 0;
+  }
+  .dialog small {
+    font-size: 10px;
+    line-height: 1.3;
+  }
+  .actions {
+    gap: 5px;
+    margin-top: 6px;
+  }
+  .actions button,
+  .dialog .confirm {
+    padding: 4px 8px;
+    font-size: 11px;
+    border-width: 2px;
+    box-shadow: inset 1px 1px 0 #558565, 2px 2px 0 #14241b;
+  }
+  .mission {
+    padding: 4px 0;
+  }
+  .mission h3 {
+    font-size: 12px;
+    margin: 2px 0;
+  }
+  .steps {
+    margin-top: 3px;
+    font-size: 11px;
+  }
+  .steps li {
+    line-height: 1.35;
+    gap: 5px;
+  }
+  .map-preview {
+    max-height: 64px;
+    width: auto;
+    max-width: 100%;
+    display: block;
+    margin: 0 auto 4px;
+  }
+  .evidence {
+    gap: 6px;
+    padding: 4px;
+  }
+  .evidence img {
+    width: 68px;
+    height: auto;
+  }
+  .details-credit {
+    margin-top: 6px;
+    padding: 4px 7px;
+    font-size: 10px;
+    line-height: 1.35;
+  }
+  .kbd-guide {
+    padding: 4px 6px;
+    font-size: 10px;
+    line-height: 1.35;
+  }
+
+  /* 4. Compact Achievement List Modal (compact 2-column badge grid, half the height!) */
+  .dialog.achievements {
+    width: min(450px, 86%);
+    max-height: 80dvh;
+  }
+  .ach-progress-wrap {
+    margin: 2px 0 6px;
+    gap: 3px;
+    font-size: 11px;
+  }
+  .ach-progress-bar {
+    height: 8px;
+    border-width: 2px;
+  }
+  .ach-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 5px;
+  }
+  .ach-card {
+    padding: 4px 6px;
+    border-width: 2px;
+  }
+  .ach-card-head {
+    gap: 4px;
+    margin-bottom: 2px;
+  }
+  .ach-card-icon {
+    width: 16px;
+    height: 16px;
+  }
+  .ach-card-head small {
+    font-size: 10px;
+  }
+  .ach-card-head strong {
+    font-size: 11px;
+    margin-top: 0;
+  }
+  .ach-card p {
+    font-size: 10px;
+    line-height: 1.25;
+  }
+
+  /* 5. Compact Stardew NPC Dialog & Welcome Card */
+  .sdv-dialog {
+    width: min(460px, 86%);
+    min-height: 0;
+    max-height: 40dvh;
+    grid-template-columns: minmax(0, 1fr) 82px;
+    padding: 4px;
+    gap: 5px;
+    border-width: 3px;
+    box-shadow: inset 2px 2px 0 #e69d52, inset -2px -2px 0 #7a3c14, 4px 4px 0 #101915;
+  }
+  .sdv-text-pane {
+    padding: 5px 8px 4px;
+    gap: 3px;
+    border-width: 2px;
+  }
+  .sdv-meta {
+    font-size: 10px;
+  }
+  .sdv-lines p,
+  .sdv-text-pane > p {
+    font-size: 11px;
+    line-height: 1.38;
+    margin: 0 0 3px;
+  }
+  .sdv-text-pane .sign-inspect {
+    max-height: 48px;
+  }
+  .sdv-portrait-pane {
+    padding: 4px;
+    gap: 3px;
+    border-width: 2px;
+  }
+  .sdv-portrait-frame {
+    width: 48px;
+    height: 48px;
+    border-width: 2px;
+    outline-width: 1px;
+  }
+  .sdv-pip {
+    display: none;
+  }
+  .sdv-nameplate {
+    font-size: 10px;
+    padding: 2px 3px;
+    border-width: 2px;
+  }
+  .sdv-nameplate::before,
+  .sdv-nameplate::after {
+    display: none;
+  }
+  .sdv-actions {
+    gap: 4px;
+    margin-top: 2px;
+  }
+  .sdv-actions .sdv-next,
+  .sdv-next {
+    padding: 3px 8px;
+    font-size: 11px;
+    border-width: 2px;
+  }
+  .sdv-actions .sdv-close-sq,
+  .sdv-close-sq {
+    width: 20px;
+    height: 20px;
+    font-size: 11px;
+    border-width: 2px;
+  }
+  .cine-dialog-mount {
+    bottom: 6px;
+    width: min(470px, 88%);
+  }
+  .tut-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 3px;
+    margin: 3px 0;
+  }
+  .tut-item {
+    padding: 2px 4px;
+    font-size: 10px;
+    border-width: 1px;
+  }
+  .tut-item kbd {
+    font-size: 10px;
+    padding: 0 3px;
+  }
+
+  /* 6. Compact Mixue Bar HUD, Speech Bubble & Tutorial Card */
   .mbar-topbar {
     padding: 0 6px;
   }
@@ -2885,79 +3152,149 @@ body.touch-on .crane-btn:active:not(:disabled) {
   .mbar-foot { font-size: 10px; gap: 8px; padding: 0 6px; }
   .mbar-skip-guide { font-size: 10px; padding: 1px 6px; }
   .mbar-tut-ring-tag { font-size: 10px; padding: 1px 5px; }
-  .mbar-tut-card { padding: 10px 14px 12px; }
-  .mbar-tut-head { padding-bottom: 5px; margin-bottom: 5px; }
-  .mbar-tut-head h3 { font-size: 16px; }
-  .mbar-tut-head img { width: 22px; height: 22px; }
-  .mbar-tut-sub { margin-bottom: 8px; font-size: 12px; }
-  .mbar-tut-grid { gap: 6px; margin-bottom: 10px; }
-  .mbar-tut-step { padding: 6px 8px; gap: 4px; }
-  .mbar-tut-icons img { width: 20px; height: 20px; }
-  .mbar-tut-primary { font-size: 14px; padding: 6px 14px; }
+  .mbar-tut-wrap { padding: 6px; }
+  .mbar-tut-card {
+    width: min(440px, 86%);
+    max-height: 82dvh;
+    padding: 7px 10px 8px;
+    border-width: 3px;
+  }
+  .mbar-tut-head { padding-bottom: 4px; margin-bottom: 4px; gap: 6px; }
+  .mbar-tut-head h3 { font-size: 14px; }
+  .mbar-tut-head img { width: 18px; height: 18px; }
+  .mbar-tut-sub { margin-bottom: 5px; font-size: 11px; line-height: 1.3; }
+  .mbar-tut-grid { gap: 4px; margin-bottom: 6px; }
+  .mbar-tut-step { padding: 4px 6px; gap: 2px; }
+  .mbar-tut-num { font-size: 10px; padding: 1px 4px; border-width: 1px; }
+  .mbar-tut-step-top strong { font-size: 11px; }
+  .mbar-tut-step-body { font-size: 10px; line-height: 1.28; gap: 5px; }
+  .mbar-tut-icons img { width: 16px; height: 16px; padding: 1px; }
+  .mbar-tut-actions { gap: 6px; }
+  .mbar-tut-primary { font-size: 12px; padding: 4px 11px; border-width: 2px; }
+  .mbar-tut-secondary { font-size: 11px; padding: 4px 9px; border-width: 2px; }
+  .mbar-finish-card {
+    max-width: min(330px, 82%);
+    padding: 10px 14px;
+    border-width: 3px;
+  }
+  .mbar-finish-card h3 { font-size: 14px; margin-bottom: 4px; }
+  .mbar-finish-card p { font-size: 11px; margin-bottom: 8px; }
+  .mbar-finish-btn { font-size: 12px; padding: 5px 12px; border-width: 2px; }
 
-  /* Compact Title / Choice / Crane on Short Landscape Phones */
+  /* 7. Compact Title, First-Stop Choice, Cutscenes, Crane & Ending on Phones */
   .title-card {
-    padding: 12px 16px;
-    gap: 8px;
-    max-height: 94dvh;
+    width: min(410px, 86%);
+    padding: 9px 12px;
+    gap: 5px;
+    border-width: 3px;
+    outline-width: 2px;
+    outline-offset: -5px;
+    max-height: 86dvh;
     overflow: auto;
   }
-  .title-card h1 { font-size: 22px; }
-  .title-sub { font-size: 12px; line-height: 1.45; }
-  .title-preview { padding: 6px 10px; }
+  .title-badge { font-size: 10px; padding: 2px 6px; }
+  .title-badge img { width: 15px; height: 15px; }
+  .title-card h1 { font-size: 18px; letter-spacing: 1px; }
+  .title-sub { font-size: 11px; line-height: 1.38; }
+  .title-preview { padding: 4px 8px; gap: 6px; }
+  .title-avatar { width: 24px; height: 24px; }
+  .title-preview strong { font-size: 11px; }
+  .title-preview small { font-size: 10px; }
   .title-landscape-tip {
-    padding: 5px 8px;
+    padding: 4px 7px;
+    font-size: 11px;
     border-width: 2px;
     box-shadow: inset 1px 1px 0 #fffce8, 2px 2px 0 #3f2814;
   }
+  .title-btn { padding: 5px 12px; font-size: 12px; border-width: 2px; }
   .title-keys { display: none; }
+
+  .intro-choice-wrap { padding: 6px; }
   .choice-panel {
-    padding: 12px 14px;
-    gap: 8px;
-    max-height: 94dvh;
+    width: min(470px, 88%);
+    padding: 8px 10px;
+    gap: 5px;
+    border-width: 3px;
+    outline-width: 2px;
+    outline-offset: -5px;
+    max-height: 86dvh;
     overflow: auto;
   }
-  .choice-head h2 { font-size: 18px; }
-  .choice-head p { font-size: 12px; }
-  .choice-thumb { height: 52px; }
-  .choice-card { padding: 9px; gap: 6px; }
-  .choice-body h3 { font-size: 16px; margin: 2px 0 4px; }
-  .choice-body p { font-size: 12px; line-height: 1.45; }
-  .choice-go { padding: 8px 10px; font-size: 13px; }
-  .cine-skip { top: 6px; right: 8px; padding: 4px 8px; border-width: 2px; font-size: 12px; }
-  .cine-caption { padding: 6px 12px; border-width: 2px; outline-width: 2px; }
-  .cine-caption strong { font-size: 14px; letter-spacing: 1px; }
-  .cine-caption small { font-size: 11px; margin-top: 2px; }
-  .transit-caption { min-width: min(320px, 90%); top: 10%; }
-  .crane-canvas { max-height: 44dvh; width: auto; max-width: 100%; margin: 0 auto; }
-  .crane-controls { margin-top: 6px; gap: 6px; }
+  .choice-head { padding-bottom: 4px; }
+  .choice-head h2 { font-size: 14px; margin: 2px 0; }
+  .choice-head p { font-size: 11px; }
+  .choice-grid { gap: 6px; }
+  .choice-card { padding: 6px 8px; gap: 4px; border-width: 2px; }
+  .choice-thumb { height: 32px; }
+  .choice-body h3 { font-size: 13px; margin: 2px 0; }
+  .choice-body p { font-size: 10px; line-height: 1.32; }
+  .choice-go { padding: 5px 8px; font-size: 11px; }
+
+  .cine-skip { top: 6px; right: 8px; padding: 3px 7px; border-width: 2px; font-size: 11px; }
+  .cine-caption { padding: 5px 10px; border-width: 2px; outline-width: 2px; }
+  .cine-caption strong { font-size: 13px; letter-spacing: 1px; }
+  .cine-caption small { font-size: 10px; margin-top: 2px; }
+  .transit-caption { min-width: min(290px, 86%); top: 10%; }
+
+  .dialog.unload { width: min(460px, 86%); max-height: 88dvh; padding: 6px 8px; }
+  .crane-hud { font-size: 10px; padding: 3px 5px; gap: 5px; }
+  .crane-canvas { max-height: 36dvh; width: auto; max-width: 100%; margin: 0 auto; }
+  .crane-controls { margin-top: 5px; gap: 5px; }
+  .crane-status { font-size: 10px; padding: 3px 6px; margin-top: 4px; }
   .dialog.unload .keys { display: none; }
-  .tut-grid { grid-template-columns: 1fr; gap: 4px; }
+
+  .ending-board { padding: 6px; }
+  .ending-shell { width: min(560px, 94%); padding: 7px 9px; gap: 5px; border-width: 3px; }
+  .ending-title-wrap img { width: 20px; height: 20px; }
+  .ending-title-wrap h2 { font-size: 14px; }
+  .ending-lead { font-size: 11px; padding: 4px 7px; line-height: 1.32; }
+  .end-status, .end-stat { font-size: 10px; padding: 2px 6px; }
 }
 
 @media (max-width: 720px) and (orientation: portrait) {
   .choice-grid {
     grid-template-columns: 1fr;
-    gap: 10px;
+    gap: 6px;
   }
   .choice-thumb {
-    height: 54px;
-    padding: 4px;
+    height: 36px;
+    padding: 3px;
   }
   .choice-thumb img {
-    max-height: 44px;
+    max-height: 30px;
   }
   .sdv-dialog {
-    grid-template-columns: minmax(0, 1fr) 114px;
-    min-height: 120px;
+    width: 92%;
+    max-height: 34dvh;
+    grid-template-columns: minmax(0, 1fr) 82px;
   }
   .sdv-portrait-frame {
-    width: 68px;
-    height: 68px;
+    width: 48px;
+    height: 48px;
   }
 }
 
 @media (max-width: 540px) {
+  #ach-toast {
+    top: 34px;
+    right: 6px;
+    max-width: 158px;
+  }
+  #viewport #toast,
+  #toast {
+    top: 34px;
+    max-width: 190px;
+  }
+  .dialog {
+    width: 90%;
+    max-height: 68dvh;
+  }
+  .dialog.achievements {
+    width: 92%;
+    max-height: 70dvh;
+  }
+  .tut-grid { grid-template-columns: 1fr; gap: 3px; }
+  .mbar-tut-card { width: 90%; max-height: 70dvh; }
   .mbar-tut-grid { grid-template-columns: 1fr; }
   .mbar-brand { display: none; }
   .mbar-vis-name,
@@ -2970,13 +3307,4 @@ body.touch-on .crane-btn:active:not(:disabled) {
   .mbar-vis-des-img { width: 22px; height: 22px; }
   .mbar-pin { transform: translate(-50%, -50%) scale(0.76); }
   .mbar-foot { display: none; }
-}
-@media (max-width: 920px), (max-height: 500px) {
-  #toast {
-    font-size: 12px;
-    padding: 4px 10px;
-    max-width: 84%;
-    white-space: normal;
-    text-align: center;
-  }
 }

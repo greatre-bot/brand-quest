@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import {sound} from '../systems/audio.js';
-import {setTouchSceneMode} from '../systems/touchControls.js';
+import {setTouchSceneMode, isTouchEnabled} from '../systems/touchControls.js';
+import {getViewMetrics, applyCenteredPanoramaCamera} from '../systems/viewportFit.js';
 import {preloadPixels} from '../render/district.js';
 import {el} from '../ui/panel.js';
 import lemonUrl from '../../assets/pixel/ui/lemon.png';
@@ -102,7 +103,14 @@ function inside(pt, box) {
   return pt.x >= box.x && pt.x <= box.x + box.w && pt.y >= box.y && pt.y <= box.y + box.h;
 }
 
-const pctX = x => ((x / 640) * 100).toFixed(3) + '%';
+const pctX = x => {
+  const {w, padX} = getViewMetrics();
+  return (((x + padX) / w) * 100).toFixed(3) + '%';
+};
+const pctW = width => {
+  const {w} = getViewMetrics();
+  return ((width / w) * 100).toFixed(3) + '%';
+};
 const pctY = y => ((y / 360) * 100).toFixed(3) + '%';
 
 export class MixueBarScene extends Phaser.Scene {
@@ -129,6 +137,12 @@ export class MixueBarScene extends Phaser.Scene {
     viewport?.classList.add('cutscene');
     sound.setWorld('mixue_bar', {restart: true});
     setTouchSceneMode('mixue_bar', this);
+    applyCenteredPanoramaCamera(this);
+    this.events.on('bq-resize', () => {
+      applyCenteredPanoramaCamera(this);
+      this.layoutHud();
+      this.syncOrderHud();
+    });
 
     this.state = {
       orderIdx: 0,
@@ -223,9 +237,10 @@ export class MixueBarScene extends Phaser.Scene {
     root.id = 'mixue-bar-hud';
 
     // 1. Top Crimson Header Bar
+    const touch = isTouchEnabled();
     const topBar = el('div', 'mbar-topbar');
     const leftBtns = el('div', 'mbar-left-btns');
-    const exitBtn = el('button', 'mbar-exit', 'ESC 离开');
+    const exitBtn = el('button', 'mbar-exit', touch ? '离开' : 'ESC 离开');
     exitBtn.type = 'button';
     exitBtn.addEventListener('click', () => { sound.close(); this.exitToShop(false); });
     const tutBtn = el('button', 'mbar-tut-btn', '? 教程');
@@ -292,11 +307,13 @@ export class MixueBarScene extends Phaser.Scene {
     bubble.append(bubMain, reviewBanner, patTrack, urgeLine);
 
     // 3. Pin-sharp Station Tags positioned directly over the 640x360 pixel stations (pointer-events: none)
+    const pins = [];
     const pin = (cx, cy, text, cls = '') => {
       const node = el('span', 'mbar-pin ' + cls, text);
       node.style.left = pctX(cx);
       node.style.top = pctY(cy);
       root.append(node);
+      pins.push({node, cx, cy});
       return node;
     };
 
@@ -304,19 +321,19 @@ export class MixueBarScene extends Phaser.Scene {
     const d0 = pin(39, 129, '柠檬水', 'tank');
     const d1 = pin(95, 129, '奶茶', 'tank');
     const d2 = pin(151, 129, '果茶', 'tank');
-    const b0 = pin(88, 281, '1 柠檬', 'bin');
-    const b1 = pin(150, 281, '2 珍珠', 'bin');
-    const b2 = pin(212, 281, '3 草莓', 'bin');
-    const iceTxt = pin(118, 320, '↑ 加冰', 'ice');
-    const syrupTxt = pin(209, 320, 'T 正常糖', 'syrup');
-    const trashTxt = pin(31, 328, 'R重来', 'trash');
+    const b0 = pin(88, 281, touch ? '柠檬' : '1 柠檬', 'bin');
+    const b1 = pin(150, 281, touch ? '珍珠' : '2 珍珠', 'bin');
+    const b2 = pin(212, 281, touch ? '草莓' : '3 草莓', 'bin');
+    const iceTxt = pin(118, 320, touch ? '加冰' : '↑ 加冰', 'ice');
+    const syrupTxt = pin(209, 320, touch ? '正常糖' : 'T 正常糖', 'syrup');
+    const trashTxt = pin(31, 328, touch ? '重来' : 'R重来', 'trash');
     const cupStatus = pin(303, 338, '空杯', 'cup-tag');
-    const bellTxt = pin(422, 232, '上餐 [Enter]', 'bell');
+    const bellTxt = pin(422, 232, touch ? '拍铃上餐' : '上餐 [Enter]', 'bell');
     const machTitle = pin(558, 114, '冰淇淋机', 'mach-title');
-    const leverHint = pin(598, 198, '按住F', 'lever');
-    const base0 = pin(515, 299, '4 甜筒', 'base');
-    const base1 = pin(561, 299, '5 波霸', 'base');
-    const base2 = pin(607, 299, '6 芒果', 'base');
+    const leverHint = pin(598, 198, touch ? '按住挤' : '按住F', 'lever');
+    const base0 = pin(515, 299, touch ? '甜筒' : '4 甜筒', 'base');
+    const base1 = pin(561, 299, touch ? '波霸' : '5 波霸', 'base');
+    const base2 = pin(607, 299, touch ? '芒果' : '6 芒果', 'base');
 
     // 4. Live Interactive Beginner Spotlight Ring (highlights exact next station during Order 1 tutorial!)
     const tutRing = el('div', 'mbar-tut-ring');
@@ -327,7 +344,9 @@ export class MixueBarScene extends Phaser.Scene {
     const popLayer = el('div', 'mbar-pop-layer');
 
     const foot = el('div', 'mbar-foot');
-    const footText = el('span', 'mbar-foot-text', '点/拖原料入杯 · 按住龙头或空格注液至绿线 · 选甜品按住冰淇淋拉杆或F · 按铃或Enter上餐');
+    const footText = el('span', 'mbar-foot-text', touch
+      ? '点/拖原料入杯 · 按住龙头注液至绿线 · 选甜品按住冰淇淋拉杆 · 拍响黄铜铃上餐'
+      : '点/拖原料入杯 · 按住龙头或空格注液至绿线 · 选甜品按住冰淇淋拉杆或F · 按铃或Enter上餐');
     const skipGuideBtn = el('button', 'mbar-skip-guide', '跳过引导');
     skipGuideBtn.type = 'button';
     skipGuideBtn.hidden = true;
@@ -373,10 +392,18 @@ export class MixueBarScene extends Phaser.Scene {
 
     const tutGrid = el('div', 'mbar-tut-grid');
     tutGrid.append(
-      stepCard('1', '看图标放料、加冰、调糖', '点/拖 1柠檬 · 2珍珠 · 3草莓入杯；杯角有冰块就点 ↑加冰；杯下写少糖就按 T 切换。', [lemonUrl, iceUrl]),
-      stepCard('2', '按住对应龙头注液', '看气泡杯颜色（黄柠檬水 / 棕奶茶 / 红果茶），按住左侧龙头或空格，到绿色刻度线松手！', [bobaUrl, strawberryUrl]),
-      stepCard('3', '冰淇淋机挤甜品', '点选右下 4甜筒 / 5波霸 / 6芒果，按住红拉杆（或长按 F / 4-6）挤满即自动放上托盘。', [uiConeUrl, bobaSundaeUrl]),
-      stepCard('4', '端上托盘、拍铃出餐', '点击红色托盘把杯子加盖放好，再拍响黄铜上餐铃（或按 Enter）交给顾客！', [mangoSundaeUrl])
+      stepCard('1', '看图标放料、加冰、调糖', touch
+        ? '点/拖柠檬、珍珠、草莓入杯；杯角有冰块就点加冰；杯下写少糖就点糖浆瓶切换。'
+        : '点/拖 1柠檬 · 2珍珠 · 3草莓入杯；杯角有冰块就点 ↑加冰；杯下写少糖就按 T 切换。', [lemonUrl, iceUrl]),
+      stepCard('2', '按住对应龙头注液', touch
+        ? '看气泡杯颜色（黄柠檬水 / 棕奶茶 / 红果茶），按住左侧对应龙头，到绿色刻度线松手！'
+        : '看气泡杯颜色（黄柠檬水 / 棕奶茶 / 红果茶），按住左侧龙头或空格，到绿色刻度线松手！', [bobaUrl, strawberryUrl]),
+      stepCard('3', '冰淇淋机挤甜品', touch
+        ? '按住右下甜筒、波霸或芒果卡片，或点选后按住冰淇淋机红拉杆，挤满自动放上托盘。'
+        : '点选右下 4甜筒 / 5波霸 / 6芒果，按住红拉杆（或长按 F / 4-6）挤满即自动放上托盘。', [uiConeUrl, bobaSundaeUrl]),
+      stepCard('4', '端上托盘、拍铃出餐', touch
+        ? '点击红色托盘把杯子加盖放好，再拍响黄铜上餐铃交给顾客！'
+        : '点击红色托盘把杯子加盖放好，再拍响黄铜上餐铃（或按 Enter）交给顾客！', [mangoSundaeUrl])
     );
 
     const tutActions = el('div', 'mbar-tut-actions');
@@ -419,7 +446,7 @@ export class MixueBarScene extends Phaser.Scene {
     viewport.append(root);
 
     this.hud = {
-      root, orderNum, scoreTxt, timerTxt,
+      root, pins, orderNum, scoreTxt, timerTxt,
       bubble, cupLiq, cupIngImg, cupIceImg, drinkOkBadge, drinkName, sugarPill,
       desIcon, desOkBadge, desName, desTag, reviewBanner, patTrack, patFill, urgeLine,
       custPlaque, d0, d1, d2, b0, b1, b2, iceTxt, syrupTxt, trashTxt, cupStatus, bellTxt, machTitle, leverHint, base0, base1, base2,
@@ -427,6 +454,18 @@ export class MixueBarScene extends Phaser.Scene {
       tutWrap, btnGuide, btnSkip, btnResume,
       popLayer, finishWrap, finishTitle, finishSub, finishBtn
     };
+    this.layoutHud();
+  }
+
+  layoutHud() {
+    const h = this.hud;
+    if (!h) return;
+    h.bubble.style.left = pctX(311);
+    h.bubble.style.width = pctW(182);
+    for (const p of h.pins) {
+      p.node.style.left = pctX(p.cx);
+      p.node.style.top = pctY(p.cy);
+    }
   }
 
   openTutorial(isInitial = false) {
@@ -473,40 +512,41 @@ export class MixueBarScene extends Phaser.Scene {
   getTutorialCue() {
     const s = this.state;
     if (!s.tutGuide || s.tutOpen || s.orderIdx !== 0 || s.phase !== 'serving') return null;
+    const t = isTouchEnabled();
     if (!s.cupOnTray && s.cupLiquidType && s.cupLiquidType !== 'lemonade') {
-      return {step: 4, box: HIT.trash, badge: '▼ 换空杯', pos: 'top', text: '倒错茶底啦！点击左侧「R重来」或按 R 换个新空杯'};
+      return {step: 4, box: HIT.trash, badge: '▼ 换空杯', pos: 'top', text: t ? '倒错茶底啦！点击左侧「重来」换个新空杯' : '倒错茶底啦！点击左侧「R重来」或按 R 换个新空杯'};
     }
     if (!s.cupOnTray && s.cupTopping !== 'lemonade') {
-      return {step: 1, box: HIT.bin0, badge: '▼ 第 1 步', pos: 'top', text: '教学 1/7：点击或拖动「1 柠檬」入杯（对应气泡杯里的柠檬）'};
+      return {step: 1, box: HIT.bin0, badge: '▼ 第 1 步', pos: 'top', text: t ? '教学 1/7：点击或拖动「柠檬」入杯（对应气泡杯里的柠檬）' : '教学 1/7：点击或拖动「1 柠檬」入杯（对应气泡杯里的柠檬）'};
     }
     if (!s.cupOnTray && !s.cupIce) {
-      return {step: 2, box: HIT.iceWell, badge: '▼ 第 2 步', pos: 'top', text: '教学 2/7：点击或拖动「↑ 加冰」入杯（对应气泡右上角冰块）'};
+      return {step: 2, box: HIT.iceWell, badge: '▼ 第 2 步', pos: 'top', text: t ? '教学 2/7：点击或拖动「加冰」入杯（对应气泡右上角冰块）' : '教学 2/7：点击或拖动「↑ 加冰」入杯（对应气泡右上角冰块）'};
     }
     if (!s.cupOnTray && s.cupSugar !== 'less') {
-      return {step: 3, box: HIT.syrup, badge: '▼ 第 3 步', pos: 'top', text: '教学 3/7：点击糖浆瓶或按 T 切换为「少糖」（对应杯下少糖标签）'};
+      return {step: 3, box: HIT.syrup, badge: '▼ 第 3 步', pos: 'top', text: t ? '教学 3/7：点击糖浆瓶切换为「少糖」（对应杯下少糖标签）' : '教学 3/7：点击糖浆瓶或按 T 切换为「少糖」（对应杯下少糖标签）'};
     }
     if (!s.cupOnTray && !(s.cupLiquidType === 'lemonade' && s.cupFill >= 60 && s.cupFill <= 80)) {
-      return {step: 4, box: HIT.disp0, badge: '▼ 第 4 步', pos: 'top', text: '教学 4/7：按住「柠檬水」龙头或空格注液，到达杯身绿线松手'};
+      return {step: 4, box: HIT.disp0, badge: '▼ 第 4 步', pos: 'top', text: t ? '教学 4/7：按住「柠檬水」龙头注液，到达杯身绿线松手' : '教学 4/7：按住「柠檬水」龙头或空格注液，到达杯身绿线松手'};
     }
     if (!s.cupOnTray) {
       return {step: 5, box: HIT.tray, badge: '▲ 第 5 步', pos: 'bottom', text: '教学 5/7：点击红色托盘（或把杯子拖上托盘）给饮品加盖'};
     }
     if (s.trayDessert !== 'cone') {
       if (s.machineBase === 'cone') {
-        return {step: 6, box: HIT.machine, badge: '▼ 第 6 步', pos: 'top', text: '教学 6/7：按住冰淇淋机红拉杆或按 F 挤满原味甜筒'};
+        return {step: 6, box: HIT.machine, badge: '▼ 第 6 步', pos: 'top', text: t ? '教学 6/7：按住冰淇淋机红拉杆，把原味甜筒挤满' : '教学 6/7：按住冰淇淋机红拉杆或按 F 挤满原味甜筒'};
       }
-      return {step: 6, box: HIT.base0, badge: '▼ 第 6 步', pos: 'top', text: '教学 6/7：按住「4 甜筒」（或点选后再拉杆 F）挤出原味甜筒'};
+      return {step: 6, box: HIT.base0, badge: '▼ 第 6 步', pos: 'top', text: t ? '教学 6/7：按住「甜筒」卡片（或点选后按红拉杆）挤出原味甜筒' : '教学 6/7：按住「4 甜筒」（或点选后再拉杆 F）挤出原味甜筒'};
     }
-    return {step: 7, box: HIT.bell, badge: '▼ 最后一步', pos: 'top', text: '教学 7/7：套餐齐啦！拍响黄铜上餐铃或按 Enter 交给莎拉'};
+    return {step: 7, box: HIT.bell, badge: '▼ 最后一步', pos: 'top', text: t ? '教学 7/7：套餐齐啦！拍响黄铜上餐铃交给莎拉' : '教学 7/7：套餐齐啦！拍响黄铜上餐铃或按 Enter 交给莎拉'};
   }
 
   drawStaticBackground() {
     const g = this.bgG;
-    // 1. Back shop cream tile wall
-    g.fillStyle(0xf2e4c2).fillRect(0, 26, 640, 152);
+    // 1. Back shop cream tile wall (full-bleed widescreen -120..760)
+    g.fillStyle(0xf2e4c2).fillRect(-120, 26, 880, 152);
     g.fillStyle(0xe5d3aa);
-    for (let y = 36; y < 176; y += 16) g.fillRect(0, y, 640, 1);
-    for (let x = 0; x < 640; x += 24) g.fillRect(x, 26, 1, 152);
+    for (let y = 36; y < 176; y += 16) g.fillRect(-120, y, 880, 1);
+    for (let x = -120; x < 760; x += 24) g.fillRect(x, 26, 1, 152);
 
     // 2. Left & right storefront windows looking onto sunny Jakarta street
     const drawWindow = (x, y, w, h) => {
@@ -548,21 +588,21 @@ export class MixueBarScene extends Phaser.Scene {
       }
     }
 
-    // 3. Top Mixue Crimson Header Fascia backdrop
-    g.fillStyle(0xa82924).fillRect(0, 0, 640, 26);
-    g.fillStyle(0xc93c35).fillRect(0, 0, 640, 4);
-    g.fillStyle(0x6e1814).fillRect(0, 24, 640, 3);
+    // 3. Top Mixue Crimson Header Fascia backdrop (full-bleed widescreen)
+    g.fillStyle(0xa82924).fillRect(-120, 0, 880, 26);
+    g.fillStyle(0xc93c35).fillRect(-120, 0, 880, 4);
+    g.fillStyle(0x6e1814).fillRect(-120, 24, 880, 3);
 
-    // 4. First-person Wooden Front Counter & Stainless Prep Workspace
-    g.fillStyle(0x4a2f18).fillRect(0, 176, 640, 4);
-    g.fillStyle(0xd4a46a).fillRect(0, 180, 640, 12);
-    g.fillStyle(0xe8be82).fillRect(0, 180, 640, 3);
-    g.fillStyle(0x634123).fillRect(0, 192, 640, 3);
-    g.fillStyle(0xc59a63).fillRect(0, 195, 640, 165);
+    // 4. First-person Wooden Front Counter & Stainless Prep Workspace (full-bleed widescreen)
+    g.fillStyle(0x4a2f18).fillRect(-120, 176, 880, 4);
+    g.fillStyle(0xd4a46a).fillRect(-120, 180, 880, 12);
+    g.fillStyle(0xe8be82).fillRect(-120, 180, 880, 3);
+    g.fillStyle(0x634123).fillRect(-120, 192, 880, 3);
+    g.fillStyle(0xc59a63).fillRect(-120, 195, 880, 165);
     g.fillStyle(0xb58850);
-    for (let y = 208; y < 346; y += 16) g.fillRect(0, y, 640, 2);
-    g.fillStyle(0x3a2515).fillRect(0, 344, 640, 16);
-    g.fillStyle(0x5c3c22).fillRect(0, 344, 640, 2);
+    for (let y = 208; y < 346; y += 16) g.fillRect(-120, y, 880, 2);
+    g.fillStyle(0x3a2515).fillRect(-120, 344, 880, 16);
+    g.fillStyle(0x5c3c22).fillRect(-120, 344, 880, 2);
   }
 
   currentOrder() {
@@ -654,7 +694,7 @@ export class MixueBarScene extends Phaser.Scene {
 
       h.drinkOkBadge.hidden = !drinkOk;
       h.desOkBadge.hidden = !desOk;
-      h.desTag.textContent = desOk ? '已上托盘' : s.machineBase === ord.dessert ? '按住拉杆[F]' : '冰淇淋机';
+      h.desTag.textContent = desOk ? '已上托盘' : s.machineBase === ord.dessert ? (isTouchEnabled() ? '按住拉杆挤冰' : '按住拉杆[F]') : '冰淇淋机';
       h.desTag.classList.toggle('done', desOk);
 
       if (s.phase === 'review') {
@@ -705,7 +745,7 @@ export class MixueBarScene extends Phaser.Scene {
       h.tutRing.hidden = false;
       h.tutRing.style.left = pctX(cue.box.x - 2);
       h.tutRing.style.top = pctY(cue.box.y - 2);
-      h.tutRing.style.width = pctX(cue.box.w + 4);
+      h.tutRing.style.width = pctW(cue.box.w + 4);
       h.tutRing.style.height = pctY(cue.box.h + 4);
       h.tutRing.classList.toggle('tag-bottom', cue.pos === 'bottom');
       h.tutRingTag.textContent = cue.badge;
@@ -717,7 +757,9 @@ export class MixueBarScene extends Phaser.Scene {
     } else {
       h.tutRing.hidden = true;
       h.foot.classList.remove('tut-active');
-      h.footText.textContent = '点/拖原料入杯 · 按住龙头或空格注液至绿线 · 选甜品按住冰淇淋拉杆或F · 按铃或Enter上餐';
+      h.footText.textContent = isTouchEnabled()
+        ? '点/拖原料入杯 · 按住龙头注液至绿线 · 选甜品按住冰淇淋拉杆 · 拍响黄铜铃上餐'
+        : '点/拖原料入杯 · 按住龙头或空格注液至绿线 · 选甜品按住冰淇淋拉杆或F · 按铃或Enter上餐';
       h.skipGuideBtn.hidden = true;
       const mNote = document.querySelector('.vpad-mixue-note');
       if (mNote) mNote.textContent = '可直接点按上方吧台，或用下方淡黄快捷按键调饮（横屏体验更佳）';
@@ -738,7 +780,7 @@ export class MixueBarScene extends Phaser.Scene {
     this.sprites.cupIng.setVisible(false);
     this.sprites.cupIce.setVisible(false);
     if (this.hud) {
-      this.hud.syrupTxt.textContent = 'T 正常糖';
+      this.hud.syrupTxt.textContent = isTouchEnabled() ? '正常糖' : 'T 正常糖';
       this.hud.syrupTxt.classList.remove('less');
     }
     if (!quiet) {
@@ -799,7 +841,9 @@ export class MixueBarScene extends Phaser.Scene {
     s.syrupPress = 0.22;
     sound.syrupPump();
     const isLess = s.cupSugar === 'less';
-    this.hud.syrupTxt.textContent = isLess ? 'T 少糖 ½' : 'T 正常糖';
+    this.hud.syrupTxt.textContent = isTouchEnabled()
+      ? (isLess ? '少糖 ½' : '正常糖')
+      : (isLess ? 'T 少糖 ½' : 'T 正常糖');
     this.hud.syrupTxt.classList.toggle('less', isLess);
     this.spawnParticles(196, 304, 0xffd66b, 6);
     this.addPopup(s.cupX, 234, isLess ? '少糖 ½' : '正常糖', isLess ? '#216e35' : '#8a551c');
@@ -981,14 +1025,14 @@ export class MixueBarScene extends Phaser.Scene {
       this.hud.finishTitle.textContent = '午高峰计时到！';
       this.hud.finishTitle.className = 'warn';
       this.hud.finishSub.textContent = `已完成 ${s.scores.length} / ${ORDERS.length} 单，点击下方再来一轮。`;
-      this.hud.finishBtn.textContent = '再来一轮 [Enter]';
+      this.hud.finishBtn.textContent = isTouchEnabled() ? '再来一轮' : '再来一轮 [Enter]';
     } else {
       sound.chime();
       const stars = avg >= 95 ? '★★★' : avg >= 75 ? '★★☆' : '★☆☆';
       this.hud.finishTitle.textContent = `午高峰收工！好评 ${avg}% ${stars}`;
       this.hud.finishTitle.className = 'ok';
       this.hud.finishSub.textContent = '3 位顾客套餐全部出餐完成，回到门店听听莉娜怎么说吧。';
-      this.hud.finishBtn.textContent = '回到门店 [Enter]';
+      this.hud.finishBtn.textContent = isTouchEnabled() ? '回到门店' : '回到门店 [Enter]';
     }
     this.hud.finishWrap.hidden = false;
   }
@@ -1046,7 +1090,7 @@ export class MixueBarScene extends Phaser.Scene {
 
   bindInputs() {
     this.input.on('pointerdown', pointer => {
-      const pt = {x: pointer.x, y: pointer.y};
+      const pt = {x: pointer.worldX, y: pointer.worldY};
       const s = this.state;
       sound.unlock();
 
@@ -1111,7 +1155,7 @@ export class MixueBarScene extends Phaser.Scene {
     });
 
     this.input.on('pointermove', pointer => {
-      const pt = {x: pointer.x, y: pointer.y};
+      const pt = {x: pointer.worldX, y: pointer.worldY};
       const s = this.state;
       s.hover = pt;
       if (s.drag) {
@@ -1125,7 +1169,7 @@ export class MixueBarScene extends Phaser.Scene {
     });
 
     const releasePointer = pointer => {
-      const pt = {x: pointer.x, y: pointer.y};
+      const pt = {x: pointer.worldX, y: pointer.worldY};
       const s = this.state;
       this.stopPour();
       this.stopSwirl();

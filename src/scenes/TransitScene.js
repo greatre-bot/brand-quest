@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 import {el} from '../ui/panel.js';
 import {sound} from '../systems/audio.js';
 import {setTouchSceneMode} from '../systems/touchControls.js';
+import {applyCenteredPanoramaCamera} from '../systems/viewportFit.js';
 
 /**
  * Full-screen 640x360 pixel intercity shuttle bus cutscene between
@@ -31,6 +32,8 @@ export class TransitScene extends Phaser.Scene {
     const viewport = document.getElementById('viewport');
     viewport.classList.add('cutscene');
     setTouchSceneMode('none');
+    applyCenteredPanoramaCamera(this);
+    this.events.on('bq-resize', () => applyCenteredPanoramaCamera(this));
     // Fade out previous scene's music cleanly & play realistic bus driving audio during the highway ride
     sound.fadeOutBgm(420);
     sound.startBusRide(this.duration);
@@ -41,7 +44,7 @@ export class TransitScene extends Phaser.Scene {
       [0, 42, 0x1e4a59], [42, 42, 0x316b78], [84, 42, 0x56908c],
       [126, 40, 0x91b492], [166, 36, 0xdec78e], [202, 26, 0xf2d99d]
     ];
-    for (const [y, h, c] of bands) sky.fillStyle(c).fillRect(0, y, 640, h);
+    for (const [y, h, c] of bands) sky.fillStyle(c).fillRect(-120, y, 880, h);
     // Stepped pixel sun
     const sunX = this.toKarawang ? 496 : 144;
     sky.fillStyle(0xf8de9c, 0.36).fillRect(sunX - 34, 152, 68, 44).fillRect(sunX - 22, 142, 44, 54);
@@ -60,18 +63,18 @@ export class TransitScene extends Phaser.Scene {
     // 3. Distant West Java volcanic ridge & lush hills (parallax layer)
     this.hills = this.add.graphics();
 
-    // 4. Highway & grassy verge
+    // 4. Highway & grassy verge (full-bleed widescreen!)
     const road = this.add.graphics();
-    road.fillStyle(0x7ca068).fillRect(0, 224, 640, 22);
-    road.fillStyle(0x5d8252).fillRect(0, 224, 640, 4);
+    road.fillStyle(0x7ca068).fillRect(-120, 224, 880, 22);
+    road.fillStyle(0x5d8252).fillRect(-120, 224, 880, 4);
     // Steel guardrail posts & rail
-    road.fillStyle(0x3a4745).fillRect(0, 244, 640, 6);
-    road.fillStyle(0xc6d0cb).fillRect(0, 245, 640, 2);
+    road.fillStyle(0x3a4745).fillRect(-120, 244, 880, 6);
+    road.fillStyle(0xc6d0cb).fillRect(-120, 245, 880, 2);
     // Asphalt toll highway
-    road.fillStyle(0x4c585c).fillRect(0, 250, 640, 66);
-    road.fillStyle(0x3d484b).fillRect(0, 250, 640, 4).fillRect(0, 312, 640, 4);
+    road.fillStyle(0x4c585c).fillRect(-120, 250, 880, 66);
+    road.fillStyle(0x3d484b).fillRect(-120, 250, 880, 4).fillRect(-120, 312, 880, 4);
     // Southern shoulder & grass
-    road.fillStyle(0x637d53).fillRect(0, 316, 640, 44);
+    road.fillStyle(0x637d53).fillRect(-120, 316, 880, 44);
 
     // 5. Scrolling roadside palms, highway signs & dashed road markings
     this.roadFx = this.add.graphics();

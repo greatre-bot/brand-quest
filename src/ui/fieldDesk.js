@@ -5,6 +5,7 @@ import {EVIDENCE_LABELS,WAN_PHOTO_KEYS} from '../data/content.js';
 import {BRAND_FACTS} from '../data/facts.js';
 import {WORLDS} from '../data/worlds.js';
 import {sound} from '../systems/audio.js';
+import {adaptTouchText} from '../systems/touchControls.js';
 import {syncAchievementHud,unlockedAchievements,ACHIEVEMENTS} from '../systems/achievements.js';
 import atlasIcon from '../../assets/pixel/ui/atlas.png';
 
@@ -58,7 +59,7 @@ export function refreshDesk(scene){
     karawang:!s.has('field_start')?'去展机旁找万老师聊聊 [E]，接下现场拍摄任务':!s.has('sany_service')?'沿路按 F 拍下厂房与展机，再进东侧服务车间':!s.has('field_pair')?(wanCount>=3?'三张现场照已拍齐，找展机旁的万老师交片 [E]':'按 F 补齐万老师要的三张园区现场照'):(s.has('mixue_order')?'两站都逛完啦，按 J 进入终章结局':'去西南候车牌搭车前往雅加达（或按 M）'),
     sany_workshop:s.has('sany_service')&&(!s.has('field_start')||s.photos.includes('sany_service_record'))?(s.done?'可从南侧回园区找万老师，或按 J 进入终章结局':'从南侧离开车间，搭车前往雅加达'):serviceHint(s)
   };
-  byId('objective').textContent=s.done&&(!s.has('field_start')||s.has('field_pair'))?'按 J 进入旅程结局与策略选择':s.guide!==false?goals[scene.worldId]:'自由逛逛 · 按 Tab 翻开旅行手账';
+  byId('objective').textContent=adaptTouchText(s.done&&(!s.has('field_start')||s.has('field_pair'))?'按 J 进入旅程结局与策略选择':s.guide!==false?goals[scene.worldId]:'自由逛逛 · 按 Tab 翻开旅行手账');
 }
 export function missionContent(scene){
   const s=scene.session,city=['jakarta','mixue_shop'].includes(scene.worldId);

@@ -1,6 +1,6 @@
 import {el} from './panel.js';
 import {sound} from '../systems/audio.js';
-import {syncTouchHud} from '../systems/touchControls.js';
+import {syncTouchHud, isTouchEnabled} from '../systems/touchControls.js';
 import {WAN_PHOTO_KEYS} from '../data/content.js';
 import playerPortrait from '../../assets/pixel/ui/portrait-player.png';
 import compassIcon from '../../assets/pixel/ui/compass.png';
@@ -90,19 +90,33 @@ export function playOpeningCutscene(scene, onComplete) {
       );
     }
 
-    const keys = isKarawang
-      ? [
-          ['WASD / 方向键', '自由行走，Shift 加速'],
-          ['E 键互动', '对话、进车间、核对备件或骑车'],
-          ['F 键拍照', '找万老师借到相机后对 ◆ 拍照'],
-          ['Tab / U / M', '手账 · 旅途成就 · 城际班车']
-        ]
-      : [
-          ['WASD / 方向键', '自由行走，Shift 加速'],
-          ['E 键互动', '对话、进店、调饮或骑电动车'],
-          ['R / 空格键', '停放电动车 · 骑行时鸣笛'],
-          ['Tab / U / M', '手账 · 旅途成就 · 城际班车']
-        ];
+    const keys = isTouchEnabled()
+      ? (isKarawang
+        ? [
+            ['左下方向键', '滑动自由行走，按住加速'],
+            ['右下互动键', '对话、进车间、卸货或骑车'],
+            ['拍照按键', '找万老师借到相机后对 ◆ 拍照'],
+            ['快捷栏', '随时打开手账、成就与城际班车']
+          ]
+        : [
+            ['左下方向键', '滑动自由行走，按住加速'],
+            ['右下互动键', '对话、进店、调饮或骑电动车'],
+            ['鸣笛 / 下车', '骑上电动车后可鸣笛与停放'],
+            ['快捷栏', '随时打开手账、成就与城际班车']
+          ])
+      : (isKarawang
+        ? [
+            ['WASD / 方向键', '自由行走，Shift 加速'],
+            ['E 键互动', '对话、进车间、核对备件或骑车'],
+            ['F 键拍照', '找万老师借到相机后对 ◆ 拍照'],
+            ['Tab / U / M', '手账 · 旅途成就 · 城际班车']
+          ]
+        : [
+            ['WASD / 方向键', '自由行走，Shift 加速'],
+            ['E 键互动', '对话、进店、调饮或骑电动车'],
+            ['R / 空格键', '停放电动车 · 骑行时鸣笛'],
+            ['Tab / U / M', '手账 · 旅途成就 · 城际班车']
+          ]);
     const grid = el('div', 'tut-grid');
     for (const [k, desc] of keys) {
       const item = el('div', 'tut-item');
@@ -136,7 +150,8 @@ export function playOpeningCutscene(scene, onComplete) {
     dialogMount.append(box);
   }
 
-  const targetScrollX = Math.max(0, Math.min(scene.world.mapW - 640, endPos.x - 320));
+  const viewW = scene.scale?.width || 640;
+  const targetScrollX = Math.max(0, Math.min(scene.world.mapW - viewW, endPos.x - viewW / 2));
   const targetScrollY = Math.max(0, Math.min(scene.world.mapH - 360, endPos.y - 180));
   scene.tweens.add({
     targets: cam,

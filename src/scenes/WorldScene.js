@@ -13,7 +13,8 @@ import {openOrder,MIXUE_MENU_SECTIONS} from '../systems/order.js';
 import {sound} from '../systems/audio.js';
 import {initVehicles,vehicleBlocked,mountVehicle,dismountVehicle,honkScooter,updateRiding,updateVehicleParticles} from '../systems/vehicle.js';
 import {unlockAchievement,showAchievements,clearAchievementPopups} from '../systems/achievements.js';
-import {touchInput,setTouchSceneMode,syncTouchHud,resetTouchInput} from '../systems/touchControls.js';
+import {touchInput,setTouchSceneMode,syncTouchHud,resetTouchInput,isTouchEnabled,adaptTouchText} from '../systems/touchControls.js';
+import {getViewMetrics} from '../systems/viewportFit.js';
 
 const actorTexture={guide:'vendor',documentarian:'wan',service_tech:'engineer',customer:'office'};
 const distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
@@ -71,8 +72,20 @@ export class WorldScene extends Phaser.Scene{
     this.player=this.add.sprite(spawn.x,spawn.y,'player',0).setOrigin(.5,.94).setDepth(spawn.y);
     this.trolley=this.worldId==='sany_workshop'?this.add.image(spawn.x,spawn.y,'handcart').setOrigin(.5,1).setVisible(false):null;
     const camera=this.cameras.main;
-    camera.setBounds(0,0,this.world.mapW,this.world.mapH);camera.centerOn(spawn.x,spawn.y);
+    const fitCameraBounds=()=>{
+      const vw=getViewMetrics(this).w;
+      if(this.world.mapW>=vw){
+        camera.setBounds(0,0,this.world.mapW,this.world.mapH);
+      }else{
+        const pad=Math.ceil((vw-this.world.mapW)/2);
+        camera.setBackgroundColor(this.worldId==='mixue_shop'?'#2b1e16':'#1c2529');
+        camera.setBounds(-pad,0,this.world.mapW+pad*2,this.world.mapH);
+      }
+    };
+    fitCameraBounds();
+    camera.centerOn(spawn.x,spawn.y);
     camera.startFollow(this.player,true,.16,.16,0,16);camera.roundPixels=true;
+    this.events.on('bq-resize',fitCameraBounds);
     if(this.transit?.intercity){
       camera.fadeIn(180,22,39,31);
       this.showTransitBanner(this.transit.from,this.worldId);
@@ -226,15 +239,20 @@ export class WorldScene extends Phaser.Scene{
   }
   updateHint(){
     const n=this.nearest(),out=document.getElementById('interaction');
+    const touch=isTouchEnabled();
     let text='';
     if(this.riding){
-      text=n
-        ? (n.kind==='evidence'?'[ F ]　':'[ E ]　')+(n.label||n.name)+'　·　[ R ] 下车　·　[ 空格 ] 鸣笛'
-        : '[ R / E ] 停放电动车　·　[ 空格 ] 鸣笛　·　Shift 加速';
+      text=touch
+        ? (n?'靠近：'+(n.label||n.name)+'　·　右侧可「鸣笛」「下车」':'骑行中　·　右侧可「鸣笛」「下车」')
+        : (n
+          ? (n.kind==='evidence'?'[ F ]　':'[ E ]　')+(n.label||n.name)+'　·　[ R ] 下车　·　[ 空格 ] 鸣笛'
+          : '[ R / E ] 停放电动车　·　[ 空格 ] 鸣笛　·　Shift 加速');
     }else if(n){
-      text=(n.kind==='evidence'?'[ F ]　':'[ E ]　')+(n.label||n.name);
+      text=touch
+        ? ((n.kind==='evidence'?'可拍摄：':'靠近：')+(n.label||n.name))
+        : ((n.kind==='evidence'?'[ F ]　':'[ E ]　')+(n.label||n.name));
     }
-    const key=(this.riding?'1:':'0:')+text;
+    const key=(this.riding?'1:':'0:')+(touch?'T:':'K:')+text;
     if(this.near===n&&this.hintKey===key)return;
     this.near=n;this.hintKey=key;out.hidden=!text;
     if(text)out.textContent=text;
@@ -353,7 +371,7 @@ export class WorldScene extends Phaser.Scene{
     photo.width=200;photo.height=114;
     const frame=n.photoFrame||[n.x-100,n.y-100,200,114];
     const [left,top,w,h]=frame;
-    const x=Phaser.Math.Clamp(left-camera.scrollX,0,640-w),y=Phaser.Math.Clamp(top-camera.scrollY,0,360-h);
+    const x=Phaser.Math.Clamp(left-camera.scrollX,0,this.scale.width-w),y=Phaser.Math.Clamp(top-camera.scrollY,0,this.scale.height-h);
     photo.getContext('2d').drawImage(canvas,Math.round(x),Math.round(y),w,h,0,0,200,114);
     this.session.photo(n.key,photo.toDataURL('image/jpeg',.75));this.record('为万老师拍下 · '+EVIDENCE_LABELS[n.key]);
     const badge=this.evidenceBadges.get(n.key);
@@ -393,7 +411,7 @@ export class WorldScene extends Phaser.Scene{
   showMap(){showMap(this);}
   showAchievements(){showAchievements(this);}
   toast(message){
-    const out=document.getElementById('toast');out.textContent=message;out.hidden=false;
+    const out=document.getElementById('toast');out.textContent=adaptTouchText(message);out.hidden=false;
     this.toastTimer?.remove();this.toastTimer=this.time.delayedCall(1800,()=>out.hidden=true);
   }
   closeOverlay(){

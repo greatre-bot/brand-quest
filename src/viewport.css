@@ -58,12 +58,20 @@ canvas, img {
 }
 #viewport {
   width: min(100vw, 177.777778dvh);
-  aspect-ratio: 16 / 9;
+  aspect-ratio: var(--vp-aspect, 16 / 9);
   position: relative;
   overflow: hidden;
   background: #8e9b75;
   border: 4px solid #0d1813;
   box-shadow: 0 0 0 2px #2e463a;
+}
+body.wide-landscape #viewport {
+  width: min(100dvw, 231.111111dvh);
+  height: 100dvh;
+  max-width: 100dvw;
+  aspect-ratio: var(--vp-aspect, 16 / 9);
+  border: 0;
+  box-shadow: none;
 }
 #game, #game > canvas {
   display: block;
@@ -828,15 +836,23 @@ body.touch-on[data-touch-mode="world"] #viewport #interaction {
   }
   body.touch-on #title-screen > .title-card,
   body.touch-on .intro-choice-wrap > .choice-panel,
-  body.touch-on #ending-board > .ending-shell,
   body.touch-on #ending-epilogue > .epilogue-card,
   body.touch-on #mixue-bar-tutorial > .mbar-tut-card,
   body.touch-on .mbar-finish-wrap > .mbar-finish-card,
   body.touch-on #sheet:not(.sdv-sheet) > .dialog {
     margin: auto 0;
-    width: min(540px, 100%);
-    max-height: none;
-    overflow: visible;
+    width: min(352px, 90%);
+    max-height: 70dvh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-shrink: 0;
+  }
+  body.touch-on #ending-board > .ending-shell {
+    margin: auto 0;
+    width: min(366px, 94%);
+    max-height: 82dvh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     flex-shrink: 0;
   }
   body.touch-on .cine-dialog-mount:has(.cine-dialog) {
@@ -854,18 +870,18 @@ body.touch-on[data-touch-mode="world"] #viewport #interaction {
     align-items: center;
     justify-content: flex-end;
     overflow-y: auto;
-    padding: max(16px, env(safe-area-inset-top)) 10px max(22px, env(safe-area-inset-bottom));
+    padding: max(12px, env(safe-area-inset-top)) 10px max(18px, env(safe-area-inset-bottom));
   }
   body.touch-on .cine-dialog-mount .cine-dialog {
-    width: min(540px, 100%);
-    max-height: 78dvh;
+    width: min(362px, 92%);
+    max-height: 44dvh;
   }
   body.touch-on #sheet.sdv-sheet:not([hidden]) {
     justify-content: flex-end;
-    padding: max(16px, env(safe-area-inset-top)) 10px max(22px, env(safe-area-inset-bottom));
+    padding: max(12px, env(safe-area-inset-top)) 10px max(18px, env(safe-area-inset-bottom));
   }
   body.touch-on #sheet.sdv-sheet .sdv-dialog {
-    width: min(540px, 100%);
-    max-height: 78dvh;
+    width: min(362px, 92%);
+    max-height: 36dvh;
   }
 }

@@ -52,6 +52,33 @@ export function isTouchEnabled() {
   return isTouchDevice();
 }
 
+export function adaptTouchText(str) {
+  if (typeof str !== 'string' || !str || !isTouchEnabled()) return str;
+  let s = str;
+  s = s.replace(/Esc\s*×/g, '×');
+  s = s.replace(/（按\s*1\s*\/\s*2\s*\/\s*3\s*对比并生成结局）/g, '（点击下方方案对比并生成结局）');
+  s = s.replace(/按空格键鸣笛/g, '点「鸣笛」键鸣笛');
+  s = s.replace(/按「空格」/g, '点「下钩」');
+  s = s.replace(/按空格/g, '点「下钩」');
+  s = s.replace(/按\s*E\s*/g, '点「互动」');
+  s = s.replace(/按\s*F\s*/g, '点「拍照」');
+  s = s.replace(/按\s*M\s*/g, '点「班车」');
+  s = s.replace(/按\s*J\s*/g, '点「结局」');
+  s = s.replace(/按\s*U\s*/g, '点「成就」');
+  s = s.replace(/按\s*Tab\s*/g, '点「手账」');
+  s = s.replace(/按\s*Esc\s*/g, '点关闭');
+  s = s.replace(/按\s*R\s*/g, '点「重来」');
+  s = s.replace(/按\s*T\s*/g, '点糖浆瓶');
+  s = s.replace(/按\s*V\s*/g, '点静音键');
+  s = s.replace(/「拍照\s*F」/g, '「拍照」');
+  s = s.replace(/底部已解锁「拍照」/g, '右下已解锁「拍照」');
+  s = s.replace(/\s*·\s*\[[0-9A-Za-z/←→↑↓ ]+\]/g, '');
+  s = s.replace(/\s*\[(?:Enter|Esc|Tab|Shift|Space|E|F|R|M|J|U|V|G|T|1|2|3|4|5|6|A\s*\/\s*←|D\s*\/\s*→|空格)\]/gi, '');
+  s = s.replace(/WASD\s*\/\s*方向键/g, '左下方向键');
+  s = s.replace(/Shift\s*加速/g, '按住「加速」');
+  return s;
+}
+
 export function cycleTouchPref() {
   pref = pref === 'auto' ? 'on' : pref === 'on' ? 'off' : 'auto';
   try { localStorage.setItem(PREF_KEY, pref); } catch { /* ignore */ }
@@ -160,17 +187,17 @@ export function mountTouchPad() {
   const rowTop = el('div', 'vpad-act-row top');
   const rowBot = el('div', 'vpad-act-row bot');
 
-  const btnPhoto = makeBtn('vpad-photo', '拍照', 'F');
+  const btnPhoto = makeBtn('vpad-photo', '拍照');
   btnPhoto.hidden = true;
   const btnHorn = makeBtn('vpad-horn', '鸣笛', '嘀嘀');
   btnHorn.hidden = true;
   const btnDismount = makeBtn('vpad-dismount', '下车', '停车');
   btnDismount.hidden = true;
-  const btnEnd = makeBtn('vpad-ending', '结局', 'J');
+  const btnEnd = makeBtn('vpad-ending', '结局');
   btnEnd.hidden = true;
 
   const btnSprint = makeBtn('vpad-sprint', '加速', '按住');
-  const btnInteract = makeBtn('vpad-interact primary', '互动', 'E');
+  const btnInteract = makeBtn('vpad-interact primary', '互动');
 
   rowTop.append(btnPhoto, btnHorn, btnDismount, btnEnd);
   rowBot.append(btnSprint, btnInteract);
@@ -184,17 +211,17 @@ export function mountTouchPad() {
   mixueWrap.hidden = true;
   const mNote = el('div', 'vpad-mixue-note', '可直接点按上方吧台，或用下方淡黄快捷按键调饮（横屏体验更佳）');
   const mRow1 = el('div', 'vpad-mixue-row');
-  const mLemon = makeBtn('vpad-mx', '柠檬', '1');
-  const mBoba = makeBtn('vpad-mx', '珍珠', '2');
-  const mStraw = makeBtn('vpad-mx', '草莓', '3');
-  const mIce = makeBtn('vpad-mx', '加冰', '↑');
-  const mSugar = makeBtn('vpad-mx', '糖度', 'T');
+  const mLemon = makeBtn('vpad-mx', '柠檬', '加料');
+  const mBoba = makeBtn('vpad-mx', '珍珠', '加料');
+  const mStraw = makeBtn('vpad-mx', '草莓', '加料');
+  const mIce = makeBtn('vpad-mx', '加冰', '冰块');
+  const mSugar = makeBtn('vpad-mx', '糖度', '切换');
   mRow1.append(mLemon, mBoba, mStraw, mIce, mSugar);
 
   const mRow2 = el('div', 'vpad-mixue-row');
   const mPour = makeBtn('vpad-mx wide primary', '按住注液', '绿线松手');
   const mTray = makeBtn('vpad-mx', '放托盘', '加盖');
-  const mTrash = makeBtn('vpad-mx', '重来', 'R');
+  const mTrash = makeBtn('vpad-mx', '重来', '换杯');
   mRow2.append(mPour, mTray, mTrash);
 
   const mRow3 = el('div', 'vpad-mixue-row');
@@ -415,10 +442,8 @@ export function syncTouchHud(scene) {
 
   // Update contextual Interact button text & golden ready highlight
   const mainLabel = padDom.btnInteract.querySelector('.vpad-main');
-  const subLabel = padDom.btnInteract.querySelector('.vpad-sub');
   const word = actionWord(near, riding);
   if (mainLabel) mainLabel.textContent = word;
-  if (subLabel) subLabel.textContent = riding && !near ? 'R' : 'E';
   padDom.btnInteract.classList.toggle('ready', Boolean(near));
 
   // Contextual Photo / Riding / Ending buttons

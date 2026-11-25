@@ -3,21 +3,24 @@ import {WORLDS} from '../data/worlds.js';
 import {mountEndingBoard} from '../ui/endingBoard.js';
 import {sound} from '../systems/audio.js';
 import {setTouchSceneMode} from '../systems/touchControls.js';
+import {applyCenteredPanoramaCamera} from '../systems/viewportFit.js';
 
 export class EndingScene extends Phaser.Scene {
   constructor() { super('EndingScene'); }
   create() {
     this.cameras.main.setBackgroundColor('#162a27');
+    applyCenteredPanoramaCamera(this);
+    this.events.on('bq-resize', () => applyCenteredPanoramaCamera(this));
     this.epilogueActive = false;
 
-    // Full-screen 640x360 pixel sunset return-flight panorama (revealed during epilogue finale)
+    // Full-screen widescreen pixel sunset return-flight panorama (revealed during epilogue finale)
     const sky = this.add.graphics();
     const bands = [
       [0, 46, 0x1b2640], [46, 44, 0x353754], [90, 44, 0x6b475c],
       [134, 42, 0xb56454], [176, 36, 0xe3995b], [212, 24, 0xf6cf7c],
       [236, 44, 0x264359], [280, 44, 0x1d3548], [324, 36, 0x152736]
     ];
-    for (const [y, h, c] of bands) sky.fillStyle(c).fillRect(0, y, 640, h);
+    for (const [y, h, c] of bands) sky.fillStyle(c).fillRect(-120, y, 880, h);
     // Stepped sunset pixel sun
     sky.fillStyle(0xf9c86d, 0.45).fillRect(268, 178, 104, 58).fillRect(284, 166, 72, 70);
     sky.fillStyle(0xfff0b2, 0.9).fillRect(298, 192, 44, 44).fillRect(306, 184, 28, 52);
@@ -88,7 +91,7 @@ export class EndingScene extends Phaser.Scene {
       this.seaFx.clear();
       const shift = Math.floor((time / 18) % 52);
       for (let y = 246; y < 346; y += 20) {
-        for (let x = -shift; x < 640; x += 58) {
+        for (let x = -120 - shift; x < 760; x += 58) {
           this.seaFx.fillStyle(0xf6be74, 0.25).fillRect(x + ((y * 5) % 24), y, 16, 2);
         }
       }

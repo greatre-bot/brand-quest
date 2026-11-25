@@ -1,5 +1,6 @@
 import {openPanel, el, actions} from '../ui/panel.js';
 import {sound} from './audio.js';
+import {adaptTouchText} from './touchControls.js';
 import crateUrl from '../../assets/pixel/props/crate.png';
 
 const W = 580;
@@ -93,7 +94,7 @@ export function openUnloadGame(scene) {
     carryPill.textContent = state.carrying
       ? `吊运中：${state.carrying.id} ${state.carrying.label}箱`
       : '吊钩状态：空钩待命';
-    hookBtn.textContent = state.carrying ? '▼ 落钩放箱 [空格]' : '▼ 下钩抓取 [空格]';
+    hookBtn.textContent = adaptTouchText(state.carrying ? '▼ 落钩放箱 [空格]' : '▼ 下钩抓取 [空格]');
     box.dataset.unloaded = String(state.placedCount);
     box.dataset.carrying = state.carrying ? state.carrying.id : '';
     box.dataset.phase = state.phase;
@@ -241,13 +242,13 @@ export function openUnloadGame(scene) {
           state.carrying = hit;
           state.phase = 'raising';
           sound.craneLatch();
-          status.textContent = `已抓起 ${hit.id} ${hit.label}箱！平稳移至右侧「${hit.id}」编号货位后按空格落钩。`;
+          status.textContent = adaptTouchText(`已抓起 ${hit.id} ${hit.label}箱！平稳移至右侧「${hit.id}」编号货位后按空格落钩。`);
           addPopup(hit.x, hit.y - 22, `抓起 ${hit.id}`, '#1e5c48');
           syncHud();
         } else if (hy >= TRUCK_DECK_Y - 4 && hx <= 228) {
           state.phase = 'raising';
           sound.error();
-          status.textContent = '没抓到货箱，把吊钩对准货车上的 A1 / B2 / C1 木箱再按空格！';
+          status.textContent = adaptTouchText('没抓到货箱，把吊钩对准货车上的 A1 / B2 / C1 木箱再按空格！');
         } else if (hy >= FLOOR_Y - 6) {
           state.phase = 'raising';
           sound.error();
@@ -293,7 +294,7 @@ export function openUnloadGame(scene) {
           } else {
             state.phase = 'raising';
             sound.error();
-            status.textContent = `请对准右侧「${crate.id} ${crate.label}区」再按空格落钩！`;
+            status.textContent = adaptTouchText(`请对准右侧「${crate.id} ${crate.label}区」再按空格落钩！`);
             syncHud();
           }
         }

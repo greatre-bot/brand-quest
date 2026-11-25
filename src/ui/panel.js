@@ -14,7 +14,7 @@ import portraitOffice from '../../assets/pixel/ui/portrait-office.png';
 import portraitBoss from '../../assets/pixel/ui/portrait-boss.png';
 import portraitTech from '../../assets/pixel/ui/portrait-tech.png';
 import {sound} from '../systems/audio.js';
-import {syncTouchHud} from '../systems/touchControls.js';
+import {syncTouchHud, adaptTouchText} from '../systems/touchControls.js';
 
 export const PORTRAITS = {
   wan: portraitWan,
@@ -39,7 +39,7 @@ export const label=(scene,x,y,value,size=12,color='#263d37',extra={})=>scene.add
 export function el(tag,cls='',text='') {
   const node=document.createElement(tag);
   if(cls)node.className=cls;
-  if(text)node.textContent=text;
+  if(text)node.textContent=adaptTouchText(text);
   return node;
 }
 

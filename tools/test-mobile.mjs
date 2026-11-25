@@ -16,6 +16,24 @@ async function cdp(method, params = {}) {
   return b.call(method, params);
 }
 
+async function assertNoKeyboardHints(label) {
+  const hits = await b.read(`(()=>{
+    const rx=/(WASD|Shift|\\[Enter\\]|\\[Esc\\]|\\[ ?[EFRMJUVG1-6] ?\\]|Esc\\s*×|ESC\\s*离开|按\\s*[EFRMJUVGT]|按空格|空格键|按住F|[1-3]\\s*(?:柠檬|珍珠|草莓)|[4-6]\\s*(?:甜筒|波霸|芒果)|T\\s*(?:正常糖|少糖)|R重来)/i;
+    const found=[];
+    for(const el of document.querySelectorAll('body *')){
+      if(el.children.length>0)continue;
+      const st=getComputedStyle(el);
+      if(st.display==='none'||st.visibility==='hidden'||el.closest('[hidden]'))continue;
+      const r=el.getBoundingClientRect();
+      if(r.width===0&&r.height===0)continue;
+      const txt=(el.textContent||'').trim();
+      if(txt&&rx.test(txt))found.push(txt);
+    }
+    return found;
+  })()`);
+  assert.deepEqual(hits, [], `mobile ${mode} (${label}) must have zero keyboard hints, found: ${JSON.stringify(hits)}`);
+}
+
 async function goto(u) {
   await b.call('Page.navigate', {url: u});
   await b.until("document.readyState==='complete'", 8000);
@@ -62,6 +80,7 @@ try {
     assert.equal(titleVp.ov, 'visible', 'portrait #viewport overflow visible to prevent iOS fixed-modal clipping');
   }
   await wait(150);
+  await assertNoKeyboardHints('title');
   await b.shot(`mobile-${mode}-title`);
 
   // Start -> Intro -> Skip -> Choose Jakarta -> Skip opening welcome
@@ -98,9 +117,43 @@ try {
     const worldLayout = await b.read("(()=>{const t=document.getElementById('mobile-top-deck').getBoundingClientRect();const v=document.getElementById('viewport').getBoundingClientRect();const p=document.getElementById('mobile-pad').getBoundingClientRect();return {tBot:t.bottom,vTop:v.top,vBot:v.bottom,pTop:p.top};})()");
     assert.ok(worldLayout.vTop >= 120 && worldLayout.tBot <= worldLayout.vTop + 2 && worldLayout.vBot <= worldLayout.pTop + 2, `portrait world #viewport centered between top deck & pad (${JSON.stringify(worldLayout)})`);
   }
+  await assertNoKeyboardHints('world');
   await b.shot(`mobile-${mode}-world`);
 
+  // Verify NPC Dialog & Achievement Modal compact sizing on mobile!
+  await b.read(`(()=>{const s=${scene};s.showAchievements();return true;})()`);
+  await b.until("!!document.querySelector('.dialog.achievements')", 2000);
+  const achBox = await b.read("(()=>{const r=document.querySelector('.dialog.achievements').getBoundingClientRect();return {w:Math.round(r.width),h:Math.round(r.height),cols:getComputedStyle(document.querySelector('.ach-grid')).gridTemplateColumns.split(' ').length};})()");
+  assert.ok(achBox.h <= H * 0.85, `achievements modal height (${achBox.h}) compact within ${H}`);
+  assert.equal(achBox.cols, 2, 'achievements modal uses compact 2-column grid on mobile');
+  await wait(80);
+  await assertNoKeyboardHints('achievements');
+  await b.shot(`mobile-${mode}-ach`);
+  await tapSelector('.dialog .exit');
+  await b.until(`${scene}?.overlay===null`, 2000);
+
+  // Talk to nearby street NPC to verify compact Stardew dialog sizing on mobile
+  await b.read(`(()=>{const s=${scene};s.player.setPosition(264,224);s.updateHint();return true;})()`);
+  await wait(100);
+  await tapSelector('.vpad-interact');
+  await b.until("!!document.querySelector('.sdv-dialog')", 2000);
+  const dlgBox = await b.read("(()=>{const r=document.querySelector('.sdv-dialog').getBoundingClientRect();return {w:Math.round(r.width),h:Math.round(r.height)};})()");
+  assert.ok(dlgBox.h <= H * 0.45, `NPC dialog height (${dlgBox.h}) compact within ${H}`);
+  await wait(80);
+  await assertNoKeyboardHints('dialog');
+  await b.shot(`mobile-${mode}-dialog`);
+  await tapSelector('.sdv-next');
+  await b.until(`${scene}?.overlay===null`, 2000);
+
   if (mode === 'landscape') {
+    // Verify true non-stretched widescreen full-bleed viewport!
+    const vpMetrics = await b.read(`(()=>{const c=document.querySelector('#game>canvas');const r=c.getBoundingClientRect();return {cw:c.width,ch:c.height,rw:Math.round(r.width),rh:Math.round(r.height),wide:document.body.classList.contains('wide-landscape')};})()`);
+    assert.equal(vpMetrics.wide, true, 'wide-landscape full-bleed active on 844x390 phone');
+    assert.ok(vpMetrics.cw >= 760 && vpMetrics.ch === 360, `logical canvas expanded to widescreen (${vpMetrics.cw}x${vpMetrics.ch})`);
+    assert.ok(vpMetrics.rw >= 836 && vpMetrics.rh >= 386, `canvas fills full landscape screen (${vpMetrics.rw}x${vpMetrics.rh})`);
+    const ratioDiff = Math.abs((vpMetrics.rw / vpMetrics.rh) - (vpMetrics.cw / vpMetrics.ch));
+    assert.ok(ratioDiff < 0.02, `1:1 square pixels with ZERO stretching (aspect diff ${ratioDiff.toFixed(4)})`);
+
     // Move to curbside red scooter & test mounting + horn + dismount via pale-yellow mobile buttons!
     await b.read(`(()=>{const s=${scene};s.player.setPosition(233,232);s.updateHint();return true;})()`);
     await wait(120);
@@ -110,7 +163,11 @@ try {
     assert.equal(await b.read("document.querySelector('.vpad-dismount')?.hidden"), false, 'pale-yellow dismount button visible while riding');
     await holdDpad(1, 0, 380);
     await tapSelector('.vpad-horn');
-    await wait(120);
+    await b.until("document.querySelector('#ach-toast') && !document.querySelector('#ach-toast').hidden", 2500);
+    const achToastBox = await b.read("(()=>{const r=document.querySelector('#ach-toast').getBoundingClientRect();return {w:Math.round(r.width),h:Math.round(r.height)};})()");
+    assert.ok(achToastBox.w <= 190 && achToastBox.h <= 46, `achievement toast must stay ultra-compact on mobile, got ${JSON.stringify(achToastBox)}`);
+    await wait(80);
+    await assertNoKeyboardHints('riding');
     await b.shot('mobile-landscape-riding');
     await tapSelector('.vpad-dismount');
     await b.until(`${scene}?.riding===null`, 2000);
@@ -124,9 +181,11 @@ try {
   await tapSelector('.vpad-interact');
   const bar = "window.BRAND_QUEST?.scene.getScene('MixueBarScene')?.barState";
   await b.until(`window.BRAND_QUEST?.scene.isActive('MixueBarScene') && ${bar}?.phase==='tutorial'`, 4000);
+  await assertNoKeyboardHints('mixue-tutorial');
   await tapSelector('[data-tut="guide"]');
   await b.until(`${bar}?.phase==='serving'`, 4000);
   await wait(160);
+  await assertNoKeyboardHints('mixue-serving');
   if (mode === 'portrait') {
     assert.equal(await b.read("getComputedStyle(document.querySelector('.vpad-mixue')).display !== 'none'"), true, 'Mixue portrait pale-yellow barista deck visible');
     // Tap pale-yellow portrait buttons to add Lemon, Ice, Less Sugar!
