@@ -75,6 +75,16 @@ body.wide-landscape #viewport {
   border: 0;
   box-shadow: none;
 }
+body.wide-landscape .location-plaque {
+  left: max(var(--pad), env(safe-area-inset-left));
+}
+body.wide-landscape .system-tools,
+body.wide-landscape .corner-badges {
+  right: max(var(--pad), env(safe-area-inset-right));
+}
+body.wide-landscape .cine-skip {
+  right: max(8px, env(safe-area-inset-right));
+}
 #game, #game > canvas {
   display: block;
   width: 100% !important;
@@ -518,52 +528,66 @@ body.touch-on[data-touch-mode="world"] #viewport #interaction {
   display: none;
 }
 
-/* Shared Pale-Yellow Pixel Button System */
-.vpad-dpad {
+/* Shared Pale-Yellow 360° Virtual Joystick + Pixel Button System */
+.vpad-joy {
   position: fixed;
-  left: max(12px, env(safe-area-inset-left));
-  bottom: max(10px, env(safe-area-inset-bottom));
-  width: 132px;
-  height: 132px;
+  left: max(14px, env(safe-area-inset-left));
+  bottom: max(12px, env(safe-area-inset-bottom));
+  width: 116px;
+  height: 116px;
+  border-radius: 50%;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(3, 1fr);
+  place-items: center;
+  background: rgba(255, 245, 196, 0.36);
+  border: 3px solid rgba(107, 78, 34, 0.80);
+  box-shadow:
+    inset 0 0 0 3px rgba(255, 252, 232, 0.50),
+    inset 0 0 12px rgba(224, 196, 108, 0.35),
+    0 3px 0 rgba(16, 28, 22, 0.38);
   pointer-events: auto;
   touch-action: none;
 }
-.vpad-dir {
-  display: grid;
-  place-items: center;
-  font-size: 16px;
+.vpad-joy.active {
+  background: rgba(255, 245, 196, 0.50);
+  border-color: #6b4e22;
+}
+.vpad-joy-tick {
+  position: absolute;
+  font-size: 9px;
   line-height: 1;
-  color: #4a3110;
-  background: rgba(255, 245, 196, 0.88);
-  border: 3px solid #6b4e22;
-  box-shadow:
-    inset 2px 2px 0 #fffce8,
-    inset -2px -2px 0 #e0c46c,
-    3px 3px 0 rgba(16, 28, 22, 0.52);
+  color: rgba(107, 78, 34, 0.55);
   pointer-events: none;
 }
-.vpad-dir.up    { grid-column: 2; grid-row: 1; border-bottom-width: 1px; }
-.vpad-dir.down  { grid-column: 2; grid-row: 3; border-top-width: 1px; }
-.vpad-dir.left  { grid-column: 1; grid-row: 2; border-right-width: 1px; }
-.vpad-dir.right { grid-column: 3; grid-row: 2; border-left-width: 1px; }
-.vpad-dir.center {
-  grid-column: 2;
-  grid-row: 2;
-  border: 0;
-  background: rgba(246, 230, 162, 0.90);
-  box-shadow: inset 2px 2px 0 #dcc068, inset -2px -2px 0 #fff9d8;
-  color: #9e7c38;
+.vpad-joy-tick.up    { top: 7px; left: 50%; transform: translateX(-50%); }
+.vpad-joy-tick.down  { bottom: 7px; left: 50%; transform: translateX(-50%); }
+.vpad-joy-tick.left  { left: 8px; top: 50%; transform: translateY(-50%); }
+.vpad-joy-tick.right { right: 8px; top: 50%; transform: translateY(-50%); }
+.vpad-joy-tick.on {
+  color: #5e340c;
+  text-shadow: 0 0 3px #fff8cc;
 }
-.vpad-dir.pressed {
-  background: #ffe173;
-  color: #2e1b06;
+.vpad-joy-knob {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, #fffdf0 0%, #fff4bc 55%, #e5c66a 100%);
+  border: 3px solid #6b4e22;
   box-shadow:
-    inset 2px 2px 0 #d4af44,
-    inset -2px -2px 0 #fffce8,
-    1px 1px 0 rgba(16, 28, 22, 0.52);
+    inset 2px 2px 0 rgba(255, 253, 240, 0.92),
+    inset -2px -2px 0 rgba(196, 158, 64, 0.75),
+    0 3px 0 rgba(16, 28, 22, 0.48);
+  pointer-events: none;
+  transition: transform 0.12s ease-out;
+  will-change: transform;
+}
+.vpad-joy.active .vpad-joy-knob {
+  transition: none;
+  background: radial-gradient(circle at 34% 30%, #fffce6 0%, #ffe374 58%, #d6ab3a 100%);
+  border-color: #5c3a0e;
+  box-shadow:
+    inset 2px 2px 0 rgba(255, 253, 240, 0.95),
+    inset -2px -2px 0 rgba(176, 132, 34, 0.8),
+    0 2px 0 rgba(16, 28, 22, 0.52);
 }
 
 .vpad-actions {
@@ -747,15 +771,18 @@ body.touch-on[data-touch-mode="world"] #viewport #interaction {
     gap: 10px;
     padding: 6px 2px;
   }
-  body.touch-on .vpad-dpad {
-    position: static;
-    width: min(152px, 38vw);
-    height: min(152px, 38vw);
+  body.touch-on .vpad-joy {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    width: min(136px, 35vw);
+    height: min(136px, 35vw);
     flex-shrink: 0;
+    background: rgba(255, 244, 188, 0.48);
   }
-  body.touch-on .vpad-dir {
-    font-size: 18px;
-    background: #fff4bc;
+  body.touch-on .vpad-joy-knob {
+    width: 52px;
+    height: 52px;
   }
   body.touch-on .vpad-actions {
     position: static;
@@ -953,19 +980,18 @@ body.touch-on[data-touch-mode="world"] #viewport #interaction {
     padding: 3px 8px;
   }
 
-  .vpad-dpad {
-    width: 96px;
-    height: 96px;
-    left: max(8px, env(safe-area-inset-left));
-    bottom: max(5px, env(safe-area-inset-bottom));
-  }
-  .vpad-dir {
-    font-size: 13px;
+  .vpad-joy {
+    width: 92px;
+    height: 92px;
+    left: max(10px, env(safe-area-inset-left));
+    bottom: max(6px, env(safe-area-inset-bottom));
     border-width: 2px;
-    box-shadow:
-      inset 1px 1px 0 #fffce8,
-      inset -1px -1px 0 #e0c46c,
-      2px 2px 0 rgba(16, 28, 22, 0.50);
+  }
+  .vpad-joy-tick { font-size: 8px; }
+  .vpad-joy-knob {
+    width: 38px;
+    height: 38px;
+    border-width: 2px;
   }
   .vpad-actions {
     right: max(8px, env(safe-area-inset-right));

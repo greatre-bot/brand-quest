@@ -60,9 +60,20 @@ function shop(scene,g) {
   rect(0,0,640,384,0x27211d);
   rect(144,22,352,292,0x6e5441);
   rect(152,28,336,278,0xf4ebd6);
-  const floor=scene.textures.get('floor-tiles');
-  if(!floor.has('floor'))floor.add('floor',0,96,0,32,32);
-  scene.add.tileSprite(156,122,328,180,'floor-tiles','floor').setOrigin(0).setDepth(-96);
+  const floorKey='baked-shop-floor';
+  if(!scene.textures.exists(floorKey)){
+    const src=scene.textures.get('ground').getSourceImage();
+    const tex=scene.textures.createCanvas(floorKey,328,180);
+    const ctx=tex.getContext();
+    ctx.imageSmoothingEnabled=false;
+    for(let y=0;y<180;y+=32){
+      for(let x=0;x<328;x+=32){
+        ctx.drawImage(src,96,0,32,32,x,y,32,32);
+      }
+    }
+    tex.refresh();
+  }
+  scene.add.image(156,122,floorKey).setOrigin(0).setDepth(-96);
 
   const trim=scene.add.graphics().setDepth(-95);
   // Signature M004 red-and-white overhead canopy valance beam across the counter bay
@@ -112,16 +123,41 @@ function shop(scene,g) {
   scene.add.text(398,88,'ORDER HERE',signStyle).setOrigin(.5).setDepth(96);
 }
 
+function bakeGroundLayer(scene, map) {
+  const key = 'baked-ground-' + scene.worldId;
+  if (scene.textures.exists(key)) return key;
+  const tw = map.tilewidth || 32;
+  const th = map.tileheight || 32;
+  const w = map.width * tw;
+  const h = map.height * th;
+  const tilesKey = map.tilesets[0].name;
+  const srcImg = scene.textures.get(tilesKey).getSourceImage();
+  const cols = Math.max(1, Math.floor(srcImg.width / tw));
+  const tex = scene.textures.createCanvas(key, w, h);
+  const ctx = tex.getContext();
+  ctx.imageSmoothingEnabled = false;
+  const data = map.layers[0].data;
+  for (let i = 0; i < data.length; i++) {
+    const gid = data[i];
+    if (gid <= 0) continue;
+    const idx = gid - 1;
+    const sx = (idx % cols) * tw;
+    const sy = Math.floor(idx / cols) * th;
+    const dx = (i % map.width) * tw;
+    const dy = Math.floor(i / map.width) * th;
+    ctx.drawImage(srcImg, sx, sy, tw, th, dx, dy, tw, th);
+  }
+  tex.refresh();
+  return key;
+}
+
 export function drawDistrict(scene) {
   const {map,props} = scene.world;
-  const tm=scene.make.tilemap({data:Array.from({length:map.height},(_,i)=>map.layers[0].data.slice(i*map.width,(i+1)*map.width).map(n=>n-1)),tileWidth:32,tileHeight:32});
-  const tiles=map.tilesets[0].name;
-  const set=tm.addTilesetImage(tiles,tiles,32,32,0,0,0);
-  tm.createLayer(0,set,0,0).setDepth(-100);
+  const bakedKey = bakeGroundLayer(scene, map);
+  scene.add.image(0,0,bakedKey).setOrigin(0,0).setDepth(-100);
   const g=scene.add.graphics().setDepth(-98);
   if(scene.worldId==='jakarta'){street(scene,g);streetLife(scene);}
   else if(scene.worldId==='mixue_shop'){
-    if(!scene.textures.exists('floor-tiles'))scene.textures.addImage('floor-tiles',scene.textures.get('ground').getSourceImage());
     shop(scene,g);
   } else paintIndustry(scene,g);
   for(const prop of props){

@@ -50,13 +50,15 @@ async function tapSelector(sel) {
   await wait(120);
 }
 
-async function holdDpad(dx, dy, ms = 420) {
-  const pt = await b.read(`(()=>{const n=document.querySelector('.vpad-dpad');if(!n)return null;const r=n.getBoundingClientRect();return {x:r.left+r.width/2+(${dx})*r.width*0.34,y:r.top+r.height/2+(${dy})*r.height*0.34};})()`);
-  assert.ok(pt, 'dpad missing');
-  await cdp('Input.dispatchMouseEvent', {type: 'mouseMoved', x: pt.x, y: pt.y});
-  await cdp('Input.dispatchMouseEvent', {type: 'mousePressed', x: pt.x, y: pt.y, button: 'left', clickCount: 1});
+async function holdJoy(dx, dy, ms = 420) {
+  const pts = await b.read(`(()=>{const n=document.querySelector('.vpad-joy');if(!n)return null;const r=n.getBoundingClientRect();const cx=r.left+r.width/2,cy=r.top+r.height/2;return {cx,cy,tx:cx+(${dx})*r.width*0.34,ty:cy+(${dy})*r.height*0.34};})()`);
+  assert.ok(pts, 'joystick missing');
+  await cdp('Input.dispatchMouseEvent', {type: 'mouseMoved', x: pts.cx, y: pts.cy});
+  await cdp('Input.dispatchMouseEvent', {type: 'mousePressed', x: pts.cx, y: pts.cy, button: 'left', buttons: 1, clickCount: 1});
+  await wait(40);
+  await cdp('Input.dispatchMouseEvent', {type: 'mouseMoved', x: pts.tx, y: pts.ty, button: 'left', buttons: 1});
   await wait(ms);
-  await cdp('Input.dispatchMouseEvent', {type: 'mouseReleased', x: pt.x, y: pt.y, button: 'left', clickCount: 1});
+  await cdp('Input.dispatchMouseEvent', {type: 'mouseReleased', x: pts.tx, y: pts.ty, button: 'left', buttons: 0, clickCount: 1});
   await wait(120);
 }
 
@@ -119,14 +121,14 @@ try {
 
   await tapSelector('[data-dest="jakarta"]');
   await b.until("window.BRAND_QUEST?.scene.isActive('WorldScene')", 6000);
-  if (mode === 'safari_short') {
-    // Wait for the actual arrival welcome card (.cine-dialog) to verify 开始逛逛 button is NOT clipped at 268px!
+  if (isLandscape) {
+    // Wait for the actual arrival welcome card (.cine-dialog) in BOTH 844x390 & 844x268!
     await b.until("!!document.querySelector('.cine-dialog .sdv-next')", 6000);
     await wait(120);
-    const welcomeBtn = await b.read("(()=>{const r=document.querySelector('.cine-dialog .sdv-next').getBoundingClientRect();const d=document.querySelector('.cine-dialog').getBoundingClientRect();return {btnTop:Math.round(r.top),btnBot:Math.round(r.bottom),dlgTop:Math.round(d.top),dlgBot:Math.round(d.bottom)};})()");
-    assert.ok(welcomeBtn.btnBot <= H + 1 && welcomeBtn.btnTop >= 0, `safari_short welcome card CTA must be 100% visible (${JSON.stringify(welcomeBtn)} in H=${H})`);
+    const welcomeBtn = await b.read("(()=>{const r=document.querySelector('.cine-dialog .sdv-next').getBoundingClientRect();const d=document.querySelector('.cine-dialog').getBoundingClientRect();return {btnTop:Math.round(r.top),btnBot:Math.round(r.bottom),dlgTop:Math.round(d.top),dlgBot:Math.round(d.bottom),dlgH:Math.round(d.height)};})()");
+    assert.ok(welcomeBtn.dlgBot <= H + 1 && welcomeBtn.btnBot <= H + 1 && welcomeBtn.btnTop >= 0, `${mode} welcome card & CTA must be 100% visible (${JSON.stringify(welcomeBtn)} in H=${H})`);
     await assertNoKeyboardHints('welcome');
-    await b.shot('mobile-safari_short-welcome');
+    await b.shot(`mobile-${mode}-welcome`);
     await tapSelector('.cine-dialog .sdv-next');
   } else {
     await b.until("!!document.querySelector('#cutscene-layer .cine-skip')", 4000);
@@ -134,17 +136,17 @@ try {
   }
   await b.until(`${scene}?.overlay===null && !document.querySelector('#mobile-pad')?.hidden`, 4000);
 
-  // Verify pale-yellow virtual controls are visible and actually move the player!
-  const padBg = await b.read("getComputedStyle(document.querySelector('.vpad-dir.up')).backgroundColor");
-  assert.ok(padBg.includes('255') && padBg.includes('24'), `expected pale yellow button bg, got ${padBg}`);
+  // Verify pale-yellow virtual joystick is visible and smoothly moves the player!
+  const padBg = await b.read("getComputedStyle(document.querySelector('.vpad-joy')).backgroundColor");
+  assert.ok(padBg.includes('255') && padBg.includes('24'), `expected pale yellow joystick bg, got ${padBg}`);
   const x0 = await S('.player.x');
   const y0 = await S('.player.y');
-  await holdDpad(-1, 0, 450);
+  await holdJoy(-1, 0, 450);
   const x1 = await S('.player.x');
-  assert.ok(x1 < x0 - 20, `left pale-yellow dpad moved player west (${x0} -> ${x1})`);
-  await holdDpad(0, 1, 250);
+  assert.ok(x1 < x0 - 20, `left pale-yellow joystick moved player west (${x0} -> ${x1})`);
+  await holdJoy(0, 1, 250);
   const y1 = await S('.player.y');
-  assert.ok(y1 > y0 + 8, `down pale-yellow dpad moved player south (${y0} -> ${y1})`);
+  assert.ok(y1 > y0 + 8, `down pale-yellow joystick moved player south (${y0} -> ${y1})`);
 
   if (mode === 'portrait') {
     const worldLayout = await b.read("(()=>{const t=document.getElementById('mobile-top-deck').getBoundingClientRect();const v=document.getElementById('viewport').getBoundingClientRect();const p=document.getElementById('mobile-pad').getBoundingClientRect();return {tBot:t.bottom,vTop:v.top,vBot:v.bottom,pTop:p.top};})()");
@@ -180,7 +182,7 @@ try {
 
   if (isLandscape) {
     // Verify true non-stretched widescreen full-bleed viewport (ZERO side pillars even at 844x268!)
-    const vpMetrics = await b.read(`(()=>{const c=document.querySelector('#game>canvas');const r=c.getBoundingClientRect();const s=${scene};return {cw:c.width,ch:c.height,rw:Math.round(r.width),rh:Math.round(r.height),zoom:Number((s.cameras.main.zoom||1).toFixed(3)),wide:document.body.classList.contains('wide-landscape'),dpadW:Math.round(document.querySelector('.vpad-dpad').getBoundingClientRect().width)};})()`);
+    const vpMetrics = await b.read(`(()=>{const c=document.querySelector('#game>canvas');const r=c.getBoundingClientRect();const s=${scene};return {cw:c.width,ch:c.height,rw:Math.round(r.width),rh:Math.round(r.height),zoom:Number((s.cameras.main.zoom||1).toFixed(3)),wide:document.body.classList.contains('wide-landscape'),joyW:Math.round(document.querySelector('.vpad-joy').getBoundingClientRect().width)};})()`);
     assert.equal(vpMetrics.wide, true, `wide-landscape full-bleed active on ${W}x${H}`);
     assert.ok(vpMetrics.cw >= 760 && vpMetrics.ch === 360, `logical canvas expanded to widescreen (${vpMetrics.cw}x${vpMetrics.ch})`);
     assert.ok(vpMetrics.rw >= W - 6 && vpMetrics.rh >= H - 4, `canvas fills 100% of ${W}x${H} screen edge-to-edge with ZERO sidebars (${vpMetrics.rw}x${vpMetrics.rh})`);
@@ -188,7 +190,7 @@ try {
     assert.ok(ratioDiff < 0.025, `1:1 square pixels with ZERO stretching (aspect diff ${ratioDiff.toFixed(4)})`);
     if (mode === 'safari_short') {
       assert.ok(vpMetrics.zoom > 1.25 && vpMetrics.zoom <= 1.6, `safari_short applies uniform 1:1 cover zoom on Jakarta map (${vpMetrics.zoom})`);
-      assert.ok(vpMetrics.dpadW <= 100, `safari_short shrinks pale-yellow dpad cleanly (${vpMetrics.dpadW}px)`);
+      assert.ok(vpMetrics.joyW <= 96, `safari_short shrinks pale-yellow joystick cleanly (${vpMetrics.joyW}px)`);
       // Tap top-right fullscreen button -> verify mobile fullscreen help opens cleanly without F11 text!
       await tapSelector('#fullscreen');
       await b.until("!!document.querySelector('.dialog.fullscreen-help')", 2500);
@@ -208,7 +210,7 @@ try {
       await b.until(`${scene}?.riding?.id==='veh_1'`, 2000);
       assert.equal(await b.read("document.querySelector('.vpad-horn')?.hidden"), false, 'pale-yellow horn button visible while riding');
       assert.equal(await b.read("document.querySelector('.vpad-dismount')?.hidden"), false, 'pale-yellow dismount button visible while riding');
-      await holdDpad(1, 0, 380);
+      await holdJoy(1, 0, 380);
       await tapSelector('.vpad-horn');
       await b.until("document.querySelector('#ach-toast') && !document.querySelector('#ach-toast').hidden", 2500);
       const achToastBox = await b.read("(()=>{const r=document.querySelector('#ach-toast').getBoundingClientRect();return {w:Math.round(r.width),h:Math.round(r.height)};})()");
@@ -249,6 +251,35 @@ try {
     assert.equal(await b.read(`${bar}?.cupSugar`), 'less', 'portrait pale-yellow sugar button worked');
   }
   await b.shot(`mobile-${mode}-mixue`);
+
+  if (isLandscape) {
+    // Verify Ending Epilogue card fits 100% inside mobile landscape screen (including all 3 buttons & 6+ achievements!)
+    await b.read(`(()=>{
+      const g=window.BRAND_QUEST;
+      const s=g.registry.get('session');
+      s.flag('mixue_order');s.flag('sany_service');s.flag('ridden_scooter');
+      s.flags.achievements=['scooter_rider','scooter_honk','lemon_master','lunch_scout','rider_helper','dual_city'];
+      s.flag('strategy_choice','dual_track');
+      g.scene.stop('MixueBarScene');
+      document.getElementById('viewport')?.classList.add('ending');
+      g.scene.start('EndingScene');
+      return true;
+    })()`);
+    await b.until("!!document.querySelector('#ending-epilogue-btn')", 4000);
+    await b.read("document.querySelector('#ending-epilogue-btn').scrollIntoView({block:'center'})");
+    await wait(80);
+    await tapSelector('#ending-epilogue-btn');
+    await b.until("!!document.querySelector('#ending-epilogue .epilogue-card')", 3000);
+    await wait(160);
+    await assertNoKeyboardHints('epilogue');
+    const epiBox = await b.read(`(()=>{
+      const c=document.querySelector('#ending-epilogue .epilogue-card').getBoundingClientRect();
+      const btns=[...document.querySelectorAll('#ending-epilogue .epilogue-actions button')].map(n=>Math.round(n.getBoundingClientRect().bottom));
+      return {top:Math.round(c.top),bot:Math.round(c.bottom),h:Math.round(c.height),maxBtnBot:Math.max(...btns)};
+    })()`);
+    assert.ok(epiBox.top >= 0 && epiBox.bot <= H + 1 && epiBox.maxBtnBot <= H + 1, `${mode} epilogue card & all buttons must fit inside ${H}px (${JSON.stringify(epiBox)})`);
+    await b.shot(`mobile-${mode}-epilogue`);
+  }
 
   const http = b.requests.filter(r => /^https?:/.test(r));
   if (url.startsWith('file:')) assert.deepEqual(http, []);

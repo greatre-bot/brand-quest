@@ -74,7 +74,7 @@ export function adaptTouchText(str) {
   s = s.replace(/底部已解锁「拍照」/g, '右下已解锁「拍照」');
   s = s.replace(/\s*·\s*\[[0-9A-Za-z/←→↑↓ ]+\]/g, '');
   s = s.replace(/\s*\[(?:Enter|Esc|Tab|Shift|Space|E|F|R|M|J|U|V|G|T|1|2|3|4|5|6|A\s*\/\s*←|D\s*\/\s*→|空格)\]/gi, '');
-  s = s.replace(/WASD\s*\/\s*方向键/g, '左下方向键');
+  s = s.replace(/WASD\s*\/\s*方向键/g, '左下摇杆');
   s = s.replace(/Shift\s*加速/g, '按住「加速」');
   return s;
 }
@@ -99,9 +99,10 @@ export function resetTouchInput() {
   touchInput.dy = 0;
   touchInput.shift = false;
   if (!padDom) return;
-  for (const btn of padDom.root.querySelectorAll('.vpad-btn.pressed, .vpad-dir.pressed')) {
+  for (const btn of padDom.root.querySelectorAll('.vpad-btn.pressed')) {
     btn.classList.remove('pressed');
   }
+  padDom.clearJoy?.();
 }
 
 export function applyTouchBodyClass() {
@@ -144,7 +145,7 @@ export function mountTouchPad() {
   topDeck.hidden = true;
 
   const deckTop = el('div', 'vpad-deck-top');
-  const deckHint = el('div', 'vpad-deck-hint', '左下方向键漫游 · 右下淡黄按键互动');
+  const deckHint = el('div', 'vpad-deck-hint', '左下摇杆漫游 · 右下淡黄按键互动');
   const deckNav = el('div', 'vpad-deck-nav');
   const navTasks = makeBtn('vpad-nav-btn', '委托');
   const navJournal = makeBtn('vpad-nav-btn', '手账');
@@ -171,16 +172,16 @@ export function mountTouchPad() {
   // Main Left / Right thumb controls
   const thumbRow = el('div', 'vpad-thumbs');
 
-  // Left: Slideable 8-way Pale-Yellow Pixel Cross D-Pad
-  const dpad = el('div', 'vpad-dpad');
-  dpad.setAttribute('role', 'group');
-  dpad.setAttribute('aria-label', '方向键');
-  const dirUp = el('div', 'vpad-dir up', '▲');
-  const dirDown = el('div', 'vpad-dir down', '▼');
-  const dirLeft = el('div', 'vpad-dir left', '◀');
-  const dirRight = el('div', 'vpad-dir right', '▶');
-  const dirCenter = el('div', 'vpad-dir center', '·');
-  dpad.append(dirUp, dirLeft, dirCenter, dirRight, dirDown);
+  // Left: Smooth 360° Pale-Yellow Virtual Joystick
+  const joy = el('div', 'vpad-joy');
+  joy.setAttribute('role', 'group');
+  joy.setAttribute('aria-label', '虚拟摇杆');
+  const tickUp = el('span', 'vpad-joy-tick up', '▲');
+  const tickDown = el('span', 'vpad-joy-tick down', '▼');
+  const tickLeft = el('span', 'vpad-joy-tick left', '◀');
+  const tickRight = el('span', 'vpad-joy-tick right', '▶');
+  const joyKnob = el('div', 'vpad-joy-knob');
+  joy.append(tickUp, tickDown, tickLeft, tickRight, joyKnob);
 
   // Right: Ergonomic Pale-Yellow Pixel Action Cluster
   const actionsWrap = el('div', 'vpad-actions');
@@ -203,7 +204,7 @@ export function mountTouchPad() {
   rowBot.append(btnSprint, btnInteract);
   actionsWrap.append(rowTop, rowBot);
 
-  thumbRow.append(dpad, actionsWrap);
+  thumbRow.append(joy, actionsWrap);
   worldWrap.append(thumbRow);
 
   // === 2. MIXUE BAR PORTRAIT HANDHELD DECK (shown ONLY in portrait phone while inside MixueBarScene) ===
@@ -236,62 +237,71 @@ export function mountTouchPad() {
   root.append(worldWrap, mixueWrap);
   document.body.append(root);
 
-  // --- Wire smooth multi-touch slideable D-pad ---
-  let dpadPointerId = null;
-  const updateDpadFromPoint = (clientX, clientY) => {
-    const rect = dpad.getBoundingClientRect();
+  // --- Wire smooth 360° multi-touch pale-yellow virtual joystick ---
+  let joyPointerId = null;
+  const updateJoyFromPoint = (clientX, clientY) => {
+    const rect = joy.getBoundingClientRect();
     const cx = rect.left + rect.width / 2;
     const cy = rect.top + rect.height / 2;
     const rx = clientX - cx;
     const ry = clientY - cy;
-    const dead = Math.max(10, rect.width * 0.11);
+    const maxR = Math.max(20, rect.width * 0.34);
+    const dead = Math.max(6, maxR * 0.16);
     const dist = Math.hypot(rx, ry);
+    const clampDist = Math.min(dist, maxR);
+    const kx = dist > 0.001 ? (rx / dist) * clampDist : 0;
+    const ky = dist > 0.001 ? (ry / dist) * clampDist : 0;
+    joyKnob.style.transform = `translate(${kx.toFixed(1)}px, ${ky.toFixed(1)}px)`;
+
     let dx = 0;
     let dy = 0;
     if (dist >= dead) {
-      const ax = Math.abs(rx);
-      const ay = Math.abs(ry);
-      if (ax > ay * 0.42) dx = rx > 0 ? 1 : -1;
-      if (ay > ax * 0.42) dy = ry > 0 ? 1 : -1;
+      const mag = Math.min(1, (dist - dead) / (maxR * 0.55));
+      dx = (rx / dist) * mag;
+      dy = (ry / dist) * mag;
     }
     touchInput.dx = dx;
     touchInput.dy = dy;
-    dirLeft.classList.toggle('pressed', dx < 0);
-    dirRight.classList.toggle('pressed', dx > 0);
-    dirUp.classList.toggle('pressed', dy < 0);
-    dirDown.classList.toggle('pressed', dy > 0);
+    tickLeft.classList.toggle('on', dx < -0.25);
+    tickRight.classList.toggle('on', dx > 0.25);
+    tickUp.classList.toggle('on', dy < -0.25);
+    tickDown.classList.toggle('on', dy > 0.25);
   };
 
-  const clearDpad = () => {
-    dpadPointerId = null;
+  const clearJoy = () => {
+    joyPointerId = null;
     touchInput.dx = 0;
     touchInput.dy = 0;
-    dirUp.classList.remove('pressed');
-    dirDown.classList.remove('pressed');
-    dirLeft.classList.remove('pressed');
-    dirRight.classList.remove('pressed');
+    joy.classList.remove('active');
+    joyKnob.style.transform = 'translate(0px, 0px)';
+    tickUp.classList.remove('on');
+    tickDown.classList.remove('on');
+    tickLeft.classList.remove('on');
+    tickRight.classList.remove('on');
   };
 
-  dpad.addEventListener('pointerdown', e => {
-    if (dpadPointerId !== null) return;
+  joy.addEventListener('pointerdown', e => {
+    if (joyPointerId !== null) return;
     e.preventDefault();
     sound.unlock();
-    dpadPointerId = e.pointerId;
-    try { dpad.setPointerCapture(e.pointerId); } catch { /* ignore */ }
-    updateDpadFromPoint(e.clientX, e.clientY);
+    joyPointerId = e.pointerId;
+    joy.classList.add('active');
+    try { joy.setPointerCapture(e.pointerId); } catch { /* ignore */ }
+    updateJoyFromPoint(e.clientX, e.clientY);
   });
-  dpad.addEventListener('pointermove', e => {
-    if (e.pointerId !== dpadPointerId) return;
+  const moveJoy = e => {
+    if (e.pointerId !== joyPointerId) return;
     e.preventDefault();
-    updateDpadFromPoint(e.clientX, e.clientY);
-  });
-  const endDpad = e => {
-    if (e.pointerId !== dpadPointerId) return;
-    clearDpad();
+    updateJoyFromPoint(e.clientX, e.clientY);
   };
-  dpad.addEventListener('pointerup', endDpad);
-  dpad.addEventListener('pointercancel', endDpad);
-  dpad.addEventListener('lostpointercapture', () => clearDpad());
+  const endJoy = e => {
+    if (e.pointerId !== joyPointerId) return;
+    clearJoy();
+  };
+  window.addEventListener('pointermove', moveJoy, {passive: false});
+  window.addEventListener('pointerup', endJoy);
+  window.addEventListener('pointercancel', endJoy);
+  joy.addEventListener('lostpointercapture', () => { /* window listener handles release smoothly */ });
 
   // --- Wire hold helper (multi-touch safe) ---
   const bindHold = (btn, onDown, onUp) => {
@@ -394,7 +404,7 @@ export function mountTouchPad() {
 
   padDom = {
     root, topDeck, worldWrap, mixueWrap,
-    deckHint, navEnd,
+    deckHint, navEnd, clearJoy,
     btnInteract, btnSprint, btnPhoto, btnHorn, btnDismount, btnEnd
   };
   applyTouchBodyClass();
@@ -461,12 +471,12 @@ export function syncTouchHud(scene) {
   if (riding) {
     padDom.deckHint.textContent = near
       ? `骑行中 · 附近：${near.label || near.name}（点「${word}」或「鸣笛」「下车」）`
-      : '骑行中 · 左手滑方向盘，右手可「加速」「鸣笛」「下车」';
+      : '骑行中 · 左手拖摇杆，右手可「加速」「鸣笛」「下车」';
   } else if (near) {
     padDom.deckHint.textContent = near.kind === 'evidence'
       ? `可拍摄：${near.label || near.name}（点「拍照」或「查看」）`
       : `附近：${near.label || near.name}（点右侧淡黄「${word}」键）`;
   } else {
-    padDom.deckHint.textContent = objText || '左下方向键漫游 · 右下淡黄按键互动';
+    padDom.deckHint.textContent = objText || '左下摇杆漫游 · 右下淡黄按键互动';
   }
 }

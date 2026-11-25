@@ -208,7 +208,9 @@ export class WorldScene extends Phaser.Scene{
         this.photoPoseUntil=0;
         sound.step(this.world.mode==='interior',sprinting);
       }
-      const step=Math.min(55,delta)/1000*(sprinting?215:138)/(Math.hypot(dx,dy)||1);
+      const mag=Math.hypot(dx,dy);
+      const thrust=Math.min(1,mag);
+      const step=Math.min(55,delta)/1000*(sprinting?215:138)*thrust/(mag||1);
       const l=this.world.limits||{left:12,right:this.world.mapW-12,top:18,bottom:this.world.mapH-6};
       const x=Phaser.Math.Clamp(p.x+dx*step,l.left,l.right),y=Phaser.Math.Clamp(p.y+dy*step,l.top,l.bottom);
       if(!this.blocked(x,p.y))p.x=x;

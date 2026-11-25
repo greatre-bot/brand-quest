@@ -87,7 +87,7 @@ export function mountVehicle(scene, veh) {
     scene.session.flag('ridden_scooter');
     scene.session.save();
     scene.toast(touchOn
-      ? '已骑上电动车！左下方向键骑行 · 加速 · 鸣笛 · 下车'
+      ? '已骑上电动车！左下摇杆骑行 · 加速 · 鸣笛 · 下车'
       : '已骑上电动车！WASD 骑行 · Shift 加速 · 空格 鸣笛 · R / E 下车');
   } else {
     scene.toast(touchOn
@@ -195,8 +195,9 @@ export function updateRiding(scene, time, delta, dx, dy, boost) {
   const dt = Math.min(55, delta) / 1000;
   const maxSpeed = boost ? 310 : 235;
   const mag = Math.hypot(dx, dy);
-  const tx = mag ? (dx / mag) * maxSpeed : 0;
-  const ty = mag ? (dy / mag) * maxSpeed : 0;
+  const thrust = Math.min(1, mag);
+  const tx = mag ? (dx / mag) * maxSpeed * thrust : 0;
+  const ty = mag ? (dy / mag) * maxSpeed * thrust : 0;
   // Snappy electric torque when accelerating, smooth rolling glide when releasing
   const rate = mag ? 12 : 9.5;
   const blend = Math.min(1, dt * rate);

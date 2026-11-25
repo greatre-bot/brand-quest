@@ -60,8 +60,8 @@ export function settings(scene,refresh){
   }]);
   actions(box,btns);
   box.append(el('p','kbd-guide',isTouchEnabled()
-    ? '触屏操作：左下淡黄方向键移动，右下淡黄按键互动、加速、骑车鸣笛或拍照，快捷栏可随时查看手账、成就与城际班车。'
-    : '电脑：WASD/方向键 移动 · Shift 加速 · E 互动/骑车 · R 下车 · 空格 鸣笛 · F 拍照 · Tab 手账 · U 成就 · M 班车 · J 结局　｜　手机：使用屏幕淡黄色虚拟方向键与功能键畅玩'));
+    ? '触屏操作：左下淡黄摇杆自由移动，右下淡黄按键互动、加速、骑车鸣笛或拍照，快捷栏可随时查看手账、成就与城际班车。'
+    : '电脑：WASD/方向键 移动 · Shift 加速 · E 互动/骑车 · R 下车 · 空格 鸣笛 · F 拍照 · Tab 手账 · U 成就 · M 班车 · J 结局　｜　手机：使用屏幕淡黄色虚拟摇杆与功能键畅玩'));
   box.append(el('small','','进度、音量与虚拟按键偏好自动保存在本机，刷新网页即可接着逛。'));
 }
 export function signCredits(box){
