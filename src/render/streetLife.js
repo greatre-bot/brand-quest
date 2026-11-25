@@ -13,6 +13,13 @@ export function streetLife(scene){
   const rider=scene.add.sprite(-2,-10,'rider',6).setOrigin(.5,1).setScale(.76);
   const front=scene.add.image(0,0,'scooter').setOrigin(.5,1).setCrop(0,13,44,20);
   const traffic=scene.add.container(-44,288,[bike,rider,front]).setDepth(288);
+  // Live dancing Snow King mascot right outside Mixue storefront (choreographed to 《甜蜜蜜》 beat)
+  const skHome={x:426,y:232};
+  const snowking=scene.add.sprite(skHome.x,skHome.y,'snowking',0).setOrigin(.5,.94).setDepth(skHome.y);
+  scene.snowking=snowking;
+  const skSeq=[0,1,0,2,3,4,3,4,5,0];
+  const skNotes=scene.add.graphics().setDepth(skHome.y+8);
+  const noteSeeds=[{ox:-14,phase:0,color:0xe2464b},{ox:14,phase:0.52,color:0xf2b949}];
   const flag=scene.add.graphics().setDepth(201);
   const atmosphere=scene.add.graphics().setDepth(920);
   const motes=Array.from({length:14},(_,i)=>({
@@ -46,6 +53,26 @@ export function streetLife(scene){
     flag.clear();
     for(const [dy,color] of [[0,0xc25349],[4,0xf4e3bc]]){
       flag.fillStyle(color).fillPoints([{x:464,y:155+dy},{x:472,y:154+dy},{x:480,y:155+flutter+dy},{x:480,y:159+flutter+dy},{x:472,y:158+dy},{x:464,y:159+dy}],true);
+    }
+    // Snow King lively street dance animation + floating pixel music notes
+    const beat=Math.floor(time/360);
+    const skFrame=skSeq[beat%skSeq.length];
+    const sub=(time%360)/360;
+    const hop=Math.round(Math.sin(sub*Math.PI)*2.4);
+    const sway=skFrame===3?-2:skFrame===4?2:0;
+    snowking.setFrame(skFrame);
+    snowking.setPosition(skHome.x+sway,skHome.y-hop).setDepth(skHome.y);
+    skNotes.clear();
+    for(const n of noteSeeds){
+      const t=((time/1500)+n.phase)%1;
+      const nx=Math.round(skHome.x+n.ox+Math.sin(t*Math.PI*2)*4);
+      const ny=Math.round(skHome.y-46-t*16);
+      const alpha=t<0.2?t/0.2:t>0.7?(1-t)/0.3:1;
+      // Crisp 6x7 pixel eighth note ♪
+      skNotes.fillStyle(0x2d1812,alpha*0.85)
+        .fillRect(nx-1,ny+2,5,4).fillRect(nx+2,ny-3,2,6).fillRect(nx+3,ny-3,4,2);
+      skNotes.fillStyle(n.color,alpha)
+        .fillRect(nx,ny+3,3,2).fillRect(nx+2,ny-2,1,5).fillRect(nx+3,ny-2,3,1);
     }
     atmosphere.clear();
     // Subtle sunlit dust motes drifting across the warm Jakarta avenue

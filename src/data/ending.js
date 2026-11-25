@@ -66,7 +66,7 @@ export function assessEvidence(session) {
   const mixueDone = Boolean(session?.has('mixue_order'));
   const sanyDone = Boolean(session?.has('sany_service'));
   const bothTasks = mixueDone && sanyDone;
-  const sideDone = [session?.has('clip_done'), session?.has('field_pair'), session?.has('queue_check_done')].filter(Boolean).length;
+  const sideDone = [session?.has('dance_video_done'), session?.has('field_pair'), session?.has('queue_check_done')].filter(Boolean).length;
 
   let level = 'basic';
   let badge = '双城主线完成';
@@ -94,7 +94,7 @@ export function assessEvidence(session) {
     totalPhotos: WAN_PHOTO_KEYS.length,
     karawangPhotos, missingPhotos,
     mixueDone, sanyDone, bothTasks,
-    clipDone: Boolean(session?.has('clip_done')),
+    danceDone: Boolean(session?.has('dance_video_done')),
     queueCheckDone: Boolean(session?.has('queue_check_done')),
     fieldPair: Boolean(session?.has('field_pair')),
     partsLoaded: session ? loadCount(session) : 0
@@ -175,7 +175,7 @@ export function resolveEnding(choiceId, session, assessment) {
     };
   }
 
-  const trueReady = assessment.bothTasks && assessment.fieldPair && assessment.clipDone && assessment.queueCheckDone && (chosen === 'dual_track' || chosen === 'proof');
+  const trueReady = assessment.bothTasks && assessment.fieldPair && assessment.danceDone && assessment.queueCheckDone && (chosen === 'dual_track' || chosen === 'proof');
   if (trueReady) {
     return {
       code: '真结局 · 01',
@@ -183,7 +183,7 @@ export function resolveEnding(choiceId, session, assessment) {
       title: '《双城全通：实干与烟火》',
       stamp: '双城真结局',
       paragraphs: [
-        '夕阳沉入爪哇海，你合上写满批注的旅行手账。一页留着雅加达老城午高峰的红招牌、酸甜冰鲜柠檬水和街坊骑手的烟火气，另一页贴着万老师归档的卡拉旺主厂房、履带展机与工整的 K-07 备件交接板。',
+        '夕阳沉入爪哇海，你合上写满批注的旅行手账。一页留着雅加达老城午高峰的红招牌、酸甜冰鲜柠檬水与雪王门口合拍的烟火气，另一页贴着万老师归档的卡拉旺主厂房、履带展机与工整的 K-07 备件交接板。',
         `${rideNote} 你已经亲手验证了两条截然不同的出海路：B2C 卖亲切感，靠显眼符号、低试错成本与稳定体验留客；B2B 卖确定性，靠实机底气与可核查的现场履约赢得托付。`
       ]
     };

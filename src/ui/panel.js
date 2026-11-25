@@ -13,6 +13,7 @@ import portraitAuntie from '../../assets/pixel/ui/portrait-auntie.png';
 import portraitOffice from '../../assets/pixel/ui/portrait-office.png';
 import portraitBoss from '../../assets/pixel/ui/portrait-boss.png';
 import portraitTech from '../../assets/pixel/ui/portrait-tech.png';
+import portraitDancer from '../../assets/pixel/ui/portrait-dancer.png';
 import {sound} from '../systems/audio.js';
 import {syncTouchHud, adaptTouchText} from '../systems/touchControls.js';
 
@@ -32,7 +33,8 @@ export const PORTRAITS = {
   auntie: portraitAuntie,
   office: portraitOffice,
   boss: portraitBoss,
-  tech: portraitTech
+  tech: portraitTech,
+  dancer: portraitDancer
 };
 
 export const label=(scene,x,y,value,size=12,color='#263d37',extra={})=>scene.add.text(x,y,value,{fontFamily:'"FusionPixel",monospace',fontSize:size+'px',color,...extra});

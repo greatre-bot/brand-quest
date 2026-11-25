@@ -10,6 +10,7 @@ import {bindDesk,refreshDesk,showMap,showJournal} from '../ui/fieldDesk.js';
 import {playOpeningCutscene,renderOnboardingBar} from '../ui/introCutscene.js';
 import {label,dialog} from '../ui/panel.js';
 import {openOrder,MIXUE_MENU_SECTIONS} from '../systems/order.js';
+import {openDanceFilm} from '../systems/danceFilm.js';
 import {sound} from '../systems/audio.js';
 import {initVehicles,vehicleBlocked,mountVehicle,dismountVehicle,honkScooter,updateRiding,updateVehicleParticles} from '../systems/vehicle.js';
 import {unlockAchievement,showAchievements,clearAchievementPopups} from '../systems/achievements.js';
@@ -48,7 +49,7 @@ export class WorldScene extends Phaser.Scene{
       return hit!==null?hit+0.5:item.y-4;
     };
     for(const item of this.items){
-      if(item.kind==='inspect')continue;
+      if(item.kind==='inspect'||item.kind==='dance_mascot')continue;
       const photographed=item.kind==='evidence'&&this.session.photos.includes(item.key);
       const symbol=photographed?'☑':{door:'↧',transport:'↔',evidence:'◆',minigame:'!',rack:'▤'}[item.kind];
       const bg=item.kind==='evidence'?(photographed?'#5c7c57':'#916940'):'#47644e';
@@ -187,7 +188,7 @@ export class WorldScene extends Phaser.Scene{
   update(time,delta){
     if(!this.player)return;
     if(this.overlay){
-      const bucket=['order','service'].includes(this.overlay)?'minigame':'panel';
+      const bucket=['order','service','dance'].includes(this.overlay)?'minigame':'panel';
       this.session.tick(this.worldId,delta,bucket);
       return;
     }
@@ -287,15 +288,33 @@ export class WorldScene extends Phaser.Scene{
       if(this.riding)dismountVehicle(this,{forDoor:true});
       this.travel(n);return;
     }
-    if(n.id==='rider'){
-      const {state,lines}=resolveNpcLines(n,this.session);
-      if(state==='ready'){
-        this.session.flag('clip_done');this.record('已把取餐夹交还里安');sound.chime();
-        unlockAchievement(this,'rider_helper');
-      }else if(state==='idle'){
-        this.session.flag('clip_start');this.record('帮骑手里安寻找取餐夹');
+    if(n.id==='dance_girl'||n.id==='snowking_mascot'){
+      if(n.sprite){
+        const vx=this.player.x-n.sprite.x,vy=this.player.y-n.sprite.y;
+        const turnDir=Math.abs(vx)>Math.abs(vy)?(vx<0?1:2):(vy<0?3:0);
+        n.sprite.facing=turnDir;n.sprite.setFrame(turnDir*3);
       }
-      dialog(this,n.name,lines,'街区支线','rider','里安');return;
+      const girlNpc=n.id==='dance_girl'?n:this.npcs.find(x=>x.id==='dance_girl');
+      const {state,lines}=girlNpc?resolveNpcLines(girlNpc,this.session):{state:'idle',lines:[n.text]};
+      const showLines=n.id==='snowking_mascot'?[n.text,...lines.slice(0,1)]:lines;
+      dialog(
+        this,
+        n.id==='snowking_mascot'?'跳舞的雪王与菲娜':n.name,
+        showLines,
+        '街区支线 · 雅加达蜜雪门口',
+        'dancer',
+        n.id==='snowking_mascot'?'雪王与菲娜':'菲娜'
+      );
+      const actRow=document.querySelector('#sheet .sdv-actions');
+      if(actRow){
+        const filmBtn=document.createElement('button');
+        filmBtn.type='button';
+        filmBtn.className='sdv-film-btn';
+        filmBtn.textContent=state==='completed'?'再帮菲娜拍一条 ▸':'接过手机拍视频 ▸';
+        filmBtn.onclick=e=>{e.stopPropagation();openDanceFilm(this);};
+        actRow.prepend(filmBtn);
+      }
+      return;
     }
     if(n.id==='street_office'){
       const vx=this.player.x-n.sprite.x,vy=this.player.y-n.sprite.y;
@@ -309,10 +328,6 @@ export class WorldScene extends Phaser.Scene{
         unlockAchievement(this,'lunch_scout');
       }
       dialog(this,n.name,lines,'街区支线','office','雷扎');return;
-    }
-    if(n.id==='clip'&&this.session.has('clip_start')&&!this.session.has('clip_found')){
-      this.session.flag('clip_found');this.record('在咖啡摊找到蓝色取餐夹');sound.pickup();
-      dialog(this,n.label,['你从粉笔槽里拿起蓝色取餐夹，过马路还给南侧等单的骑手里安吧。'],'街区支线','player','旅行者');return;
     }
     if(n.id==='documentarian'){fieldAssignment(this);return;}
     if(n.kind==='rack'){pickFromRack(this,n.slot);return;}

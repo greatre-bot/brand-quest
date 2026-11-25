@@ -487,14 +487,33 @@
       "geography": "用户提供用于本游戏各场景配乐与成就提示；剥离内嵌封面后转为 96kbps 立体声 MP3 入包。",
       "publication_year": 2026,
       "capture_year": null,
-      "author": "用户提供（含商业游戏原声曲目，公开发行前须确认或替换授权）",
+      "author": "用户提供（含商业游戏原声及品牌主题曲，公开发行前须确认或替换授权）",
       "checked": "2026-11-25",
       "claims": [
-        "覆盖开场、雅加达街区、蜜雪门店、蜜雪奶茶吧台小游戏、卡拉旺园区、三一车间、终章通关 7 场景配乐与成就解锁音效。"
+        "覆盖开场、雅加达街区、蜜雪门店（bgm/蜜雪冰城甜蜜蜜.mp3）、蜜雪奶茶吧台小游戏、卡拉旺园区、三一车间、终章通关 7 场景配乐与成就解锁音效。"
       ],
       "intended_reference": "游戏各场景循环背景音乐与成就解锁号角。",
       "asset_usage": "user_provided_audio",
-      "rights_status": "用户提供；仅限本地课程展示使用，公开发行前须核验并替换未经授权的商业原声曲目",
+      "rights_status": "用户提供；仅限本地课程展示使用，公开发行前须核验并替换未经授权的商业原声与品牌歌曲",
+      "verification": "checked"
+    },
+    {
+      "id": "M010",
+      "organization": "MIXUE Indonesia / 公开街头活动参考",
+      "title": "蜜雪冰城主题曲《甜蜜蜜》手势舞与印尼门店雪王人偶街舞动作参考",
+      "url": "https://www.youtube.com/results?search_query=Mixue+theme+song+dance+Indonesia+Joget+Badut",
+      "scene": "jakarta",
+      "geography": "公开短视频与门店街头人偶互动动作研究参考；用于观察雪王人偶手势与摇摆节拍，不含任何下载影像。",
+      "publication_year": 2023,
+      "capture_year": null,
+      "author": "MIXUE / 公开街头视频参考",
+      "checked": "2026-11-25",
+      "claims": [
+        "参考《你爱我，我爱你，蜜雪冰城甜蜜蜜》四段经典舞步（指镜、头顶比心、左右扭扭踏步、捧脸比耶定格）与雪王人偶晃动节拍，原创像素重绘。"
+      ],
+      "intended_reference": "指导蜜雪门口跳舞雪王人偶 6 帧循环动画与手机取景框共舞四段动作编排。",
+      "asset_usage": "reference_only",
+      "rights_status": "仅作动作节拍参考，未下载或使用任何外部图片/视频；角色精灵与动画为项目原创手绘像素",
       "verification": "checked"
     }
   ]

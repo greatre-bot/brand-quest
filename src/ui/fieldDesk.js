@@ -67,7 +67,7 @@ export function missionContent(scene){
     const first=mission('雅加达主线','蜜雪午高峰店员体验',s.has('mixue_order')?`${s.flags.last_drink||'蜜雪套餐'}已经完成。逛完街区后按 M 可乘班车前往卡拉旺三一产业园。`:'走进红招牌的蜜雪门店，在左柜台体验店员视角，根据顾客小票调配饮品加冰调糖并搭配甜筒圣代。',[
       ['进店完成一轮 3 单套餐调配',s.has('mixue_order')]
     ]);
-    const extra=mission('街区支线','骑手的取餐夹',s.has('clip_done')?'已还给里安。':s.has('clip_found')?'拿着蓝夹子过马路，还给南侧等单的骑手里安。':s.has('clip_start')?'去北侧咖啡摊小黑板下面找找蓝夹子。':'马路南侧的骑手里安正在找遗落的取餐夹。');
+    const extra=mission('街区支线','雪王共舞短视频',s.has('dance_video_done')?`已帮菲娜拍下《甜蜜蜜》共舞视频（最佳高光 ${s.flags.dance_hits||0}/4），随时还能找她重拍。`:'蜜雪门口有雪王人偶在跳舞，旁边的姑娘菲娜想请你接过手机，帮她拍一段《甜蜜蜜》共舞短视频。');
     const queueSide=mission('街区支线','雷扎的午休排队',s.has('queue_check_done')?'已告诉雷扎柜台前排着三个人。':s.has('queue_check_start')&&s.has('queue_counted')?'已经看到店内排着三个人，回去告诉蜜雪西侧的雷扎吧。':s.has('queue_check_start')?'进蜜雪门店看一眼柜台前的排队人数，再回来告诉雷扎。':'蜜雪西侧的上班族雷扎在犹豫午休时间够不够排队。');
     return [first,extra,queueSide];
   }
@@ -128,7 +128,13 @@ export function showJournal(scene){
     if(image?.startsWith('data:image/jpeg;')){const img=el('img');img.src=image;img.alt=EVIDENCE_LABELS[id];row.append(img);}
     const fact=BRAND_FACTS[spot.fact],cap=el('div');cap.append(el('b','',EVIDENCE_LABELS[id]),el('small','','背景参考 · '+fact.sources.join(' / ')),el('small','',fact.text));row.append(cap);box.append(row);
   }
-  box.append(el('p','',`行程记录　${scene.session.flags.last_drink||'蜜雪饮品'} ${scene.session.has('mixue_order')?'☑':'☐'}　K-07 备件 ${scene.session.has('sany_service')?'☑':'☐'}　取餐夹 ${scene.session.has('clip_done')?'☑':'☐'}　排队问询 ${scene.session.has('queue_check_done')?'☑':'☐'}`));
+  if(scene.session.snapshots?.dance_video?.startsWith('data:image/jpeg;')){
+    const row=el('div','evidence');
+    const img=el('img');img.src=scene.session.snapshots.dance_video;img.alt='菲娜与雪王共舞视频定格';
+    const cap=el('div');cap.append(el('b','','菲娜与雪王 · 《甜蜜蜜》共舞'),el('small','',`雅加达蜜雪门口 · 最佳高光抓拍 ${scene.session.flags.dance_hits||0} / 4`));
+    row.append(img,cap);box.append(row);
+  }
+  box.append(el('p','',`行程记录　${scene.session.flags.last_drink||'蜜雪饮品'} ${scene.session.has('mixue_order')?'☑':'☐'}　K-07 备件 ${scene.session.has('sany_service')?'☑':'☐'}　雪王合拍 ${scene.session.has('dance_video_done')?'☑':'☐'}　排队问询 ${scene.session.has('queue_check_done')?'☑':'☐'}`));
   box.append(el('p','',`旅途成就　${unlockedAchievements(scene.session).length} / ${ACHIEVEMENTS.length}（按 U 查看全部徽章）`));
   if(scene.session.has('service_ticket'))docket(box,scene.session);
   if(scene.session.has('field_pair'))box.append(el('p','','万老师批注　☑ 三张园区现场照已归档，前场展示与后场记录已成对照。'));

@@ -25,23 +25,28 @@ export const jakarta = {
       ready:['柜台前排着三个人？行，时间还赶得上。谢了，我这就过去买。'],
       completed:['三个人还能等。要是排到门口，我大概就回办公室喝白水了。']
     },{role:'side',sprite:'office',portrait:'office'}),
-    villager('street_hijab','娜迪亚 · 路过游客',438,226,0,0,[
+    villager('street_hijab','娜迪亚 · 路过游客',292,236,0,0,[
       '我在这等我朋友，这个标识挺好认的。',
       '我觉得他们家正常糖有点偏甜，待会儿我得点少糖多冰。'
-    ],{role:'ambient',sprite:'hijab',portrait:'hijab',facing:1,queue:true}),
+    ],{role:'ambient',sprite:'hijab',portrait:'hijab',facing:2,queue:true}),
+    villager('dance_girl','菲娜 · 爱拍视频的姑娘',456,236,0,0,{
+      idle:[
+        '你好呀！门口的雪王人偶跳得太可爱了，我想跟着《蜜雪冰城甜蜜蜜》和它合拍一段短视频发给朋友！',
+        '可是我一个人拿不住手机……方便接过我的手机，帮我们拍一段共舞视频吗？'
+      ],
+      completed:[
+        '刚刚那段共舞视频拍得超有感觉！发给朋友大家都在问这是雅加达哪家蜜雪呢。',
+        '要是你还想再拍一条，随时拿我手机重录就行！'
+      ]
+    },{role:'side',sprite:'dancer',portrait:'dancer',facing:1}),
     villager('vendor','伊布 · 水果摊主',484,230,54,0,[
       '快到中午了，太阳一转过来我就得把水果车往树荫里挪一挪。',
       '对面店里一到午饭点就热闹，有时候不愿排队的客人，也会顺路在我这儿买点芒果和青柠。'
     ],{role:'ambient'}),
-    villager('rider','里安 · 骑手',225,378,47,0,{
-      idle:[
-        '麻烦问一下，你刚才经过马路对面吗？我那个蓝色取餐夹好像落在咖啡摊小黑板底下了。',
-        '中午单子多，没夹子小票容易被风吹跑。你要是顺路，能帮我带回来吗？'
-      ],
-      accepted:['应该就在马路对面咖啡摊的小黑板下面，麻烦路过时帮看一眼。'],
-      ready:['就是这个蓝夹子，谢了。扣回包带上踏实多了，我先继续等单。'],
-      completed:['中午这一片冷饮单比较密，珍珠奶茶和波霸圣代点得最多，我就在树荫下等下一单。']
-    },{role:'side'}),
+    villager('rider','里安 · 骑手',225,378,47,0,[
+      '中午这一片冷饮单比较密，珍珠奶茶和波霸圣代点得最多，我就在树荫下等下一单。',
+      '刚才路过蜜雪门口，雪王人偶还在跟着音乐扭来扭去，围了好些拍照拍视频的年轻人呢。'
+    ],{role:'ambient'}),
     villager('street_auntie','西蒂阿姨 · 街坊',498,386,58,0,[
       '前阵子马路对面还是空铺子，没过多久就开了这家红招牌的冷饮店。'
     ],{role:'ambient',sprite:'auntie',portrait:'auntie'}),
@@ -52,7 +57,8 @@ export const jakarta = {
   interactables:[
     spot('mixue_door','进入蜜雪门店','door',359,204,{to:'mixue_shop',spawn:{x:320,y:266}}),
     spot('mixue_sign','查看门店招牌','inspect',318,218,{text:'红底白字的 MIXUE 招牌配雪王立在街角，隔着马路也能一眼认出来。'}),
-    spot('clip','咖啡摊的小黑板','inspect',112,208,{text:'小黑板上写着街边咖啡摊的日常饮品。底下粉笔槽里，正躺着一枚蓝色外卖取餐夹。'}),
+    spot('snowking_mascot','跳舞的雪王人偶','dance_mascot',426,232,{text:'雪王人偶举着冰淇淋权杖，正踩着《蜜雪冰城甜蜜蜜》的欢快节拍左右摇摆！旁边的姑娘菲娜正想找人帮她拍一段共舞视频。'}),
+    spot('coffee_board','咖啡摊的小黑板','inspect',112,208,{text:'小黑板上写着街边咖啡摊的日常冰美式与棕榈糖拿铁，午后阳光把粉笔字晒得暖洋洋的。'}),
     spot('fruit','水果手推车','inspect',528,217,{text:'彩条车篷下摆着山竹、芒果和青柠，摊主把熟果推到了阴凉一侧。'}),
     spot('halte','搭车前往卡拉旺','transport',675,413,{to:'karawang'}),
     spot('bench','树荫下的长椅','inspect',291,429,{text:'树荫下的木长椅正好对着街角门店，坐在这儿能清楚看见人流和红招牌。'}),

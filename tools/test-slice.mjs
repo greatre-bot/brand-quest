@@ -231,19 +231,43 @@ try{
   await b.shot('ending-partial');
   await b.tap('Escape');await world('jakarta');
 
-  // 7. Jakarta side quests: Reza queue check + Rian blue clip
+  // 7. Jakarta side quests: Reza queue check + Dancing Snow King & Fina smartphone dance filming!
+  assert.ok(await S(".snowking?.visible"),'live dancing Snow King mascot visible outside Mixue storefront');
   await walk(264,224);await b.tap('e');assert.ok(await S(".session.has('queue_check_start')"));await b.tap('Escape');
   await b.tap('e');assert.ok(await S(".session.has('queue_check_done')"));await b.tap('Escape');
-  await move('y',373);await move('x',248);await b.tap('e');assert.ok(await S(".session.has('clip_start')"));
-  assert.ok(await b.read("document.querySelector('#sheet.sdv-sheet .sdv-portrait-frame img')?.complete"),'Stardew bottom dialog portrait shown');
+  await move('y',242);await move('x',452);await move('y',238);await b.tap('e');
+  assert.ok(await b.read("document.querySelector('#sheet.sdv-sheet .sdv-portrait-frame img')?.complete"),'Fina Stardew bottom dialog portrait shown');
+  assert.ok(await b.read("!!document.querySelector('#sheet .sdv-film-btn')"),'hand-over-phone film button shown');
   await assertCleanText('#sheet');
   await b.shot('dialog-jakarta');
+  await clickSelector('#sheet .sdv-film-btn');
+  await b.until("document.querySelector('.dialog.phone-cam')?.dataset.phase==='ready'",3000);
+  await assertCleanText('#sheet');
+  await clickSelector('.phone-primary-btn');
+  await b.until("document.querySelector('.dialog.phone-cam')?.dataset.phase==='recording'",3000);
+  assert.equal(await b.read("window.BRAND_QUEST_SOUND?.currentTrackKey()"),'mixue','Mixue Tianmimi theme song plays during Snow King dance filming');
+  // Snap all 4 choreographed 《甜蜜蜜》 highlight dance poses inside the golden focus windows
+  for(const idx of [0,1,2,3]){
+    await b.read(`window.BRAND_QUEST_DANCE.jumpToMove(${idx})`);
+    await wait(90);
+    if(idx===1) await b.shot('dance-filming');
+    await b.tap(' ');
+    await b.until(`Number(document.querySelector('.dialog.phone-cam')?.dataset.hits||0)===${idx+1}`,2000);
+  }
+  await b.read("window.BRAND_QUEST_DANCE.finishNow()");
+  await b.until("document.querySelector('.dialog.phone-cam')?.dataset.phase==='review'",3000);
+  await wait(120);
+  await assertCleanText('#sheet');
+  await b.shot('dance-review');
+  await clickSelector('.phone-review-actions .phone-primary-btn');
+  await b.until(scene+".session.has('dance_video_done') && "+scene+".session.flags.achievements?.includes('dance_filmer')",3000);
+  assert.equal(await S(".session.flags.dance_hits"),4,'all 4 dance highlights saved');
+  assert.equal(await b.read("window.BRAND_QUEST_SOUND?.currentTrackKey()"),'jakarta','Jakarta street BGM restored after handing phone back to Fina');
+  await assertCleanText('#sheet');
   await b.tap('Escape');
-  await move('y',267);await move('x',112);await move('y',220);await b.tap('e');assert.ok(await S(".session.has('clip_found')"));await b.tap('Escape');
-  await move('y',369);await move('x',248);await b.tap('e');assert.ok(await S(".session.has('clip_done')"));await b.tap('Escape');
 
   // 8. Shuttle to Karawang -> verify full-screen TransitScene pixel bus cutscene -> land in Karawang with fresh BGM!
-  await walk(675,388);await b.tap('e');
+  await move('x',358);await move('y',368);await walk(675,388);await b.tap('e');
   await b.until("window.BRAND_QUEST?.scene.isActive('TransitScene') && !!document.querySelector('#transit-layer')",4000);
   await wait(850);
   await b.shot('transit-bus');
@@ -333,7 +357,7 @@ try{
   assert.equal(await S(".session.flags.achievements?.length"),8,'all 8 achievements unlocked');
   assert.equal(await b.read("document.querySelector('#ach-count')?.textContent"),'8 / 8');
   await b.tap('u');await b.until("document.querySelectorAll('.ach-card.unlocked').length===8");await b.shot('achievements');await b.tap('Escape');
-  await b.tap('Tab');await b.until("document.querySelectorAll('.evidence img').length===3");await b.shot('journal');await b.tap('Escape');
+  await b.tap('Tab');await b.until("document.querySelectorAll('.evidence img').length===4");await b.shot('journal');await b.tap('Escape');
 
   // 10. Complete Ending Board + Sunset Multi-Ending Epilogue verification (3 Wan photos + Mixue postcard + 8/8 achievements + True Ending)
   await b.tap('j');await b.until("window.BRAND_QUEST.scene.isActive('EndingScene') && !!document.querySelector('#ending-board')");
@@ -407,5 +431,5 @@ try{
 
   const fps=await b.read('window.BRAND_QUEST.loop.actualFps');assert.deepEqual(b.errors,[]);
   const http=b.requests.filter(r=>/^https?:/.test(r));if(url.startsWith('file:'))assert.deepEqual(http,[]);
-  console.log(JSON.stringify({sliceSeconds,completed:'title, full-screen IntroScene opening animation, 2-city first-stop choice (both Jakarta-first & Karawang-first), 6 inlined scene BGMs + achievement fanfare + door/shutter/bus/talk/page SFX, clean rideable/parkable red/teal e-scooters (zero ugly badge), 8/8 achievements + trophy panel + popups, zero Mixue photos, Wan-exclusive 3-photo quest, 4 maps, both minigames, Reza+Rian side quests, partial & full ending + animated sunset True Ending epilogue, zero classroom copy, reload resume',orderRecovery:'overflow, cancel, timeout, retry, keyboard delivery',fpsAtEnd:fps,httpRequests:http.length,browserExceptions:b.errors},null,2));
+  console.log(JSON.stringify({sliceSeconds,completed:'title, full-screen IntroScene opening animation, 2-city first-stop choice (both Jakarta-first & Karawang-first), 6 inlined scene BGMs + achievement fanfare + door/shutter/bus/talk/page SFX, clean rideable/parkable red/teal e-scooters (zero ugly badge), 8/8 achievements + trophy panel + popups, zero Mixue photos, Wan-exclusive 3-photo quest, 4 maps, both minigames, dancing Snow King + Fina smartphone dance filming + Reza side quests, partial & full ending + animated sunset True Ending epilogue, zero classroom copy, reload resume',orderRecovery:'overflow, cancel, timeout, retry, keyboard delivery',fpsAtEnd:fps,httpRequests:http.length,browserExceptions:b.errors},null,2));
 }catch(e){console.error(await b.read('({scene:window.BRAND_QUEST?.scene.getScenes(true)[0]?.scene.key,world:'+scene+'?.worldId,x:'+scene+'?.player?.x,y:'+scene+'?.player?.y,overlay:'+scene+'?.overlay,near:'+scene+'?.near?.id})'),b.errors);throw e;}finally{await b.close().catch(()=>{});}

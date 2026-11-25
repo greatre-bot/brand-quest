@@ -15,10 +15,8 @@ export function resolveNpcState(npc, session) {
     case 'cashier':
       return session.has('mixue_order') ? 'completed' : 'idle';
 
-    case 'rider':
-      if (session.has('clip_done')) return 'completed';
-      if (session.has('clip_found')) return 'ready';
-      return session.has('clip_start') ? 'accepted' : 'idle';
+    case 'dance_girl':
+      return session.has('dance_video_done') ? 'completed' : 'idle';
 
     case 'street_office':
       if (session.has('queue_check_done')) return 'completed';

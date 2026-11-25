@@ -1080,8 +1080,8 @@
       "state": "approved",
       "asset_usage": "user_provided_audio",
       "license": "user_provided",
-      "rights_status": "用户提供；用于本项目配乐（公开发行前需核验原曲授权）",
-      "notes": "源自 bgm/蜜雪冰城里.mp3（63.5s），已剥离封面并转码 96kbps 立体声 MP3。"
+      "rights_status": "用户提供；含蜜雪冰城品牌主题曲（仅限本地课程展示使用，公开发行前须替换为授权或原创曲目）",
+      "notes": "源自 bgm/蜜雪冰城甜蜜蜜.mp3（28.81s），已剥离元数据并转码 96kbps 立体声 MP3（338 KiB），用于蜜雪冰城门店室内场景循环背景音乐。"
     },
     {
       "id": "audio_bgm_mixue_bar",
@@ -1894,6 +1894,51 @@
       "license": "project_original",
       "rights_status": "项目原创",
       "notes": "32×32 原生像素金色奖杯图标，用于旅途成就栏、成就解锁弹窗与结局页展示。"
+    },
+    {
+      "id": "actor_snowking",
+      "kind": "character",
+      "scene": "jakarta",
+      "file": "assets/pixel/characters/snowking.png",
+      "resolution": [240, 48],
+      "anchor": [0.5, 0.94],
+      "collision": null,
+      "source_ids": ["M003", "M009", "M010"],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创像素精灵；品牌吉祥物形象仅作课程识别用途",
+      "notes": "6 帧 40×48 蜜雪门店门口跳舞雪王人偶精灵表（立正、举权杖招手、抱爱心、左摇踏步、右摇踏步、星光定格）。"
+    },
+    {
+      "id": "actor_dancer",
+      "kind": "character",
+      "scene": "jakarta",
+      "file": "assets/pixel/characters/dancer.png",
+      "resolution": [96, 160],
+      "anchor": [0.5, 0.94],
+      "collision": null,
+      "source_ids": ["A001", "A002", "A003", "M010"],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创",
+      "notes": "3 帧 × 4 向、单帧 32×40 的年轻姑娘菲娜像素精灵（双丸子头、粉色开衫、牛仔裙与手持浅蓝手机）。"
+    },
+    {
+      "id": "portrait_dancer",
+      "kind": "ui",
+      "scene": "jakarta",
+      "file": "assets/pixel/ui/portrait-dancer.png",
+      "resolution": [64, 64],
+      "anchor": [0.5, 0.5],
+      "collision": null,
+      "source_ids": ["A001", "A002", "A003"],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创",
+      "notes": "年轻姑娘菲娜 64×64 原生像素对话头像。"
     }
   ]
 }

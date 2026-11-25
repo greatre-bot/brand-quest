@@ -65,7 +65,7 @@ function stationColumn(session, stationId, assessment) {
     const drinkName = session.flags.last_drink || '蜜雪饮品';
     records.append(
       el('span', 'end-pill ' + (orderOk ? 'ok' : 'warn'), `${drinkName}：${orderOk ? '已交付' : '未完成'}`),
-      el('span', 'end-pill ' + (assessment.clipDone ? 'ok' : 'muted'), `骑手取餐夹：${assessment.clipDone ? '已归还' : '未完成'}`)
+      el('span', 'end-pill ' + (assessment.danceDone ? 'ok' : 'muted'), `雪王共舞视频：${assessment.danceDone ? '已拍好' : '未完成'}`)
     );
     if (assessment.queueCheckDone) records.append(el('span', 'end-pill ok', '午休排队问询：已告知'));
   } else {

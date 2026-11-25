@@ -36,7 +36,7 @@ export class GameSession {
   }
   flag(id,value=true){
     this.flags[id]=value;
-    if(value&&['mixue_order','sany_service','clip_done','field_pair','service_ticket','service_parts'].includes(id)){
+    if(value&&['mixue_order','sany_service','dance_video_done','field_pair','service_ticket','service_parts'].includes(id)){
       this.markMilestone(id);
     }
   }

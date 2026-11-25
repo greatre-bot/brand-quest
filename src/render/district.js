@@ -7,7 +7,7 @@ export function preloadPixels(scene) {
   for (const [file,url] of Object.entries(art)) {
     const key = file.split('/').pop().slice(0,-4);
     if(file.includes('/characters/')) {
-      const size=key.startsWith('ride-')?{frameWidth:48,frameHeight:48}:{frameWidth:32,frameHeight:40};
+      const size=key.startsWith('ride-')?{frameWidth:48,frameHeight:48}:key==='snowking'?{frameWidth:40,frameHeight:48}:{frameWidth:32,frameHeight:40};
       scene.load.spritesheet(key,url,size);
     }
     else scene.load.image(key,url);

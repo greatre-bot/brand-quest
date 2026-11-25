@@ -221,6 +221,33 @@ try {
       await tapSelector('.vpad-dismount');
       await b.until(`${scene}?.riding===null`, 2000);
     }
+
+    // Test Snow King + Fina Smartphone Viewfinder Dance Filming on mobile landscape & safari_short!
+    await b.read(`(()=>{const s=${scene};s.player.setPosition(450,240);s.updateHint();return true;})()`);
+    await wait(100);
+    await tapSelector('.vpad-interact');
+    await b.until("!!document.querySelector('#sheet .sdv-film-btn')", 2500);
+    await tapSelector('#sheet .sdv-film-btn');
+    await b.until("document.querySelector('.dialog.phone-cam')?.dataset.phase==='ready'", 2500);
+    await assertNoKeyboardHints('dance-ready');
+    const phoneBox = await b.read("(()=>{const r=document.querySelector('.dialog.phone-cam').getBoundingClientRect();return {top:Math.round(r.top),bot:Math.round(r.bottom),left:Math.round(r.left),right:Math.round(r.right)};})()");
+    assert.ok(phoneBox.top >= 0 && phoneBox.bot <= H + 1 && phoneBox.left >= 0 && phoneBox.right <= W + 1, `${mode} phone viewfinder must fit 100% inside ${W}x${H} (${JSON.stringify(phoneBox)})`);
+    await tapSelector('.phone-primary-btn');
+    await b.until("document.querySelector('.dialog.phone-cam')?.dataset.phase==='recording'", 2500);
+    await b.read("window.BRAND_QUEST_DANCE.jumpToMove(1)");
+    await wait(80);
+    await assertNoKeyboardHints('dance-recording');
+    await b.shot(`mobile-${mode}-dance`);
+    await tapSelector('.phone-shutter');
+    await b.until("Number(document.querySelector('.dialog.phone-cam')?.dataset.hits||0)===1", 2000);
+    await b.read("window.BRAND_QUEST_DANCE.finishNow()");
+    await b.until("document.querySelector('.dialog.phone-cam')?.dataset.phase==='review'", 2500);
+    const handBackBox = await b.read("(()=>{const r=document.querySelector('.phone-review-actions .phone-primary-btn').getBoundingClientRect();return {top:Math.round(r.top),bot:Math.round(r.bottom)};})()");
+    assert.ok(handBackBox.top >= 0 && handBackBox.bot <= H + 1, `${mode} hand-back button must fit inside ${H}px (${JSON.stringify(handBackBox)})`);
+    await tapSelector('.phone-review-actions .phone-primary-btn');
+    await b.until(`${scene}?.session.has('dance_video_done') && !!document.querySelector('#sheet .sdv-next')`, 2500);
+    await tapSelector('#sheet .sdv-next');
+    await b.until(`${scene}?.overlay===null`, 2000);
   }
 
   // Enter Mixue shop & launch MixueBarScene -> verify responsive layout
@@ -258,7 +285,7 @@ try {
       const g=window.BRAND_QUEST;
       const s=g.registry.get('session');
       s.flag('mixue_order');s.flag('sany_service');s.flag('ridden_scooter');
-      s.flags.achievements=['scooter_rider','scooter_honk','lemon_master','lunch_scout','rider_helper','dual_city'];
+      s.flags.achievements=['first_ride','street_horn','lemon_master','lunch_scout','dance_filmer','dual_city'];
       s.flag('strategy_choice','dual_track');
       g.scene.stop('MixueBarScene');
       document.getElementById('viewport')?.classList.add('ending');
