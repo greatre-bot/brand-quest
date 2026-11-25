@@ -1,0 +1,501 @@
+{
+  "schema_version": "2.0.0",
+  "last_reviewed": "2026-11-23",
+  "notes": "年份 null 表示未披露、未核实或不适用，不能以发布日期代拍摄年份。",
+  "sources": [
+    {
+      "id": "S001",
+      "organization": "SANY",
+      "title": "Inside Views Ep. 68 · SANY Indonesia Industrial Park",
+      "url": "https://www.sanyglobal.com/video/204/",
+      "scene": "karawang",
+      "geography": "官方说明为印尼园区、距雅加达约70公里；KIM位置交叉核对 S002/S005。",
+      "publication_year": null,
+      "capture_year": null,
+      "author": "SANY",
+      "checked": "2026-11-23",
+      "claims": [
+        "规划交通分场。已核对影片页介绍，未逐帧编目。"
+      ],
+      "intended_reference": "规划交通分场。已核对影片页介绍，未逐帧编目。",
+      "asset_usage": "reference_only",
+      "rights_status": "版权所有；仅研究，不随游戏发行",
+      "verification": "checked"
+    },
+    {
+      "id": "S002",
+      "organization": "SANY",
+      "title": "Indonesia Industrial Park Starts its Phase II Construction",
+      "url": "https://www.sanyglobal.com/id/press_releases/1216/",
+      "scene": "karawang",
+      "geography": "正文指明 KIM Industrial Park。",
+      "publication_year": 2023,
+      "capture_year": null,
+      "author": "SANY",
+      "checked": "2026-11-23",
+      "claims": [
+        "二期于2023年举行开工仪式，一期生产挖掘机。"
+      ],
+      "intended_reference": "二期于2023年举行开工仪式，一期生产挖掘机。",
+      "asset_usage": "reference_only",
+      "rights_status": "版权所有；仅研究，不随游戏发行",
+      "verification": "checked"
+    },
+    {
+      "id": "S003",
+      "organization": "SANY",
+      "title": "SANY becomes the first Chinese heavy equipment manufacturer to “export” a lighthouse factory",
+      "url": "https://www.sanyglobal.com/id/press_releases/759/",
+      "scene": "karawang",
+      "geography": "正文指明印尼 KIM 园区。",
+      "publication_year": 2022,
+      "capture_year": null,
+      "author": "SANY",
+      "checked": "2026-11-23",
+      "claims": [
+        "2022年首台 SY315CKD 下线。整机与装配情景参考。"
+      ],
+      "intended_reference": "2022年首台 SY315CKD 下线。整机与装配情景参考。",
+      "asset_usage": "reference_only",
+      "rights_status": "版权所有；仅研究，不随游戏发行",
+      "verification": "checked"
+    },
+    {
+      "id": "S004",
+      "organization": "SANY",
+      "title": "SANY Forges Alliance with UNSIKA to Empower Younger Generation",
+      "url": "https://www.sanyglobal.com/press_releases/3095/",
+      "scene": "karawang",
+      "geography": "正文区分印尼园区实训和长沙师资培训。",
+      "publication_year": 2024,
+      "capture_year": null,
+      "author": "SANY",
+      "checked": "2026-11-23",
+      "claims": [
+        "园区有工程机械实训活动。虚构协调员不指向报道人物。"
+      ],
+      "intended_reference": "园区有工程机械实训活动。虚构协调员不指向报道人物。",
+      "asset_usage": "reference_only",
+      "rights_status": "版权所有；仅研究，不随游戏发行",
+      "verification": "checked"
+    },
+    {
+      "id": "S005",
+      "organization": "SANY",
+      "title": "SANY Profile · Karawang, Indonesia",
+      "url": "https://sanyglobal-img.sany.com.cn/brands/sany-profile.pdf",
+      "scene": "karawang",
+      "geography": "Karawang 标题和 KIM 说明；同跨页另一处为美国 Peachtree。",
+      "publication_year": null,
+      "capture_year": null,
+      "author": "SANY",
+      "checked": "2026-11-23",
+      "claims": [
+        "印尼厂房入口和红色 SANY 字标，为后续厂房绘制提供外观依据。"
+      ],
+      "intended_reference": "印尼厂房入口和红色 SANY 字标，为后续厂房绘制提供外观依据。",
+      "asset_usage": "reference_only",
+      "rights_status": "版权所有；仅研究，不随游戏发行",
+      "verification": "checked"
+    },
+    {
+      "id": "S006",
+      "organization": "ANTARA Jawa Barat",
+      "title": "Produsen alat berat China perluas area pabrik di Karawang",
+      "url": "https://jabar.antaranews.com/berita/468111/produsen-alat-berat-china-perluas-area-pabrik-di-karawang-dengan-investasi-rp23-triliun",
+      "scene": "karawang",
+      "geography": "图片说明明确 2023-09-12 西爪哇 Karawang。",
+      "publication_year": 2023,
+      "capture_year": 2023,
+      "author": "Farhan Arda Nugraha / ANTARA",
+      "checked": "2026-11-23",
+      "claims": [
+        "当地拍摄的二期动工现场，佐证城市及事件。"
+      ],
+      "intended_reference": "当地拍摄的二期动工现场，佐证城市及事件。",
+      "asset_usage": "reference_only",
+      "rights_status": "版权所有；仅研究，不随游戏发行",
+      "verification": "checked"
+    },
+    {
+      "id": "M001",
+      "organization": "MIXUE Indonesia",
+      "title": "Official channel hub",
+      "url": "https://linktr.ee/mixueofficial",
+      "scene": "jakarta",
+      "geography": "印尼渠道；未定位某家雅加达门店。",
+      "publication_year": null,
+      "capture_year": null,
+      "author": "MIXUE Indonesia",
+      "checked": "2026-11-23",
+      "claims": [
+        "用于溯源品牌渠道，不作地理证据。"
+      ],
+      "intended_reference": "用于溯源品牌渠道，不作地理证据。",
+      "asset_usage": "reference_only",
+      "rights_status": "版权所有；仅研究，不随游戏发行",
+      "verification": "checked"
+    },
+    {
+      "id": "M002",
+      "organization": "The Jakarta Post",
+      "title": "Mixue to expand market, investment in Indonesia",
+      "url": "https://www.thejakartapost.com/business/2026/06/07/mixue-to-expand-market-investment-in-indonesia",
+      "scene": "jakarta",
+      "geography": "无法核验照片所在地。",
+      "publication_year": null,
+      "capture_year": null,
+      "author": "未核验",
+      "checked": "2026-11-23",
+      "claims": [
+        "旧索引线索，原页返回403，未采用。"
+      ],
+      "intended_reference": "旧索引线索，原页返回403，未采用。",
+      "asset_usage": "lead_only",
+      "rights_status": "未获许可",
+      "verification": "blocked_403"
+    },
+    {
+      "id": "M003",
+      "organization": "Wikimedia Commons",
+      "title": "Mixue Ice Cream & Tea Kota Tua",
+      "url": "https://commons.wikimedia.org/wiki/File:Mixue_Ice_Cream_%26_Tea_Kota_Tua.jpg",
+      "scene": "jakarta",
+      "geography": "Kota Tua；说明与相机地理坐标，EXIF 2023-01-25。",
+      "publication_year": 2023,
+      "capture_year": 2023,
+      "author": "Fikri RA",
+      "checked": "2026-11-23",
+      "claims": [
+        "临街拱廊、白字红招牌和入口甜筒，概括为可独立碰撞的门面。"
+      ],
+      "intended_reference": "临街拱廊、白字红招牌和入口甜筒，概括为可独立碰撞的门面。",
+      "asset_usage": "licensed_for_reuse",
+      "rights_status": "CC BY-SA 4.0 摄影；署名和同许可覆盖门头的摄影改编，标识和雪王另受保护。",
+      "verification": "checked"
+    },
+    {
+      "id": "M004",
+      "organization": "Wikimedia Commons",
+      "title": "Inside Mixue Ice Cream & Tea Kota Tua",
+      "url": "https://commons.wikimedia.org/wiki/File:Inside_Mixue_Ice_Cream_%26_Tea_Kota_Tua.jpg",
+      "scene": "mixue_shop",
+      "geography": "西雅加达 Kota Tua；说明和坐标与 M003 一致。",
+      "publication_year": 2023,
+      "capture_year": 2023,
+      "author": "Fikri RA",
+      "checked": "2026-11-23",
+      "claims": [
+        "菜单屏位于柜台上方，COLLECT 与 ORDER HERE 分区。"
+      ],
+      "intended_reference": "菜单屏位于柜台上方，COLLECT 与 ORDER HERE 分区。",
+      "asset_usage": "reference_only",
+      "rights_status": "CC BY-SA 4.0；摄影授权不覆盖商标及肖像",
+      "verification": "checked"
+    },
+    {
+      "id": "M005",
+      "organization": "Republika",
+      "title": "Ekspansi Gerai Es Krim dan Minuman Teh Mixue di Indonesia",
+      "url": "https://visual.republika.co.id/berita/rozvtv491/ekspansi-gerai-es-krim-dan-minuman-teh-mixue-di-indonesia",
+      "scene": "mixue_shop",
+      "geography": "图注为 Jalan Ampera, Jakarta，2023-01-24。",
+      "publication_year": 2023,
+      "capture_year": 2023,
+      "author": "Thoudy Badai / Republika",
+      "checked": "2026-11-23",
+      "claims": [
+        "工人在店内向机器补充原料，为后台道具提供依据。"
+      ],
+      "intended_reference": "工人在店内向机器补充原料，为后台道具提供依据。",
+      "asset_usage": "reference_only",
+      "rights_status": "版权所有；仅研究，不随游戏发行",
+      "verification": "checked"
+    },
+    {
+      "id": "M006",
+      "organization": "Wikimedia Commons",
+      "title": "Jalanan Kota Tua Jakarta",
+      "url": "https://commons.wikimedia.org/wiki/File:Jalanan_Kota_Tua_Jakarta.jpg",
+      "scene": "jakarta",
+      "geography": "作者标注 Kota Tua，记录相机坐标和 2020-02-22 拍摄时间。",
+      "publication_year": 2020,
+      "capture_year": 2020,
+      "author": "Muhammadsyahid",
+      "checked": "2026-11-23",
+      "claims": [
+        "老城街道公共空间；游戏中的步行距离重新设计。"
+      ],
+      "intended_reference": "老城街道公共空间；游戏中的步行距离重新设计。",
+      "asset_usage": "reference_only",
+      "rights_status": "CC BY-SA 4.0；摄影授权不覆盖商标及肖像",
+      "verification": "checked"
+    },
+    {
+      "id": "M007",
+      "organization": "Wikimedia Commons",
+      "title": "Jakarta Indonesia Hawkers-in- Glodok-06",
+      "url": "https://commons.wikimedia.org/wiki/File:Jakarta_Indonesia_Hawkers-in-_Glodok-06.jpg",
+      "scene": "jakarta",
+      "geography": "说明明确 Glodok, West Jakarta。",
+      "publication_year": 2015,
+      "capture_year": 2015,
+      "author": "CEphoto, Uwe Aranas",
+      "checked": "2026-11-23",
+      "claims": [
+        "街边修理机动三轮车的铺面；以临街小商业作为邻铺类型参考。"
+      ],
+      "intended_reference": "街边修理机动三轮车的铺面；以临街小商业作为邻铺类型参考。",
+      "asset_usage": "reference_only",
+      "rights_status": "CC BY-SA 3.0；人物权利另计",
+      "verification": "checked"
+    },
+    {
+      "id": "M008",
+      "organization": "Wikimedia Commons",
+      "title": "Jalan Moh. Kahfi II, Jakarta",
+      "url": "https://commons.wikimedia.org/wiki/File:Jalan_Moh._Kahfi_II,_Jakarta_20240622_131456.jpg",
+      "scene": "jakarta",
+      "geography": "作者命名街道与城市；EXIF 为 2024-06-22。",
+      "publication_year": 2024,
+      "capture_year": 2024,
+      "author": "Naval Scene",
+      "checked": "2026-11-23",
+      "claims": [
+        "雅加达街道尺度对照；不将其标为 Kota Tua 门店前道路。"
+      ],
+      "intended_reference": "雅加达街道尺度对照；不将其标为 Kota Tua 门店前道路。",
+      "asset_usage": "reference_only",
+      "rights_status": "CC BY-SA 4.0；摄影授权不覆盖商标及肖像",
+      "verification": "checked"
+    },
+    {
+      "id": "A001",
+      "organization": "OpenGameArt",
+      "title": "Character sprite + walk animation",
+      "url": "https://opengameart.org/content/character-sprite-walk-animation",
+      "scene": "characters",
+      "geography": "数字创作；地理位置与拍摄年份不适用。",
+      "publication_year": 2012,
+      "capture_year": null,
+      "author": "Belohlavek",
+      "checked": "2026-11-23",
+      "claims": [
+        "观察交替步态和待机脚位。"
+      ],
+      "intended_reference": "观察交替步态和待机脚位。",
+      "asset_usage": "reference_only",
+      "rights_status": "CC0 1.0；未下载或入包",
+      "verification": "checked"
+    },
+    {
+      "id": "A002",
+      "organization": "OpenGameArt",
+      "title": "8d run/walk & idle sprite sheet",
+      "url": "https://opengameart.org/content/8d-runwalk-idle-sprite-sheet",
+      "scene": "characters",
+      "geography": "数字创作；地理位置与拍摄年份不适用。",
+      "publication_year": 2025,
+      "capture_year": null,
+      "author": "adhochero",
+      "checked": "2026-11-23",
+      "claims": [
+        "观察有限像素下朝向与静止姿势的可读性。"
+      ],
+      "intended_reference": "观察有限像素下朝向与静止姿势的可读性。",
+      "asset_usage": "reference_only",
+      "rights_status": "CC0 1.0；未下载或入包",
+      "verification": "checked"
+    },
+    {
+      "id": "A003",
+      "organization": "OpenGameArt",
+      "title": "Walking Character Set",
+      "url": "https://opengameart.org/content/walking-character-set",
+      "scene": "characters",
+      "geography": "数字创作；地理位置与拍摄年份不适用。",
+      "publication_year": 2022,
+      "capture_year": null,
+      "author": "ATMANAN",
+      "checked": "2026-11-23",
+      "claims": [
+        "比较角色换装轮廓、行走周期。"
+      ],
+      "intended_reference": "比较角色换装轮廓、行走周期。",
+      "asset_usage": "reference_only",
+      "rights_status": "CC0 1.0；未下载或入包",
+      "verification": "checked"
+    },
+    {
+      "id": "L001",
+      "organization": "Kenney",
+      "title": "Input Prompts",
+      "url": "https://kenney.nl/assets/input-prompts",
+      "scene": "global",
+      "geography": "数字创作；地理位置与拍摄年份不适用。",
+      "publication_year": 2024,
+      "capture_year": null,
+      "author": "Kenney",
+      "checked": "2026-11-23",
+      "claims": [
+        "后备输入图标。"
+      ],
+      "intended_reference": "后备输入图标。",
+      "asset_usage": "licensed_for_reuse",
+      "rights_status": "CC0 1.0；未下载或入包",
+      "verification": "checked"
+    },
+    {
+      "id": "L002",
+      "organization": "OpenGameArt",
+      "title": "(12x12) City Tiles - Top Down",
+      "url": "https://opengameart.org/content/12x12-city-tiles-top-down",
+      "scene": "global",
+      "geography": "数字创作；地理位置与拍摄年份不适用。",
+      "publication_year": 2020,
+      "capture_year": null,
+      "author": "FisherG",
+      "checked": "2026-11-23",
+      "claims": [
+        "后备城市制作套件。"
+      ],
+      "intended_reference": "后备城市制作套件。",
+      "asset_usage": "licensed_for_reuse",
+      "rights_status": "CC0 1.0；未下载或入包",
+      "verification": "checked"
+    },
+    {
+      "id": "L003",
+      "organization": "OpenGameArt",
+      "title": "Road Tile Set",
+      "url": "https://opengameart.org/content/road-tile-set-0",
+      "scene": "global",
+      "geography": "数字创作；地理位置与拍摄年份不适用。",
+      "publication_year": 2016,
+      "capture_year": null,
+      "author": "Chasersgaming",
+      "checked": "2026-11-23",
+      "claims": [
+        "后备32px道路素材。"
+      ],
+      "intended_reference": "后备32px道路素材。",
+      "asset_usage": "licensed_for_reuse",
+      "rights_status": "CC0 1.0；未下载或入包",
+      "verification": "checked"
+    },
+    {
+      "id": "R001",
+      "organization": "课程小组",
+      "title": "三一重工 M1 调研诊断",
+      "url": null,
+      "scene": "karawang",
+      "geography": "组内研究，不是现场照片。",
+      "publication_year": null,
+      "capture_year": null,
+      "author": "课程小组",
+      "checked": "2026-11-23",
+      "claims": [
+        "作为研究推断的输入。"
+      ],
+      "intended_reference": "作为研究推断的输入。",
+      "asset_usage": "citation_only",
+      "rights_status": "组内研究；不公开打包",
+      "verification": "checked"
+    },
+    {
+      "id": "R002",
+      "organization": "课程小组",
+      "title": "蜜雪冰城 M1 调研诊断",
+      "url": null,
+      "scene": "jakarta",
+      "geography": "组内研究，不是现场照片。",
+      "publication_year": null,
+      "capture_year": null,
+      "author": "课程小组",
+      "checked": "2026-11-23",
+      "claims": [
+        "作为研究推断的输入。"
+      ],
+      "intended_reference": "作为研究推断的输入。",
+      "asset_usage": "citation_only",
+      "rights_status": "组内研究；不公开打包",
+      "verification": "checked"
+    },
+    {
+      "id": "U001",
+      "organization": "用户提供",
+      "title": "万老师造型参考图",
+      "url": null,
+      "scene": "karawang",
+      "geography": "由用户指定为虚构角色参考；图不证明人物工作地点。",
+      "publication_year": null,
+      "capture_year": null,
+      "author": "原作者及肖像权待确认",
+      "checked": "2026-11-23",
+      "claims": [
+        "深色上衣、短发和斜挎包；原创32×40角色。"
+      ],
+      "intended_reference": "深色上衣、短发和斜挎包；原创32×40角色。",
+      "asset_usage": "private_reference_only",
+      "rights_status": "内部研究；可识别肖像公开使用待确认",
+      "verification": "checked"
+    },
+    {
+      "id": "M009",
+      "organization": "MIXUE Group / HKEXnews",
+      "title": "MIXUE Group shareholder circular, 9 June 2025, cover",
+      "url": "https://www1.hkexnews.hk/listedco/listconews/sehk/2025/0609/2025060900944.pdf",
+      "scene": "jakarta",
+      "geography": "企业文件，仅用于核对国际品牌标识。门店所在地以 M003 为准。",
+      "publication_year": 2025,
+      "capture_year": null,
+      "author": "MIXUE Group",
+      "checked": "2026-11-23",
+      "claims": [
+        "封面组合标包含戴冠持杖雪王、MIXUE 字标与 SINCE 1997 · ICE CREAM & TEA。"
+      ],
+      "intended_reference": "核对雪王、字标与副标的排列。",
+      "asset_usage": "reference_only",
+      "rights_status": "企业标识权利保留；未使用此文件图像",
+      "verification": "checked"
+    },
+    {
+      "id": "L004",
+      "organization": "TakWolf (GitHub)",
+      "title": "Fusion Pixel Font 12px Proportional (zh_hans) v2026.11.10",
+      "url": "https://github.com/TakWolf/fusion-pixel-font",
+      "scene": "global",
+      "geography": "数字开源点阵字体；地理位置与拍摄年份不适用。",
+      "publication_year": 2026,
+      "capture_year": null,
+      "author": "TakWolf & upstream contributors (Ark Pixel / Cubic 11 / Galmuri)",
+      "checked": "2026-11-24",
+      "claims": [
+        "12px 原生像素比例简中与拉丁点阵字体，经子集化为 WOFF2 内联用于游戏全界面、对话与场景文字。"
+      ],
+      "intended_reference": "游戏全界面、对话与场景原生像素排版字体。",
+      "asset_usage": "licensed_for_reuse",
+      "rights_status": "SIL Open Font License 1.1 (OFL-1.1)；完整许可已保存于 assets/licenses/OFL-fusion-pixel-font.txt",
+      "verification": "checked"
+    },
+    {
+      "id": "U002",
+      "organization": "用户提供",
+      "title": "场景 BGM 与成就解锁配乐包（bgm/ 目录 8 首原曲）",
+      "url": null,
+      "scene": "global",
+      "geography": "用户提供用于本游戏各场景配乐与成就提示；剥离内嵌封面后转为 96kbps 立体声 MP3 入包。",
+      "publication_year": 2026,
+      "capture_year": null,
+      "author": "用户提供（含商业游戏原声曲目，公开发行前须确认或替换授权）",
+      "checked": "2026-11-25",
+      "claims": [
+        "覆盖开场、雅加达街区、蜜雪门店、蜜雪奶茶吧台小游戏、卡拉旺园区、三一车间、终章通关 7 场景配乐与成就解锁音效。"
+      ],
+      "intended_reference": "游戏各场景循环背景音乐与成就解锁号角。",
+      "asset_usage": "user_provided_audio",
+      "rights_status": "用户提供；仅限本地课程展示使用，公开发行前须核验并替换未经授权的商业原声曲目",
+      "verification": "checked"
+    }
+  ]
+}

@@ -1,0 +1,1899 @@
+{
+  "schema_version": "2.0.0",
+  "visual_style": {
+    "perspective": "topdown_3_4",
+    "base_tile_px": 32,
+    "logical_resolution": [
+      640,
+      360
+    ],
+    "frame_px": [
+      32,
+      40
+    ]
+  },
+  "assets": [
+    {
+      "id": "building_mixue_facade",
+      "kind": "buildings",
+      "scene": "jakarta",
+      "file": "assets/pixel/buildings/mixue.png",
+      "resolution": [
+        176,
+        153
+      ],
+      "anchor": [
+        0.5,
+        1
+      ],
+      "collision": [
+        -84,
+        -75,
+        168,
+        72
+      ],
+      "source_ids": [
+        "M003"
+      ],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "独立绘制，底边中心排序；碰撞为相对锚点的 [x,y,w,h]。"
+    },
+    {
+      "id": "prop_kopi",
+      "kind": "buildings",
+      "scene": "jakarta",
+      "file": "assets/pixel/buildings/kopi.png",
+      "resolution": [
+        144,
+        144
+      ],
+      "anchor": [
+        0.5,
+        1
+      ],
+      "collision": [
+        -68,
+        -66,
+        136,
+        63
+      ],
+      "source_ids": [
+        "M006",
+        "M007",
+        "M008"
+      ],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "独立绘制，底边中心排序；碰撞为相对锚点的 [x,y,w,h]。"
+    },
+    {
+      "id": "prop_fruit",
+      "kind": "buildings",
+      "scene": "jakarta",
+      "file": "assets/pixel/buildings/fruit.png",
+      "resolution": [
+        144,
+        139
+      ],
+      "anchor": [
+        0.5,
+        1
+      ],
+      "collision": [
+        -68,
+        -68,
+        136,
+        65
+      ],
+      "source_ids": [
+        "M006",
+        "M007",
+        "M008"
+      ],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "独立绘制，底边中心排序；碰撞为相对锚点的 [x,y,w,h]。"
+    },
+    {
+      "id": "prop_palm",
+      "kind": "props",
+      "scene": "jakarta",
+      "file": "assets/pixel/props/palm.png",
+      "resolution": [
+        102,
+        110
+      ],
+      "anchor": [
+        0.5,
+        1
+      ],
+      "collision": [
+        -5,
+        -13,
+        10,
+        10
+      ],
+      "source_ids": [
+        "M006",
+        "M007",
+        "M008"
+      ],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "独立绘制，底边中心排序；碰撞为相对锚点的 [x,y,w,h]。"
+    },
+    {
+      "id": "prop_planter",
+      "kind": "props",
+      "scene": "jakarta / mixue_shop",
+      "file": "assets/pixel/props/planter.png",
+      "resolution": [
+        42,
+        42
+      ],
+      "anchor": [
+        0.5,
+        1
+      ],
+      "collision": [
+        -9,
+        -16,
+        19,
+        13
+      ],
+      "source_ids": [
+        "M006",
+        "M007",
+        "M008"
+      ],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "独立绘制，底边中心排序；碰撞为相对锚点的 [x,y,w,h]。"
+    },
+    {
+      "id": "prop_shade-tree",
+      "kind": "props",
+      "scene": "jakarta",
+      "file": "assets/pixel/props/shade-tree.png",
+      "resolution": [
+        84,
+        81
+      ],
+      "anchor": [
+        0.5,
+        1
+      ],
+      "collision": [
+        -6,
+        -13,
+        12,
+        10
+      ],
+      "source_ids": [
+        "M006",
+        "M007",
+        "M008"
+      ],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "独立绘制，底边中心排序；碰撞为相对锚点的 [x,y,w,h]。"
+    },
+    {
+      "id": "prop_scooter",
+      "kind": "props",
+      "scene": "jakarta",
+      "file": "assets/pixel/props/scooter.png",
+      "resolution": [
+        44,
+        33
+      ],
+      "anchor": [
+        0.5,
+        1
+      ],
+      "collision": [
+        -18,
+        -13,
+        36,
+        10
+      ],
+      "source_ids": [
+        "M006",
+        "M007",
+        "M008"
+      ],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "独立绘制，底边中心排序；碰撞为相对锚点的 [x,y,w,h]。"
+    },
+    {
+      "id": "prop_vespa",
+      "kind": "props",
+      "scene": "jakarta",
+      "file": "assets/pixel/props/vespa.png",
+      "resolution": [
+        44,
+        33
+      ],
+      "anchor": [
+        0.5,
+        1
+      ],
+      "collision": [
+        -18,
+        -13,
+        36,
+        10
+      ],
+      "source_ids": [
+        "M006",
+        "M007",
+        "M008"
+      ],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "独立绘制，底边中心排序；碰撞为相对锚点的 [x,y,w,h]。"
+    },
+    {
+      "id": "prop_cart",
+      "kind": "props",
+      "scene": "jakarta",
+      "file": "assets/pixel/props/cart.png",
+      "resolution": [
+        64,
+        62
+      ],
+      "anchor": [
+        0.5,
+        1
+      ],
+      "collision": [
+        -28,
+        -26,
+        56,
+        23
+      ],
+      "source_ids": [
+        "M006",
+        "M007",
+        "M008"
+      ],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "独立绘制，底边中心排序；碰撞为相对锚点的 [x,y,w,h]。"
+    },
+    {
+      "id": "prop_halte",
+      "kind": "props",
+      "scene": "jakarta",
+      "file": "assets/pixel/props/halte.png",
+      "resolution": [
+        71,
+        68
+      ],
+      "anchor": [
+        0.5,
+        1
+      ],
+      "collision": [
+        -31,
+        -11,
+        63,
+        8
+      ],
+      "source_ids": [
+        "M006",
+        "M007",
+        "M008"
+      ],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "独立绘制，底边中心排序；碰撞为相对锚点的 [x,y,w,h]。"
+    },
+    {
+      "id": "prop_chalkboard",
+      "kind": "props",
+      "scene": "jakarta / mixue_shop",
+      "file": "assets/pixel/props/chalkboard.png",
+      "resolution": [
+        30,
+        40
+      ],
+      "anchor": [
+        0.5,
+        1
+      ],
+      "collision": [
+        -11,
+        -12,
+        22,
+        9
+      ],
+      "source_ids": [
+        "M006",
+        "M007",
+        "M008"
+      ],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "独立绘制，底边中心排序；碰撞为相对锚点的 [x,y,w,h]。"
+    },
+    {
+      "id": "prop_bench",
+      "kind": "props",
+      "scene": "jakarta",
+      "file": "assets/pixel/props/bench.png",
+      "resolution": [
+        54,
+        27
+      ],
+      "anchor": [
+        0.5,
+        1
+      ],
+      "collision": [
+        -23,
+        -15,
+        46,
+        12
+      ],
+      "source_ids": [
+        "M006",
+        "M007",
+        "M008"
+      ],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "独立绘制，底边中心排序；碰撞为相对锚点的 [x,y,w,h]。"
+    },
+    {
+      "id": "prop_table",
+      "kind": "props",
+      "scene": "mixue_shop",
+      "file": "assets/pixel/props/table.png",
+      "resolution": [
+        52,
+        42
+      ],
+      "anchor": [
+        0.5,
+        1
+      ],
+      "collision": [
+        -22,
+        -22,
+        44,
+        19
+      ],
+      "source_ids": [
+        "M004",
+        "M005"
+      ],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "独立绘制，底边中心排序；碰撞为相对锚点的 [x,y,w,h]。"
+    },
+    {
+      "id": "prop_cone",
+      "kind": "props",
+      "scene": "jakarta / mixue_shop",
+      "file": "assets/pixel/props/cone.png",
+      "resolution": [
+        32,
+        36
+      ],
+      "anchor": [
+        0.5,
+        1
+      ],
+      "collision": [
+        -7,
+        -12,
+        15,
+        9
+      ],
+      "source_ids": [
+        "M003"
+      ],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "独立绘制，底边中心排序；碰撞为相对锚点的 [x,y,w,h]。"
+    },
+    {
+      "id": "interior_mixue_counter",
+      "kind": "props",
+      "scene": "mixue_shop",
+      "file": "assets/pixel/props/counter.png",
+      "resolution": [
+        240,
+        58
+      ],
+      "anchor": [
+        0.5,
+        1
+      ],
+      "collision": [
+        -116,
+        -34,
+        232,
+        31
+      ],
+      "source_ids": [
+        "M004",
+        "M005"
+      ],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "按 M004 Kota Tua 实拍合并为单张 240×58 连体长柜台：原木连体台面、冰蓝/奶油色正面灯箱、左侧出餐立牌与右侧单台收银机。"
+    },
+    {
+      "id": "prop_menu-board",
+      "kind": "props",
+      "scene": "mixue_shop",
+      "file": "assets/pixel/props/menu-board.png",
+      "resolution": [
+        96,
+        53
+      ],
+      "anchor": [
+        0.5,
+        1
+      ],
+      "collision": [
+        -44,
+        -3,
+        88,
+        0
+      ],
+      "source_ids": [
+        "M004",
+        "M005"
+      ],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "独立绘制左联三屏菜单（原味甜筒 / 波霸圣代 / 芒果圣代），底边中心排序。"
+    },
+    {
+      "id": "prop_menu-board-drinks",
+      "kind": "props",
+      "scene": "mixue_shop",
+      "file": "assets/pixel/props/menu-board-drinks.png",
+      "resolution": [
+        96,
+        53
+      ],
+      "anchor": [
+        0.5,
+        1
+      ],
+      "collision": [
+        -44,
+        -3,
+        88,
+        0
+      ],
+      "source_ids": [
+        "M004",
+        "M005"
+      ],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "独立绘制右联三屏菜单（冰鲜柠檬水 / 黑糖珍珠奶茶 / 草莓果茶），底边中心排序。"
+    },
+    {
+      "id": "prop_crate",
+      "kind": "props",
+      "scene": "mixue_shop",
+      "file": "assets/pixel/props/crate.png",
+      "resolution": [
+        40,
+        32
+      ],
+      "anchor": [
+        0.5,
+        1
+      ],
+      "collision": [
+        -16,
+        -23,
+        32,
+        20
+      ],
+      "source_ids": [
+        "M004",
+        "M005"
+      ],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "独立绘制，底边中心排序；碰撞为相对锚点的 [x,y,w,h]。"
+    },
+    {
+      "id": "tile_jakarta_ground",
+      "kind": "tileset",
+      "scene": "jakarta / mixue_shop",
+      "file": "assets/pixel/tilesets/ground.png",
+      "resolution": [
+        256,
+        32
+      ],
+      "anchor": [
+        0,
+        0
+      ],
+      "collision": null,
+      "source_ids": [
+        "M003",
+        "M006",
+        "M008"
+      ],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "八格地表，32×32；碰撞另在物件层。"
+    },
+    {
+      "id": "actor_player",
+      "kind": "character",
+      "scene": "global",
+      "file": "assets/pixel/characters/player.png",
+      "resolution": [
+        96,
+        160
+      ],
+      "anchor": [
+        0.5,
+        0.94
+      ],
+      "collision": [
+        -5,
+        -2,
+        10,
+        4
+      ],
+      "source_ids": [
+        "A001",
+        "A002",
+        "A003"
+      ],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "3帧×4向，帧32×40；帽型、服装、道具与步态均重新绘制。"
+    },
+    {
+      "id": "actor_student",
+      "kind": "character",
+      "scene": "jakarta / mixue_shop",
+      "file": "assets/pixel/characters/student.png",
+      "resolution": [
+        96,
+        160
+      ],
+      "anchor": [
+        0.5,
+        0.94
+      ],
+      "collision": null,
+      "source_ids": [
+        "A001",
+        "A002",
+        "A003"
+      ],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "3帧×4向，帧32×40；帽型、服装、道具与步态均重新绘制。"
+    },
+    {
+      "id": "actor_rider",
+      "kind": "character",
+      "scene": "jakarta / mixue_shop",
+      "file": "assets/pixel/characters/rider.png",
+      "resolution": [
+        96,
+        160
+      ],
+      "anchor": [
+        0.5,
+        0.94
+      ],
+      "collision": null,
+      "source_ids": [
+        "A001",
+        "A002",
+        "A003"
+      ],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "3帧×4向，帧32×40；帽型、服装、道具与步态均重新绘制。"
+    },
+    {
+      "id": "actor_vendor",
+      "kind": "character",
+      "scene": "jakarta / mixue_shop",
+      "file": "assets/pixel/characters/vendor.png",
+      "resolution": [
+        96,
+        160
+      ],
+      "anchor": [
+        0.5,
+        0.94
+      ],
+      "collision": null,
+      "source_ids": [
+        "A001",
+        "A002",
+        "A003"
+      ],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "3帧×4向，帧32×40；帽型、服装、道具与步态均重新绘制。"
+    },
+    {
+      "id": "npc_mixue_clerk",
+      "kind": "character",
+      "scene": "mixue_shop",
+      "file": "assets/pixel/characters/clerk.png",
+      "resolution": [
+        96,
+        160
+      ],
+      "anchor": [
+        0.5,
+        0.94
+      ],
+      "collision": null,
+      "source_ids": [
+        "A001",
+        "A002",
+        "A003"
+      ],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "3帧×4向，帧32×40；帽型、服装、道具与步态均重新绘制。"
+    },
+    {
+      "id": "actor_engineer",
+      "kind": "character",
+      "scene": "karawang / sany_workshop",
+      "file": "assets/pixel/characters/engineer.png",
+      "resolution": [
+        96,
+        160
+      ],
+      "anchor": [
+        0.5,
+        0.94
+      ],
+      "collision": null,
+      "source_ids": [
+        "A001",
+        "A002",
+        "A003"
+      ],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "3帧×4向，帧32×40；帽型、服装、道具与步态均重新绘制。"
+    },
+    {
+      "id": "npc_field_documentarian",
+      "kind": "character",
+      "scene": "karawang",
+      "file": "assets/pixel/characters/wan.png",
+      "resolution": [
+        96,
+        160
+      ],
+      "anchor": [
+        0.5,
+        0.94
+      ],
+      "collision": null,
+      "source_ids": [
+        "A001",
+        "A002",
+        "A003",
+        "U001"
+      ],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "3帧×4向，帧32×40；帽型、服装、道具与步态均重新绘制。 用户指定虚构称呼万老师；通用面孔与深色挎包。"
+    },
+    {
+      "id": "ui_compass",
+      "kind": "ui",
+      "scene": "global",
+      "file": "assets/pixel/ui/compass.png",
+      "resolution": [
+        32,
+        32
+      ],
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "collision": null,
+      "source_ids": [],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "原创调查手册图标 / 操作配件。"
+    },
+    {
+      "id": "ui_camera",
+      "kind": "ui",
+      "scene": "global",
+      "file": "assets/pixel/ui/camera.png",
+      "resolution": [
+        32,
+        32
+      ],
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "collision": null,
+      "source_ids": [],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "原创调查手册图标 / 操作配件。"
+    },
+    {
+      "id": "ui_evidence_journal",
+      "kind": "ui",
+      "scene": "global",
+      "file": "assets/pixel/ui/journal.png",
+      "resolution": [
+        32,
+        32
+      ],
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "collision": null,
+      "source_ids": [],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "原创调查手册图标 / 操作配件。"
+    },
+    {
+      "id": "ui_atlas",
+      "kind": "ui",
+      "scene": "global",
+      "file": "assets/pixel/ui/atlas.png",
+      "resolution": [
+        32,
+        32
+      ],
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "collision": null,
+      "source_ids": [],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "原创调查手册图标 / 操作配件。"
+    },
+    {
+      "id": "ui_tasks",
+      "kind": "ui",
+      "scene": "global",
+      "file": "assets/pixel/ui/tasks.png",
+      "resolution": [
+        32,
+        32
+      ],
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "collision": null,
+      "source_ids": [],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "原创调查手册图标 / 操作配件。"
+    },
+    {
+      "id": "ui_cup",
+      "kind": "ui",
+      "scene": "global",
+      "file": "assets/pixel/ui/cup.png",
+      "resolution": [
+        32,
+        32
+      ],
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "collision": null,
+      "source_ids": [],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "原创调查手册图标 / 操作配件。"
+    },
+    {
+      "id": "ui_lemon",
+      "kind": "ui",
+      "scene": "global",
+      "file": "assets/pixel/ui/lemon.png",
+      "resolution": [
+        32,
+        32
+      ],
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "collision": null,
+      "source_ids": [],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "原创调查手册图标 / 操作配件。"
+    },
+    {
+      "id": "ui_ice",
+      "kind": "ui",
+      "scene": "mixue_shop",
+      "file": "assets/pixel/ui/ice.png",
+      "resolution": [
+        32,
+        32
+      ],
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "collision": null,
+      "source_ids": [],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "原创蜜雪操作台冰块像素图标。"
+    },
+    {
+      "id": "ui_boba",
+      "kind": "ui",
+      "scene": "mixue_shop",
+      "file": "assets/pixel/ui/boba.png",
+      "resolution": [
+        32,
+        32
+      ],
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "collision": null,
+      "source_ids": [],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "原创蜜雪操作台黑糖珍珠像素图标。"
+    },
+    {
+      "id": "ui_strawberry",
+      "kind": "ui",
+      "scene": "mixue_shop",
+      "file": "assets/pixel/ui/strawberry.png",
+      "resolution": [
+        32,
+        32
+      ],
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "collision": null,
+      "source_ids": [],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "原创蜜雪操作台草莓果酱像素图标。"
+    },
+    {
+      "id": "ui_cone",
+      "kind": "ui",
+      "scene": "mixue_shop",
+      "file": "assets/pixel/ui/cone.png",
+      "resolution": [
+        32,
+        32
+      ],
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "collision": null,
+      "source_ids": [],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "原创蜜雪操作台原味甜筒像素图标。"
+    },
+    {
+      "id": "ui_boba_sundae",
+      "kind": "ui",
+      "scene": "mixue_shop",
+      "file": "assets/pixel/ui/boba-sundae.png",
+      "resolution": [
+        32,
+        32
+      ],
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "collision": null,
+      "source_ids": [],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "原创蜜雪操作台波霸圣代像素图标。"
+    },
+    {
+      "id": "ui_mango_sundae",
+      "kind": "ui",
+      "scene": "mixue_shop",
+      "file": "assets/pixel/ui/mango-sundae.png",
+      "resolution": [
+        32,
+        32
+      ],
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "collision": null,
+      "source_ids": [],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创图形；品牌文字按课程识别用途处理",
+      "notes": "原创蜜雪操作台芒果圣代像素图标。"
+    },
+    {
+      "id": "audio_bgm_opening",
+      "kind": "audio",
+      "scene": "menu / intro",
+      "file": "assets/audio/bgm-opening.mp3",
+      "resolution": null,
+      "anchor": null,
+      "collision": null,
+      "source_ids": ["U002"],
+      "state": "approved",
+      "asset_usage": "user_provided_audio",
+      "license": "user_provided",
+      "rights_status": "用户提供；用于本项目配乐（公开发行前需核验原曲授权）",
+      "notes": "源自 bgm/开场音乐.mp3（111.1s），已剥离封面并转码 96kbps 立体声 MP3。"
+    },
+    {
+      "id": "audio_bgm_ending",
+      "kind": "audio",
+      "scene": "ending",
+      "file": "assets/audio/bgm-ending.mp3",
+      "resolution": null,
+      "anchor": null,
+      "collision": null,
+      "source_ids": ["U002"],
+      "state": "approved",
+      "asset_usage": "user_provided_audio",
+      "license": "user_provided",
+      "rights_status": "用户提供；含商业游戏原声曲目（仅限本地展示使用，公开发行前须替换为授权或原创曲目）",
+      "notes": "源自 bgm/通关音乐.mp3（114.3s），已剥离封面并转码 96kbps 立体声 MP3，用于终章结局与日落返航界面。"
+    },
+    {
+      "id": "audio_bgm_jakarta",
+      "kind": "audio",
+      "scene": "jakarta",
+      "file": "assets/audio/bgm-jakarta.mp3",
+      "resolution": null,
+      "anchor": null,
+      "collision": null,
+      "source_ids": ["U002"],
+      "state": "approved",
+      "asset_usage": "user_provided_audio",
+      "license": "user_provided",
+      "rights_status": "用户提供；用于本项目配乐（公开发行前需核验原曲授权）",
+      "notes": "源自 bgm/蜜雪冰城外.mp3（64.6s），已剥离封面并转码 96kbps 立体声 MP3。"
+    },
+    {
+      "id": "audio_bgm_mixue",
+      "kind": "audio",
+      "scene": "mixue_shop",
+      "file": "assets/audio/bgm-mixue.mp3",
+      "resolution": null,
+      "anchor": null,
+      "collision": null,
+      "source_ids": ["U002"],
+      "state": "approved",
+      "asset_usage": "user_provided_audio",
+      "license": "user_provided",
+      "rights_status": "用户提供；用于本项目配乐（公开发行前需核验原曲授权）",
+      "notes": "源自 bgm/蜜雪冰城里.mp3（63.5s），已剥离封面并转码 96kbps 立体声 MP3。"
+    },
+    {
+      "id": "audio_bgm_mixue_bar",
+      "kind": "audio",
+      "scene": "mixue_bar",
+      "file": "assets/audio/bgm-mixue-bar.mp3",
+      "resolution": null,
+      "anchor": null,
+      "collision": null,
+      "source_ids": ["U002"],
+      "state": "approved",
+      "asset_usage": "user_provided_audio",
+      "license": "user_provided",
+      "rights_status": "用户提供；含商业游戏原声曲目（仅限本地展示使用，公开发行前须替换为授权或原创曲目）",
+      "notes": "源自 bgm/奶茶游戏.mp3（55.5s，Pokémon Ruby & Sapphire OST《ヒワマキシティ》/ 青木森一），已剥离封面并转码 96kbps 立体声 MP3，用于蜜雪第一人称吧台小游戏场景。"
+    },
+    {
+      "id": "audio_bgm_karawang",
+      "kind": "audio",
+      "scene": "karawang",
+      "file": "assets/audio/bgm-karawang.mp3",
+      "resolution": null,
+      "anchor": null,
+      "collision": null,
+      "source_ids": ["U002"],
+      "state": "approved",
+      "asset_usage": "user_provided_audio",
+      "license": "user_provided",
+      "rights_status": "用户提供；用于本项目配乐（公开发行前需核验原曲授权）",
+      "notes": "源自 bgm/三一重工外.mp3（115.8s），已剥离封面并转码 96kbps 立体声 MP3。"
+    },
+    {
+      "id": "audio_bgm_workshop",
+      "kind": "audio",
+      "scene": "sany_workshop",
+      "file": "assets/audio/bgm-workshop.mp3",
+      "resolution": null,
+      "anchor": null,
+      "collision": null,
+      "source_ids": ["U002"],
+      "state": "approved",
+      "asset_usage": "user_provided_audio",
+      "license": "user_provided",
+      "rights_status": "用户提供；用于本项目配乐（公开发行前需核验原曲授权）",
+      "notes": "源自 bgm/三一重工仓库.mp3（52.3s），已剥离封面并转码 96kbps 立体声 MP3。"
+    },
+    {
+      "id": "audio_sfx_achievement",
+      "kind": "audio",
+      "scene": "global",
+      "file": "assets/audio/sfx-achievement.mp3",
+      "resolution": null,
+      "anchor": null,
+      "collision": null,
+      "source_ids": ["U002"],
+      "state": "approved",
+      "asset_usage": "user_provided_audio",
+      "license": "user_provided",
+      "rights_status": "用户提供；用于成就解锁与终章提示（公开发行前需核验原曲授权）",
+      "notes": "源自 bgm/完成成就.mp3（5.24s），已剥离封面并转码 96kbps 立体声 MP3。"
+    },
+    {
+      "id": "ref_exterior",
+      "kind": "reference",
+      "scene": "jakarta",
+      "file": "assets/references/kota_tua_exterior.jpg",
+      "resolution": [
+        400,
+        300
+      ],
+      "anchor": null,
+      "collision": null,
+      "source_ids": [
+        "M003"
+      ],
+      "state": "reference",
+      "asset_usage": "reference_only",
+      "license": "CC-BY-SA-4.0",
+      "rights_status": "CC-BY-SA-4.0",
+      "notes": "仅研究；发行入口不引用。"
+    },
+    {
+      "id": "ref_interior",
+      "kind": "reference",
+      "scene": "mixue_shop",
+      "file": "assets/references/kota_tua_interior.jpg",
+      "resolution": [
+        300,
+        400
+      ],
+      "anchor": null,
+      "collision": null,
+      "source_ids": [
+        "M004"
+      ],
+      "state": "reference",
+      "asset_usage": "reference_only",
+      "license": "CC-BY-SA-4.0",
+      "rights_status": "CC-BY-SA-4.0",
+      "notes": "仅研究；发行入口不引用。"
+    },
+    {
+      "id": "ref_private",
+      "kind": "reference",
+      "scene": "karawang",
+      "file": "assets/references/npc_user_video_contact_sheet.jpg",
+      "resolution": [
+        1448,
+        1086
+      ],
+      "anchor": null,
+      "collision": null,
+      "source_ids": [
+        "U001"
+      ],
+      "state": "reference",
+      "asset_usage": "reference_only",
+      "license": "private_reference_only",
+      "rights_status": "private_reference_only",
+      "notes": "仅研究；发行入口不引用。"
+    },
+    {
+      "id": "mixue_kota_tua_sign",
+      "kind": "sign",
+      "scene": "jakarta",
+      "file": "assets/pixel/buildings/mixue-sign.png",
+      "resolution": [
+        272,
+        104
+      ],
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "collision": null,
+      "source_ids": [
+        "M003",
+        "M009"
+      ],
+      "state": "redrawn",
+      "asset_usage": "licensed_photo_adaptation",
+      "license": "CC-BY-SA-4.0 (photo contribution only)",
+      "rights_status": "摄影改编署名 Fikri RA 并保留相同许可。MIXUE 名称与雪王的标识、美术权利由品牌方保留，公开使用待确认。",
+      "notes": "仅截取 M003 实际门牌，透视校正、有限色重映射与小像素修整。场景显示为 136×52，近看面板展示完整像素。M009 核对组合标。"
+    },
+    {
+      "id": "building_sany_karawang",
+      "kind": "buildings",
+      "scene": "karawang",
+      "file": "assets/pixel/buildings/sany-hall.png",
+      "resolution": [
+        262,
+        141
+      ],
+      "anchor": [
+        0.5,
+        1
+      ],
+      "collision": [
+        -125,
+        -58,
+        251,
+        55
+      ],
+      "source_ids": [
+        "S005"
+      ],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创；SANY 文字权利归品牌方。",
+      "notes": "原创像素重绘；车间货位和具体尺寸为玩法编排。"
+    },
+    {
+      "id": "service_bay",
+      "kind": "buildings",
+      "scene": "karawang",
+      "file": "assets/pixel/buildings/service-bay.png",
+      "resolution": [
+        138,
+        114
+      ],
+      "anchor": [
+        0.5,
+        1
+      ],
+      "collision": [
+        -65,
+        -54,
+        131,
+        51
+      ],
+      "source_ids": [
+        "S002",
+        "S005"
+      ],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创；SANY 文字权利归品牌方。",
+      "notes": "原创像素重绘；车间货位和具体尺寸为玩法编排。"
+    },
+    {
+      "id": "prop_excavator_sany",
+      "kind": "props",
+      "scene": "karawang",
+      "file": "assets/pixel/props/excavator.png",
+      "resolution": [
+        146,
+        92
+      ],
+      "anchor": [
+        0.5,
+        1
+      ],
+      "collision": [
+        -67,
+        -22,
+        80,
+        19
+      ],
+      "source_ids": [
+        "S003",
+        "S005"
+      ],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创；SANY 文字权利归品牌方。",
+      "notes": "原创像素重绘；车间货位和具体尺寸为玩法编排。"
+    },
+    {
+      "id": "parts_rack_a1",
+      "kind": "props",
+      "scene": "sany_workshop",
+      "file": "assets/pixel/props/rack-a1.png",
+      "resolution": [
+        100,
+        67
+      ],
+      "anchor": [
+        0.5,
+        1
+      ],
+      "collision": [
+        -48,
+        -32,
+        96,
+        29
+      ],
+      "source_ids": [
+        "S004"
+      ],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创；SANY 文字权利归品牌方。",
+      "notes": "原创像素重绘；车间货位和具体尺寸为玩法编排。"
+    },
+    {
+      "id": "parts_rack_b2",
+      "kind": "props",
+      "scene": "sany_workshop",
+      "file": "assets/pixel/props/rack-b2.png",
+      "resolution": [
+        100,
+        67
+      ],
+      "anchor": [
+        0.5,
+        1
+      ],
+      "collision": [
+        -48,
+        -32,
+        96,
+        29
+      ],
+      "source_ids": [
+        "S004"
+      ],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创；SANY 文字权利归品牌方。",
+      "notes": "原创像素重绘；车间货位和具体尺寸为玩法编排。"
+    },
+    {
+      "id": "parts_rack_c3",
+      "kind": "props",
+      "scene": "sany_workshop",
+      "file": "assets/pixel/props/rack-c3.png",
+      "resolution": [
+        100,
+        67
+      ],
+      "anchor": [
+        0.5,
+        1
+      ],
+      "collision": [
+        -48,
+        -32,
+        96,
+        29
+      ],
+      "source_ids": [
+        "S004"
+      ],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创；SANY 文字权利归品牌方。",
+      "notes": "原创像素重绘；车间货位和具体尺寸为玩法编排。"
+    },
+    {
+      "id": "dispatch_station",
+      "kind": "props",
+      "scene": "sany_workshop",
+      "file": "assets/pixel/props/dispatch.png",
+      "resolution": [
+        67,
+        52
+      ],
+      "anchor": [
+        0.5,
+        1
+      ],
+      "collision": [
+        -29,
+        -21,
+        58,
+        18
+      ],
+      "source_ids": [
+        "S004"
+      ],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创；SANY 文字权利归品牌方。",
+      "notes": "原创像素重绘；车间货位和具体尺寸为玩法编排。"
+    },
+    {
+      "id": "workshop_wall",
+      "kind": "buildings",
+      "scene": "sany_workshop",
+      "file": "assets/pixel/buildings/shop-wall.png",
+      "resolution": [
+        238,
+        77
+      ],
+      "anchor": [
+        0.5,
+        1
+      ],
+      "collision": [
+        -117,
+        -49,
+        235,
+        46
+      ],
+      "source_ids": [
+        "S005"
+      ],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创；SANY 文字权利归品牌方。",
+      "notes": "原创像素重绘；车间货位和具体尺寸为玩法编排。"
+    },
+    {
+      "id": "tile_sany_yard",
+      "kind": "tilesets",
+      "scene": "karawang / sany_workshop",
+      "file": "assets/pixel/tilesets/yard-ground.png",
+      "resolution": [
+        64,
+        32
+      ],
+      "anchor": [
+        0,
+        0
+      ],
+      "collision": null,
+      "source_ids": [
+        "S005"
+      ],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创",
+      "notes": "模拟物流道具与地坪。"
+    },
+    {
+      "id": "loaded_trolley",
+      "kind": "props",
+      "scene": "sany_workshop",
+      "file": "assets/pixel/props/handcart.png",
+      "resolution": [
+        32,
+        30
+      ],
+      "anchor": [
+        0.5,
+        1
+      ],
+      "collision": null,
+      "source_ids": [],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创",
+      "notes": "模拟物流道具与地坪。"
+    },
+    {
+      "id": "portrait_wan",
+      "kind": "ui",
+      "scene": "global",
+      "file": "assets/pixel/ui/portrait-wan.png",
+      "resolution": [
+        64,
+        64
+      ],
+      "anchor": [
+        0.5,
+        0.5
+      ],
+      "collision": null,
+      "source_ids": [
+        "U001"
+      ],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创像素头像；依据三视图造型参考绘制",
+      "notes": "万老师 64×64 对话像素半身像，用于卡拉旺园区对话。"
+    },
+    {
+      "id": "portrait_player",
+      "kind": "ui",
+      "scene": "global",
+      "file": "assets/pixel/ui/portrait-player.png",
+      "resolution": [64, 64],
+      "anchor": [0.5, 0.5],
+      "collision": null,
+      "source_ids": ["A001", "A002", "A003"],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创",
+      "notes": "调查员 64×64 像素对话头像。"
+    },
+    {
+      "id": "portrait_student",
+      "kind": "ui",
+      "scene": "jakarta / mixue_shop",
+      "file": "assets/pixel/ui/portrait-student.png",
+      "resolution": [64, 64],
+      "anchor": [0.5, 0.5],
+      "collision": null,
+      "source_ids": ["A001", "A002", "A003"],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创",
+      "notes": "阿妮与门店顾客 64×64 像素对话头像。"
+    },
+    {
+      "id": "portrait_vendor",
+      "kind": "ui",
+      "scene": "jakarta",
+      "file": "assets/pixel/ui/portrait-vendor.png",
+      "resolution": [64, 64],
+      "anchor": [0.5, 0.5],
+      "collision": null,
+      "source_ids": ["A001", "A002", "A003"],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创",
+      "notes": "摊主伊布 64×64 像素对话头像。"
+    },
+    {
+      "id": "portrait_rider",
+      "kind": "ui",
+      "scene": "jakarta",
+      "file": "assets/pixel/ui/portrait-rider.png",
+      "resolution": [64, 64],
+      "anchor": [0.5, 0.5],
+      "collision": null,
+      "source_ids": ["A001", "A002", "A003"],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创",
+      "notes": "骑手里安 64×64 像素对话头像。"
+    },
+    {
+      "id": "portrait_clerk",
+      "kind": "ui",
+      "scene": "mixue_shop",
+      "file": "assets/pixel/ui/portrait-clerk.png",
+      "resolution": [64, 64],
+      "anchor": [0.5, 0.5],
+      "collision": null,
+      "source_ids": ["A001", "A002", "A003"],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创",
+      "notes": "店员莉娜 64×64 像素对话头像。"
+    },
+    {
+      "id": "portrait_engineer",
+      "kind": "ui",
+      "scene": "karawang / sany_workshop",
+      "file": "assets/pixel/ui/portrait-engineer.png",
+      "resolution": [64, 64],
+      "anchor": [0.5, 0.5],
+      "collision": null,
+      "source_ids": ["A001", "A002", "A003"],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创",
+      "notes": "三一服务工程师与协调员 64×64 像素对话头像。"
+    },
+    {
+      "id": "portrait_guide",
+      "kind": "ui",
+      "scene": "karawang",
+      "file": "assets/pixel/ui/portrait-guide.png",
+      "resolution": [64, 64],
+      "anchor": [0.5, 0.5],
+      "collision": null,
+      "source_ids": ["A001", "A002", "A003"],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创",
+      "notes": "园区接待员迪安 64×64 像素对话头像。"
+    },
+    {
+      "id": "ui_sound_on",
+      "kind": "ui",
+      "scene": "global",
+      "file": "assets/pixel/ui/sound-on.png",
+      "resolution": [16, 16],
+      "anchor": [0.5, 0.5],
+      "collision": null,
+      "source_ids": [],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创",
+      "notes": "16×16 原生像素扬声器开启图标，替换系统 Emoji。"
+    },
+    {
+      "id": "ui_sound_off",
+      "kind": "ui",
+      "scene": "global",
+      "file": "assets/pixel/ui/sound-off.png",
+      "resolution": [16, 16],
+      "anchor": [0.5, 0.5],
+      "collision": null,
+      "source_ids": [],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创",
+      "notes": "16×16 原生像素静音图标，替换系统 Emoji。"
+    },
+    {
+      "id": "ui_fullscreen",
+      "kind": "ui",
+      "scene": "global",
+      "file": "assets/pixel/ui/fullscreen.png",
+      "resolution": [16, 16],
+      "anchor": [0.5, 0.5],
+      "collision": null,
+      "source_ids": [],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创",
+      "notes": "16×16 原生像素全屏图标，替换系统符号。"
+    },
+    {
+      "id": "ui_gear",
+      "kind": "ui",
+      "scene": "global",
+      "file": "assets/pixel/ui/gear.png",
+      "resolution": [16, 16],
+      "anchor": [0.5, 0.5],
+      "collision": null,
+      "source_ids": [],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创",
+      "notes": "16×16 原生像素设置齿轮图标。"
+    },
+    {
+      "id": "font_fusion_pixel_12px",
+      "kind": "font",
+      "scene": "global",
+      "file": "assets/fonts/fusion-pixel-12px.woff2",
+      "resolution": null,
+      "anchor": null,
+      "collision": null,
+      "source_ids": ["L004"],
+      "state": "approved",
+      "asset_usage": "licensed_for_reuse",
+      "license": "SIL-OFL-1.1",
+      "rights_status": "SIL Open Font License 1.1（允许子集化与离线随单文件分发，保留许可声明）",
+      "notes": "缝合像素字体 Fusion Pixel 12px Proportional zh_hans 离线子集 WOFF2，覆盖全游戏 100% 文本与符号。"
+    },
+    {
+      "id": "npc_hijab_customer",
+      "kind": "character",
+      "scene": "jakarta / mixue_shop",
+      "file": "assets/pixel/characters/hijab.png",
+      "resolution": [96, 160],
+      "anchor": [0.5, 0.94],
+      "collision": null,
+      "source_ids": ["A001", "A002", "A003"],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创",
+      "notes": "3帧×4向，帧32×40；印尼年轻穆斯林女性顾客（浅薄荷头巾与珊瑚上衣）。"
+    },
+    {
+      "id": "npc_auntie_batik",
+      "kind": "character",
+      "scene": "jakarta / mixue_shop",
+      "file": "assets/pixel/characters/auntie.png",
+      "resolution": [96, 160],
+      "anchor": [0.5, 0.94],
+      "collision": null,
+      "source_ids": ["A001", "A002", "A003"],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创",
+      "notes": "3帧×4向，帧32×40；身着印尼巴迪克金纹上衣的街坊阿姨。"
+    },
+    {
+      "id": "npc_office_worker",
+      "kind": "character",
+      "scene": "jakarta / mixue_shop / karawang",
+      "file": "assets/pixel/characters/office.png",
+      "resolution": [96, 160],
+      "anchor": [0.5, 0.94],
+      "collision": null,
+      "source_ids": ["A001", "A002", "A003"],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创",
+      "notes": "3帧×4向，帧32×40；雅加达白领通勤族与配件调度员（眼镜、翻领衬衫与工牌）。"
+    },
+    {
+      "id": "npc_contractor_boss",
+      "kind": "character",
+      "scene": "karawang / sany_workshop",
+      "file": "assets/pixel/characters/boss.png",
+      "resolution": [96, 160],
+      "anchor": [0.5, 0.94],
+      "collision": null,
+      "source_ids": ["A001", "A002", "A003"],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创",
+      "notes": "3帧×4向，帧32×40；印尼工程承包商老板（白色安全帽与高可见反光背心）。"
+    },
+    {
+      "id": "npc_workshop_tech",
+      "kind": "character",
+      "scene": "karawang / sany_workshop",
+      "file": "assets/pixel/characters/tech.png",
+      "resolution": [96, 160],
+      "anchor": [0.5, 0.94],
+      "collision": null,
+      "source_ids": ["A001", "A002", "A003"],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创",
+      "notes": "3帧×4向，帧32×40；卡拉旺产业园实训技师与备件仓管员（藏蓝工装与作业帽）。"
+    },
+    {
+      "id": "portrait_hijab",
+      "kind": "ui",
+      "scene": "jakarta / mixue_shop",
+      "file": "assets/pixel/ui/portrait-hijab.png",
+      "resolution": [64, 64],
+      "anchor": [0.5, 0.5],
+      "collision": null,
+      "source_ids": ["A001", "A002", "A003"],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创",
+      "notes": "浅薄荷头巾顾客 64×64 像素对话头像。"
+    },
+    {
+      "id": "portrait_auntie",
+      "kind": "ui",
+      "scene": "jakarta / mixue_shop",
+      "file": "assets/pixel/ui/portrait-auntie.png",
+      "resolution": [64, 64],
+      "anchor": [0.5, 0.5],
+      "collision": null,
+      "source_ids": ["A001", "A002", "A003"],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创",
+      "notes": "巴迪克街坊阿姨 64×64 像素对话头像。"
+    },
+    {
+      "id": "portrait_office",
+      "kind": "ui",
+      "scene": "jakarta / mixue_shop / karawang",
+      "file": "assets/pixel/ui/portrait-office.png",
+      "resolution": [64, 64],
+      "anchor": [0.5, 0.5],
+      "collision": null,
+      "source_ids": ["A001", "A002", "A003"],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创",
+      "notes": "雅加达白领与调度员 64×64 像素对话头像。"
+    },
+    {
+      "id": "portrait_boss",
+      "kind": "ui",
+      "scene": "karawang / sany_workshop",
+      "file": "assets/pixel/ui/portrait-boss.png",
+      "resolution": [64, 64],
+      "anchor": [0.5, 0.5],
+      "collision": null,
+      "source_ids": ["A001", "A002", "A003"],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创",
+      "notes": "工程承包商老板 64×64 像素对话头像。"
+    },
+    {
+      "id": "portrait_tech",
+      "kind": "ui",
+      "scene": "karawang / sany_workshop",
+      "file": "assets/pixel/ui/portrait-tech.png",
+      "resolution": [64, 64],
+      "anchor": [0.5, 0.5],
+      "collision": null,
+      "source_ids": ["A001", "A002", "A003"],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创",
+      "notes": "园区实训技师与仓管员 64×64 像素对话头像。"
+    },
+    {
+      "id": "actor_player_ride_scooter",
+      "kind": "character",
+      "scene": "jakarta / karawang",
+      "file": "assets/pixel/characters/ride-scooter.png",
+      "resolution": [144, 192],
+      "anchor": [0.5, 0.9],
+      "collision": null,
+      "source_ids": ["A001", "A002", "A003", "M007"],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创",
+      "notes": "主角骑行青色电动车 48×48 四向三帧像素精灵表（含前大灯、尾灯、车轮转动与草帽骑手）。"
+    },
+    {
+      "id": "actor_player_ride_vespa",
+      "kind": "character",
+      "scene": "jakarta",
+      "file": "assets/pixel/characters/ride-vespa.png",
+      "resolution": [144, 192],
+      "anchor": [0.5, 0.9],
+      "collision": null,
+      "source_ids": ["A001", "A002", "A003", "M007"],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创",
+      "notes": "主角骑行红色电动车 48×48 四向三帧像素精灵表（含前大灯、尾灯、车轮转动与草帽骑手）。"
+    },
+    {
+      "id": "ui_trophy",
+      "kind": "ui",
+      "scene": "global",
+      "file": "assets/pixel/ui/trophy.png",
+      "resolution": [32, 32],
+      "anchor": [0.5, 0.5],
+      "collision": null,
+      "source_ids": [],
+      "state": "redrawn",
+      "asset_usage": "original_pixel_art",
+      "license": "project_original",
+      "rights_status": "项目原创",
+      "notes": "32×32 原生像素金色奖杯图标，用于旅途成就栏、成就解锁弹窗与结局页展示。"
+    }
+  ]
+}

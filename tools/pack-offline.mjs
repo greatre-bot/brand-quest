@@ -1,0 +1,14 @@
+import fs from 'node:fs/promises';
+const root=new URL('../dist/',import.meta.url);
+let html=await fs.readFile(new URL('index.html',root),'utf8');
+const script=html.match(/<script\b[^>]*\bsrc="([^"]+)"[^>]*><\/script>/);
+const style=html.match(/<link\b[^>]*\brel="stylesheet"[^>]*\bhref="([^"]+)"[^>]*>/);
+if(!script||!style)throw Error('Vite entry or stylesheet missing');
+const js=await fs.readFile(new URL(script[1],root),'utf8');
+const css=await fs.readFile(new URL(style[1],root),'utf8');
+if(/url\(["']?\.?\/?assets\//.test(css))throw Error('Un-inlined CSS asset found — raise assetsInlineLimit so single-file HTML stays 100% offline');
+if(/["']\.?\/?assets\/[^"']+\.mp3["']/.test(js))throw Error('Un-inlined MP3 asset found — raise assetsInlineLimit so single-file HTML stays 100% offline');
+html=html.replace(script[0],'').replace(style[0],()=>'<style>'+css+'</style>');
+html=html.replace('</body>',()=>'<script type="module">'+js.replace(/<\/script/gi,'<\\/script')+'</script></body>');
+await fs.writeFile(new URL('brand-quest.html',root),html);
+console.log('Single-file classroom edition created.');

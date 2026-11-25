@@ -1,0 +1,444 @@
+{
+  "mixue": {
+    "file": "assets/pixel/buildings/mixue.png",
+    "size": [
+      176,
+      153
+    ],
+    "anchor": [
+      0.5,
+      1
+    ],
+    "footprint": [
+      -84,
+      -75,
+      168,
+      72
+    ]
+  },
+  "kopi": {
+    "file": "assets/pixel/buildings/kopi.png",
+    "size": [
+      144,
+      144
+    ],
+    "anchor": [
+      0.5,
+      1
+    ],
+    "footprint": [
+      -68,
+      -66,
+      136,
+      63
+    ]
+  },
+  "fruit": {
+    "file": "assets/pixel/buildings/fruit.png",
+    "size": [
+      144,
+      139
+    ],
+    "anchor": [
+      0.5,
+      1
+    ],
+    "footprint": [
+      -68,
+      -68,
+      136,
+      65
+    ]
+  },
+  "palm": {
+    "file": "assets/pixel/props/palm.png",
+    "size": [
+      102,
+      110
+    ],
+    "anchor": [
+      0.5,
+      1
+    ],
+    "footprint": [
+      -5,
+      -13,
+      10,
+      10
+    ]
+  },
+  "planter": {
+    "file": "assets/pixel/props/planter.png",
+    "size": [
+      42,
+      42
+    ],
+    "anchor": [
+      0.5,
+      1
+    ],
+    "footprint": [
+      -9,
+      -16,
+      19,
+      13
+    ]
+  },
+  "shade-tree": {
+    "file": "assets/pixel/props/shade-tree.png",
+    "size": [
+      84,
+      81
+    ],
+    "anchor": [
+      0.5,
+      1
+    ],
+    "footprint": [
+      -6,
+      -13,
+      12,
+      10
+    ]
+  },
+  "scooter": {
+    "file": "assets/pixel/props/scooter.png",
+    "size": [
+      44,
+      33
+    ],
+    "anchor": [
+      0.5,
+      1
+    ],
+    "footprint": [
+      -18,
+      -13,
+      36,
+      10
+    ]
+  },
+  "vespa": {
+    "file": "assets/pixel/props/vespa.png",
+    "size": [
+      44,
+      33
+    ],
+    "anchor": [
+      0.5,
+      1
+    ],
+    "footprint": [
+      -18,
+      -13,
+      36,
+      10
+    ]
+  },
+  "cart": {
+    "file": "assets/pixel/props/cart.png",
+    "size": [
+      64,
+      62
+    ],
+    "anchor": [
+      0.5,
+      1
+    ],
+    "footprint": [
+      -28,
+      -26,
+      56,
+      23
+    ]
+  },
+  "halte": {
+    "file": "assets/pixel/props/halte.png",
+    "size": [
+      71,
+      68
+    ],
+    "anchor": [
+      0.5,
+      1
+    ],
+    "footprint": [
+      -31,
+      -11,
+      63,
+      8
+    ]
+  },
+  "chalkboard": {
+    "file": "assets/pixel/props/chalkboard.png",
+    "size": [
+      30,
+      40
+    ],
+    "anchor": [
+      0.5,
+      1
+    ],
+    "footprint": [
+      -11,
+      -12,
+      22,
+      9
+    ]
+  },
+  "bench": {
+    "file": "assets/pixel/props/bench.png",
+    "size": [
+      54,
+      27
+    ],
+    "anchor": [
+      0.5,
+      1
+    ],
+    "footprint": [
+      -23,
+      -15,
+      46,
+      12
+    ]
+  },
+  "table": {
+    "file": "assets/pixel/props/table.png",
+    "size": [
+      52,
+      42
+    ],
+    "anchor": [
+      0.5,
+      1
+    ],
+    "footprint": [
+      -22,
+      -22,
+      44,
+      19
+    ]
+  },
+  "cone": {
+    "file": "assets/pixel/props/cone.png",
+    "size": [
+      32,
+      36
+    ],
+    "anchor": [
+      0.5,
+      1
+    ],
+    "footprint": [
+      -7,
+      -12,
+      15,
+      9
+    ]
+  },
+  "counter": {
+    "file": "assets/pixel/props/counter.png",
+    "size": [
+      240,
+      58
+    ],
+    "anchor": [
+      0.5,
+      1
+    ],
+    "footprint": [
+      -116,
+      -34,
+      232,
+      31
+    ]
+  },
+  "menu-board": {
+    "file": "assets/pixel/props/menu-board.png",
+    "size": [
+      96,
+      53
+    ],
+    "anchor": [
+      0.5,
+      1
+    ],
+    "footprint": [
+      -44,
+      -3,
+      88,
+      0
+    ]
+  },
+  "menu-board-drinks": {
+    "file": "assets/pixel/props/menu-board-drinks.png",
+    "size": [
+      96,
+      53
+    ],
+    "anchor": [
+      0.5,
+      1
+    ],
+    "footprint": [
+      -44,
+      -3,
+      88,
+      0
+    ]
+  },
+  "crate": {
+    "file": "assets/pixel/props/crate.png",
+    "size": [
+      40,
+      32
+    ],
+    "anchor": [
+      0.5,
+      1
+    ],
+    "footprint": [
+      -16,
+      -23,
+      32,
+      20
+    ]
+  },
+  "sany-hall": {
+    "file": "assets/pixel/buildings/sany-hall.png",
+    "size": [
+      262,
+      141
+    ],
+    "anchor": [
+      0.5,
+      1
+    ],
+    "footprint": [
+      -125,
+      -58,
+      251,
+      55
+    ]
+  },
+  "service-bay": {
+    "file": "assets/pixel/buildings/service-bay.png",
+    "size": [
+      138,
+      114
+    ],
+    "anchor": [
+      0.5,
+      1
+    ],
+    "footprint": [
+      -65,
+      -54,
+      131,
+      51
+    ]
+  },
+  "excavator": {
+    "file": "assets/pixel/props/excavator.png",
+    "size": [
+      146,
+      92
+    ],
+    "anchor": [
+      0.5,
+      1
+    ],
+    "footprint": [
+      -67,
+      -22,
+      80,
+      19
+    ]
+  },
+  "rack-a1": {
+    "file": "assets/pixel/props/rack-a1.png",
+    "size": [
+      100,
+      67
+    ],
+    "anchor": [
+      0.5,
+      1
+    ],
+    "footprint": [
+      -48,
+      -32,
+      96,
+      29
+    ]
+  },
+  "rack-b2": {
+    "file": "assets/pixel/props/rack-b2.png",
+    "size": [
+      100,
+      67
+    ],
+    "anchor": [
+      0.5,
+      1
+    ],
+    "footprint": [
+      -48,
+      -32,
+      96,
+      29
+    ]
+  },
+  "rack-c3": {
+    "file": "assets/pixel/props/rack-c3.png",
+    "size": [
+      100,
+      67
+    ],
+    "anchor": [
+      0.5,
+      1
+    ],
+    "footprint": [
+      -48,
+      -32,
+      96,
+      29
+    ]
+  },
+  "dispatch": {
+    "file": "assets/pixel/props/dispatch.png",
+    "size": [
+      67,
+      52
+    ],
+    "anchor": [
+      0.5,
+      1
+    ],
+    "footprint": [
+      -29,
+      -21,
+      58,
+      18
+    ]
+  },
+  "shop-wall": {
+    "file": "assets/pixel/buildings/shop-wall.png",
+    "size": [
+      238,
+      77
+    ],
+    "anchor": [
+      0.5,
+      1
+    ],
+    "footprint": [
+      -117,
+      -49,
+      235,
+      46
+    ]
+  }
+}

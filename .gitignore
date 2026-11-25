@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Build output (built automatically by GitHub Actions for Pages)
+dist/
+.vite/
+
+# Raw uncompressed source BGM (compressed runtime audio lives in assets/audio/)
+bgm/
+
+# Private internal-only reference (do not publish to public repos)
+assets/references/npc_user_video_contact_sheet.jpg
+
+# Logs & OS junk
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.*

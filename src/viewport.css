@@ -1,0 +1,810 @@
+@font-face {
+  font-family: "FusionPixel";
+  src: url("../assets/fonts/fusion-pixel-12px.woff2") format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: block;
+}
+:root {
+  font-family: "FusionPixel", monospace;
+  font-size: 16px;
+  font-weight: 400;
+  color: #302418;
+  background: #14241c;
+  font-synthesis: none;
+  -webkit-font-smoothing: none;
+  -moz-osx-font-smoothing: grayscale;
+  font-smooth: never;
+  text-rendering: optimizeSpeed;
+}
+* {
+  box-sizing: border-box;
+  border-radius: 0;
+}
+h1, h2, h3, h4, b, strong, small, button, kbd, input {
+  font-family: "FusionPixel", monospace;
+  font-weight: 400;
+}
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+}
+body {
+  display: grid;
+  place-items: center;
+  background-color: #14241c;
+  background-image: repeating-conic-gradient(#172920 0% 25%, #12211a 0% 50%);
+  background-size: 16px 16px;
+}
+button {
+  font: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+button:focus-visible {
+  outline: 2px solid #f4c052;
+  outline-offset: 2px;
+}
+canvas, img {
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+#viewport {
+  width: min(100vw, 177.777778dvh);
+  aspect-ratio: 16 / 9;
+  position: relative;
+  overflow: hidden;
+  background: #8e9b75;
+  border: 4px solid #0d1813;
+  box-shadow: 0 0 0 2px #2e463a;
+}
+#game, #game > canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  touch-action: none;
+  -webkit-touch-callout: none;
+}
+#hud {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  --pad: 16px;
+}
+#hud button {
+  pointer-events: auto;
+}
+#viewport.hud-off #hud,
+#viewport.hud-off #interaction,
+#viewport.ending #hud,
+#viewport.ending #transit-banner,
+#viewport.ending #tutorial-bar,
+#viewport.title-mode #hud,
+#viewport.title-mode #interaction,
+#viewport.title-mode #tutorial-bar,
+#viewport.cutscene #hud,
+#viewport.cutscene #interaction,
+#viewport.cutscene #tutorial-bar {
+  display: none;
+}
+#viewport:has(#sheet:not([hidden])) #hud,
+#viewport:has(#sheet:not([hidden])) #interaction {
+  visibility: hidden;
+}
+.location-plaque, .system-tools, .quest-strip, .corner-badges, .hotbar {
+  position: absolute;
+}
+.location-plaque {
+  top: var(--pad);
+  left: var(--pad);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px 8px 8px;
+  background: #f8e9c2;
+  border: 3px solid #3f2b18;
+  box-shadow:
+    inset 2px 2px 0 #fff7dc,
+    inset -2px -2px 0 #cfa96e,
+    4px 4px 0 #16241d;
+}
+.location-plaque img {
+  width: 36px;
+  height: 36px;
+}
+.location-plaque small, .quest-strip small {
+  display: block;
+  font-size: 12px;
+  line-height: 1.2;
+  letter-spacing: 1px;
+  color: #7d5932;
+}
+.location-plaque i {
+  font-style: normal;
+  color: #b44d38;
+}
+.location-plaque h1 {
+  margin: 4px 0 0;
+  font-size: 24px;
+  line-height: 1.1;
+  color: #25362c;
+  text-shadow: 1px 1px 0 #fff6da;
+}
+.system-tools {
+  right: var(--pad);
+  top: var(--pad);
+  display: flex;
+  align-items: stretch;
+  gap: 6px;
+}
+.system-tools button, .photo-count, .ach-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: #233a2f;
+  border: 3px solid #13211a;
+  color: #fff2cc;
+  box-shadow:
+    inset 2px 2px 0 #3f6250,
+    inset -2px -2px 0 #182921,
+    3px 3px 0 #0f1c16;
+  font-size: 12px;
+  line-height: 1;
+  padding: 7px 10px;
+  min-height: 34px;
+}
+.system-tools button:hover, .photo-count:hover, .ach-count:hover {
+  background: #2e4c3e;
+}
+.system-tools button:active, .photo-count:active, .ach-count:active {
+  transform: translate(2px, 2px);
+  box-shadow:
+    inset 2px 2px 0 #182921,
+    inset -2px -2px 0 #3f6250,
+    1px 1px 0 #0f1c16;
+}
+.system-tools button.icon-btn {
+  padding: 6px 8px;
+  min-width: 34px;
+}
+.hud-icon {
+  width: 16px;
+  height: 16px;
+  display: block;
+  flex-shrink: 0;
+}
+.system-tools #mode-label::after {
+  content: "▾";
+  color: #e4bd74;
+  margin-left: 2px;
+}
+.quest-strip {
+  bottom: var(--pad);
+  left: var(--pad);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px 8px 8px;
+  max-width: min(34%, 360px);
+  background: #f8e9c2;
+  color: #2f3e31;
+  border: 3px solid #3f2b18;
+  box-shadow:
+    inset 2px 2px 0 #fff7dc,
+    inset -2px -2px 0 #cfa96e,
+    4px 4px 0 #16241d;
+  text-align: left;
+}
+.quest-strip img {
+  width: 32px;
+  height: 32px;
+  flex-shrink: 0;
+}
+.quest-strip strong {
+  display: block;
+  font-size: 12px;
+  line-height: 1.5;
+  margin-top: 2px;
+  color: #24382c;
+}
+.quest-strip small {
+  color: #9b5a2f;
+}
+.hotbar {
+  bottom: var(--pad);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  padding: 6px;
+  background: #6c4a2b;
+  border: 3px solid #331e0e;
+  box-shadow:
+    inset 2px 2px 0 #9f7044,
+    inset -2px -2px 0 #4d3119,
+    4px 4px 0 #16241d;
+}
+.hotbar button {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  place-items: center;
+  gap: 2px;
+  background: #f2dda9;
+  color: #3d2817;
+  border: 2px solid #4e331b;
+  box-shadow:
+    inset 2px 2px 0 #fff4d4,
+    inset -2px -2px 0 #c9a165;
+  min-width: 56px;
+  padding: 3px 5px 4px;
+}
+.hotbar button:hover, .quest-strip:hover {
+  background: #fcebc0;
+}
+.hotbar button:active {
+  transform: translate(1px, 1px);
+  box-shadow: inset 2px 2px 0 #c9a165, inset -2px -2px 0 #fff4d4;
+}
+.hotbar img {
+  grid-column: span 2;
+  width: 32px;
+  height: 32px;
+}
+.hotbar span, .hotbar kbd {
+  font-size: 12px;
+  line-height: 1;
+}
+.hotbar kbd {
+  color: #8c4b24;
+  background: #e5c689;
+  padding: 1px 3px;
+  border: 1px solid #9e7544;
+}
+.corner-badges {
+  bottom: var(--pad);
+  right: var(--pad);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.photo-count, .ach-count {
+  font-size: 14px;
+  padding: 6px 10px;
+}
+.ach-count {
+  border-color: #4f3518;
+  background: #3d2c1b;
+  color: #ffefc2;
+  box-shadow:
+    inset 2px 2px 0 #6e4f2d,
+    inset -2px -2px 0 #261a0e,
+    3px 3px 0 #0f1c16;
+}
+.ach-count:hover {
+  background: #523b23;
+}
+.photo-count img, .ach-count img {
+  width: 22px;
+  height: 22px;
+}
+#viewport.hud-off #ach-toast,
+#viewport.ending #ach-toast,
+#viewport.title-mode #ach-toast,
+#viewport.cutscene #ach-toast {
+  display: none;
+}
+#viewport #interaction {
+  bottom: 92px;
+}
+#viewport #toast {
+  top: 13%;
+}
+.mission {
+  padding: 8px 0;
+  border-bottom: 2px solid #dfc99b;
+}
+.mission:last-child {
+  border-bottom: 0;
+}
+.mission small, .details-credit summary {
+  color: #8e562d;
+  font-size: 12px;
+}
+.mission h3 {
+  margin: 4px 0;
+  font-size: 16px;
+  color: #263d32;
+}
+.mission p {
+  margin: 4px 0;
+}
+.steps {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 0;
+  font-size: 12px;
+}
+.steps li {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  line-height: 1.7;
+}
+.steps i {
+  border: 2px solid #6e5232;
+  background: #fff7df;
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+.done i {
+  background: #4e8052;
+  box-shadow: inset 2px 2px 0 #89b884;
+}
+.map-preview {
+  width: 100%;
+  height: auto;
+  border: 3px solid #59432b;
+  box-shadow: inset 0 0 0 2px #d7bf8e;
+}
+.details-credit {
+  font-size: 12px;
+  margin-top: 12px;
+  line-height: 1.6;
+  background: #f2e4bf;
+  border: 2px solid #b59a6e;
+  padding: 6px 10px;
+}
+.details-credit summary {
+  cursor: pointer;
+}
+.details-credit a {
+  color: #2f684e;
+  text-decoration: underline;
+}
+.sign-inspect {
+  display: block;
+  width: min(100%, 408px);
+  margin: 10px auto 0;
+  border: 3px solid #5a3c20;
+}
+.kbd-guide {
+  color: #5a523e;
+  background: #f2e4bf;
+  border: 2px solid #c4ab7d;
+  padding: 8px 10px;
+  font-size: 12px;
+}
+@media (max-width: 920px), (max-height: 500px) {
+  #viewport {
+    border-width: 2px;
+  }
+  #hud { --pad: 6px; }
+  .location-plaque { gap: 6px; padding: 4px 8px 4px 4px; }
+  .location-plaque img { width: 22px; height: 22px; }
+  .location-plaque small { display: none; }
+  .location-plaque h1 { font-size: 14px; margin: 0; }
+  .system-tools { gap: 4px; }
+  .system-tools button { padding: 4px 7px; min-height: 28px; font-size: 12px; }
+  .system-tools button.icon-btn { min-width: 28px; padding: 4px 6px; }
+  .quest-strip { padding: 4px 8px; gap: 6px; }
+  .quest-strip img { width: 18px; height: 18px; }
+  .quest-strip small { display: none; }
+  .quest-strip strong { margin: 0; font-size: 12px; line-height: 1.25; }
+  .hotbar { padding: 4px; gap: 4px; }
+  .hotbar img { width: 22px; height: 22px; }
+  .hotbar button { min-width: 38px; padding: 3px 5px; }
+  .hotbar kbd { display: none; }
+  .photo-count, .ach-count { font-size: 12px; padding: 4px 7px; min-height: 26px; }
+  .photo-count img, .ach-count img { width: 16px; height: 16px; }
+  #viewport #interaction { bottom: 54px; font-size: 12px; padding: 4px 10px; }
+  .dialog { padding: 10px 12px; }
+  .dialog h2 { font-size: 16px; }
+  .dialog p, .dialog .receipt { font-size: 12px; margin: 4px 0; }
+  .order-stage { padding: 4px; }
+  .dialog .glass { height: 48px; }
+  .dialog .station img { width: 24px; }
+  .dialog .keys { margin: 2px 0; }
+  .dialog header img { width: 24px; }
+}
+
+/* ============================================================
+   MOBILE ADAPTATION — Pale-Yellow (淡黄色) Pixel Virtual Gamepad
+   ============================================================ */
+.vpad {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 20;
+  touch-action: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.vpad[hidden],
+body:not(.touch-on) .vpad,
+.vpad.modal-open,
+body[data-touch-mode="world"] #viewport.cutscene ~ .vpad,
+body[data-touch-mode="world"] #viewport.title-mode ~ .vpad,
+body[data-touch-mode="world"] #viewport.ending ~ .vpad,
+body[data-touch-mode="world"] #viewport.hud-off ~ .vpad,
+body.mbar-modal-open .vpad {
+  display: none !important;
+}
+
+/* Landscape / Overlay Mode: Clear bottom corners for left/right pale-yellow thumb controls */
+body.touch-on[data-touch-mode="world"] .quest-strip {
+  top: 6px;
+  bottom: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: min(44%, 310px);
+  padding: 4px 8px;
+}
+body.touch-on[data-touch-mode="world"] #tutorial-bar {
+  display: none !important;
+}
+body.touch-on[data-touch-mode="world"] .quest-strip small {
+  display: none;
+}
+body.touch-on[data-touch-mode="world"] .quest-strip strong {
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+body.touch-on[data-touch-mode="world"] .corner-badges {
+  top: 40px;
+  bottom: auto;
+  right: var(--pad);
+  gap: 4px;
+}
+body.touch-on[data-touch-mode="world"] .hotbar [data-action="interact"],
+body.touch-on[data-touch-mode="world"] .hotbar [data-action="photo"] {
+  display: none;
+}
+body.touch-on[data-touch-mode="world"] .hotbar {
+  bottom: 6px;
+  padding: 4px 5px;
+  gap: 5px;
+}
+body.touch-on[data-touch-mode="world"] .hotbar button {
+  background: #fff4bc;
+  border-color: #6b4e22;
+  color: #4a3110;
+  min-width: 46px;
+}
+body.touch-on[data-touch-mode="world"] .hotbar span {
+  display: block;
+  font-size: 12px;
+}
+body.touch-on[data-touch-mode="world"] #viewport #interaction {
+  bottom: 60px;
+}
+
+/* Portrait-only elements stay hidden in landscape */
+.vpad-deck-top,
+.vpad-mixue {
+  display: none;
+}
+
+/* Shared Pale-Yellow Pixel Button System */
+.vpad-dpad {
+  position: fixed;
+  left: max(12px, env(safe-area-inset-left));
+  bottom: max(10px, env(safe-area-inset-bottom));
+  width: 132px;
+  height: 132px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  pointer-events: auto;
+  touch-action: none;
+}
+.vpad-dir {
+  display: grid;
+  place-items: center;
+  font-size: 16px;
+  line-height: 1;
+  color: #4a3110;
+  background: rgba(255, 245, 196, 0.88);
+  border: 3px solid #6b4e22;
+  box-shadow:
+    inset 2px 2px 0 #fffce8,
+    inset -2px -2px 0 #e0c46c,
+    3px 3px 0 rgba(16, 28, 22, 0.52);
+  pointer-events: none;
+}
+.vpad-dir.up    { grid-column: 2; grid-row: 1; border-bottom-width: 1px; }
+.vpad-dir.down  { grid-column: 2; grid-row: 3; border-top-width: 1px; }
+.vpad-dir.left  { grid-column: 1; grid-row: 2; border-right-width: 1px; }
+.vpad-dir.right { grid-column: 3; grid-row: 2; border-left-width: 1px; }
+.vpad-dir.center {
+  grid-column: 2;
+  grid-row: 2;
+  border: 0;
+  background: rgba(246, 230, 162, 0.90);
+  box-shadow: inset 2px 2px 0 #dcc068, inset -2px -2px 0 #fff9d8;
+  color: #9e7c38;
+}
+.vpad-dir.pressed {
+  background: #ffe173;
+  color: #2e1b06;
+  box-shadow:
+    inset 2px 2px 0 #d4af44,
+    inset -2px -2px 0 #fffce8,
+    1px 1px 0 rgba(16, 28, 22, 0.52);
+}
+
+.vpad-actions {
+  position: fixed;
+  right: max(12px, env(safe-area-inset-right));
+  bottom: max(10px, env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  pointer-events: auto;
+  touch-action: none;
+}
+.vpad-act-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.vpad-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-width: 54px;
+  min-height: 46px;
+  padding: 5px 10px;
+  background: rgba(255, 245, 196, 0.90);
+  color: #4a3110;
+  border: 3px solid #6b4e22;
+  box-shadow:
+    inset 2px 2px 0 #fffce8,
+    inset -2px -2px 0 #e0c46c,
+    3px 3px 0 rgba(16, 28, 22, 0.55);
+  touch-action: none;
+  pointer-events: auto;
+}
+.vpad-btn .vpad-main {
+  font-size: 14px;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+.vpad-btn .vpad-sub {
+  font-size: 12px;
+  line-height: 1;
+  color: #8c6422;
+}
+.vpad-btn.primary {
+  min-width: 68px;
+  min-height: 58px;
+  background: rgba(255, 238, 158, 0.94);
+  border-color: #7d5218;
+}
+.vpad-btn.primary .vpad-main {
+  font-size: 16px;
+}
+.vpad-btn.ready {
+  background: #ffe374;
+  border-color: #9e4d12;
+  box-shadow:
+    inset 2px 2px 0 #fffce8,
+    inset -2px -2px 0 #d9a734,
+    0 0 0 2px #fff2aa,
+    3px 3px 0 rgba(16, 28, 22, 0.6);
+}
+.vpad-btn.vpad-ending,
+.vpad-btn.vpad-end-pill {
+  background: #ffe47a;
+  border-color: #8f3c16;
+  color: #5e1f0a;
+}
+.vpad-btn.pressed,
+.vpad-btn:active {
+  background: #ffd95e;
+  transform: translate(2px, 2px);
+  box-shadow:
+    inset 2px 2px 0 #cfa638,
+    inset -2px -2px 0 #fffce8,
+    1px 1px 0 rgba(16, 28, 22, 0.55);
+}
+
+/* ============================================================
+   PORTRAIT PHONE HANDHELD DECK (e.g. 390x844 / 412x915)
+   Top = 100% unobstructed 16:9 game screen; Bottom = Pale-Yellow Gamepad Deck!
+   ============================================================ */
+@media (max-width: 720px) and (orientation: portrait) {
+  body.touch-on {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+  }
+  body.touch-on #viewport {
+    width: 100vw;
+    max-width: 100vw;
+    flex-shrink: 0;
+    border-inline: 0;
+    border-top: 0;
+    border-bottom: 4px solid #0d1813;
+  }
+  /* Keep top 16:9 canvas super clean in portrait; move nav & status into lower handheld deck */
+  body.touch-on[data-touch-mode="world"] .quest-strip,
+  body.touch-on[data-touch-mode="world"] .corner-badges,
+  body.touch-on[data-touch-mode="world"] .hotbar,
+  body.touch-on[data-touch-mode="world"] #interaction,
+  body.touch-on[data-touch-mode="world"] #tutorial-bar {
+    display: none !important;
+  }
+  body.touch-on .vpad {
+    position: relative;
+    inset: auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    pointer-events: auto;
+    background: linear-gradient(180deg, #1b3125 0%, #13221a 100%);
+    padding: 10px 14px max(18px, env(safe-area-inset-bottom));
+    overflow: hidden;
+  }
+  body.touch-on .vpad-world {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  body.touch-on .vpad-deck-top {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  body.touch-on .vpad-deck-hint {
+    background: #fff6cf;
+    border: 3px solid #6b4e22;
+    box-shadow: inset 2px 2px 0 #fffce8, inset -2px -2px 0 #e0c46c, 3px 3px 0 #0d1813;
+    color: #3d280f;
+    padding: 7px 10px;
+    font-size: 12px;
+    line-height: 1.45;
+    text-align: center;
+  }
+  body.touch-on .vpad-deck-nav {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  body.touch-on .vpad-nav-btn {
+    min-width: 58px;
+    min-height: 36px;
+    padding: 5px 10px;
+    background: #fff4bc;
+  }
+  body.touch-on .vpad-nav-btn .vpad-main {
+    font-size: 12px;
+  }
+  body.touch-on .vpad-thumbs {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 6px 2px;
+  }
+  body.touch-on .vpad-dpad {
+    position: static;
+    width: 156px;
+    height: 156px;
+    flex-shrink: 0;
+  }
+  body.touch-on .vpad-dir {
+    font-size: 18px;
+    background: #fff4bc;
+  }
+  body.touch-on .vpad-actions {
+    position: static;
+    gap: 10px;
+  }
+  body.touch-on .vpad-btn {
+    min-width: 60px;
+    min-height: 50px;
+    background: #fff4bc;
+  }
+  body.touch-on .vpad-btn.primary {
+    min-width: 78px;
+    min-height: 66px;
+    background: #ffeb94;
+  }
+
+  /* Mixue Bar Portrait Pale-Yellow Barista Deck */
+  body.touch-on[data-touch-mode="mixue_bar"] .vpad-mixue {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+  }
+  .vpad-mixue-note {
+    background: #fff6cf;
+    border: 2px solid #6b4e22;
+    color: #4a3110;
+    font-size: 12px;
+    line-height: 1.35;
+    text-align: center;
+    padding: 6px 8px;
+  }
+  .vpad-mixue-row {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+  }
+  .vpad-mx {
+    flex: 1;
+    min-width: 0;
+    min-height: 52px;
+    padding: 5px 4px;
+    background: #fff4bc;
+  }
+  .vpad-mx.wide {
+    flex: 1.55;
+  }
+  .vpad-mx .vpad-main {
+    font-size: 12px;
+  }
+  .vpad-mx .vpad-sub {
+    font-size: 12px;
+  }
+
+  body.touch-on #mixue-bar-hud {
+    z-index: 35;
+  }
+  /* Full-screen Portrait Modals & Screens so text/crane/ending aren't cramped into 219px */
+  body.touch-on #sheet:not([hidden]),
+  body.touch-on #title-screen,
+  body.touch-on #ending-board,
+  body.touch-on .intro-choice-wrap:not([hidden]),
+  body.touch-on #mixue-bar-tutorial:not([hidden]),
+  body.touch-on .mbar-finish-wrap:not([hidden]) {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    overflow: auto;
+  }
+  body.touch-on .cine-dialog-mount:has(.cine-dialog) {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    background: rgba(14, 29, 24, 0.72);
+    display: flex;
+    align-items: flex-end;
+    padding: 12px 10px max(22px, env(safe-area-inset-bottom));
+  }
+  body.touch-on #sheet.sdv-sheet {
+    align-items: flex-end;
+    padding: 12px 10px max(22px, env(safe-area-inset-bottom));
+  }
+  body.touch-on .dialog {
+    width: min(540px, 96%);
+    max-height: 92dvh;
+  }
+  body.touch-on #title-screen {
+    padding: 14px;
+    overflow: auto;
+  }
+}

@@ -1,0 +1,166 @@
+{
+ "type": "map",
+ "version": "1.10",
+ "tiledversion": "1.10.2",
+ "orientation": "orthogonal",
+ "renderorder": "right-down",
+ "infinite": false,
+ "width": 20,
+ "height": 12,
+ "tilewidth": 32,
+ "tileheight": 32,
+ "nextlayerid": 3,
+ "nextobjectid": 11,
+ "tilesets": [
+  {
+   "firstgid": 1,
+   "name": "ground",
+   "tilewidth": 32,
+   "tileheight": 32,
+   "tilecount": 8,
+   "columns": 8,
+   "image": "../../assets/pixel/tilesets/ground.png",
+   "imagewidth": 256,
+   "imageheight": 32,
+   "margin": 0,
+   "spacing": 0
+  }
+ ],
+ "layers": [
+  {
+   "id": 1,
+   "name": "ground",
+   "type": "tilelayer",
+   "width": 20,
+   "height": 12,
+   "data": [
+    4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+    4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+    4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+    4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+    4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+    4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+    4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+    4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+    4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+    4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+    4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,
+    4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4
+   ],
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true
+  },
+  {
+   "id": 2,
+   "name": "props",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 1,
+     "name": "counter",
+     "type": "prop",
+     "x": 204,
+     "y": 126,
+     "width": 240,
+     "height": 58,
+     "rotation": 0,
+     "visible": true
+    },
+    {
+     "id": 3,
+     "name": "menu-board",
+     "type": "prop",
+     "x": 224,
+     "y": 40,
+     "width": 96,
+     "height": 53,
+     "rotation": 0,
+     "visible": true
+    },
+    {
+     "id": 4,
+     "name": "menu-board-drinks",
+     "type": "prop",
+     "x": 320,
+     "y": 40,
+     "width": 96,
+     "height": 53,
+     "rotation": 0,
+     "visible": true
+    },
+    {
+     "id": 5,
+     "name": "crate",
+     "type": "prop",
+     "x": 444,
+     "y": 130,
+     "width": 40,
+     "height": 32,
+     "rotation": 0,
+     "visible": true
+    },
+    {
+     "id": 6,
+     "name": "crate",
+     "type": "prop",
+     "x": 444,
+     "y": 152,
+     "width": 40,
+     "height": 32,
+     "rotation": 0,
+     "visible": true
+    },
+    {
+     "id": 7,
+     "name": "planter",
+     "type": "prop",
+     "x": 160,
+     "y": 138,
+     "width": 42,
+     "height": 42,
+     "rotation": 0,
+     "visible": true
+    },
+    {
+     "id": 8,
+     "name": "table",
+     "type": "prop",
+     "x": 164,
+     "y": 204,
+     "width": 52,
+     "height": 42,
+     "rotation": 0,
+     "visible": true
+    },
+    {
+     "id": 9,
+     "name": "cone",
+     "type": "prop",
+     "x": 166,
+     "y": 248,
+     "width": 32,
+     "height": 36,
+     "rotation": 0,
+     "visible": true
+    },
+    {
+     "id": 10,
+     "name": "chalkboard",
+     "type": "prop",
+     "x": 448,
+     "y": 246,
+     "width": 30,
+     "height": 40,
+     "rotation": 0,
+     "visible": true
+    }
+   ],
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true
+  }
+ ]
+}
