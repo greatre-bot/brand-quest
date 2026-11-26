@@ -1035,8 +1035,8 @@
       "state": "approved",
       "asset_usage": "user_provided_audio",
       "license": "user_provided",
-      "rights_status": "用户提供；用于本项目配乐（公开发行前需核验原曲授权）",
-      "notes": "源自 bgm/开场音乐.mp3（111.1s），已剥离封面并转码 96kbps 立体声 MP3。"
+      "rights_status": "用户提供；含商业游戏原声曲目（Stardew Valley OST，仅限本地课程展示使用，公开发行前须替换为授权或原创曲目）",
+      "notes": "源自 bgm/新开场音乐.mp3（146.37s，Stardew Valley Overture / ConcernedApe），已剥离内嵌封面、增益 +1.6dB 并转码为 96kbps 立体声 MP3。"
     },
     {
       "id": "audio_bgm_ending",
